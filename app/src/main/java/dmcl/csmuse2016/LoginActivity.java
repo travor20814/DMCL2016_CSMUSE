@@ -17,7 +17,7 @@ import android.widget.EditText;
 
 public class LoginActivity extends Activity {
     private ProgressDialog pDialog;
-    private boolean check=false; //qq?????
+    private boolean check=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
