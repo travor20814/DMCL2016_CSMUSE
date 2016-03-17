@@ -15,9 +15,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+
 public class LoginActivity extends Activity {
     private ProgressDialog pDialog;
-    private boolean check=false;
+    private boolean check=false;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class LoginActivity extends Activity {
                 password.setHint("");
                 account.setHint("帳號");
             }
-        });
+        });;
 
     }
 
@@ -149,4 +150,3 @@ public class LoginActivity extends Activity {
 
     }
 }
-
