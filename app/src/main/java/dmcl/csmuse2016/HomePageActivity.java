@@ -35,8 +35,7 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton02){ //卜卦畫面
-                    Intent intent = new Intent(HomePageActivity.this,MinpanActivity.class);
-                    HomePageActivity.this.startActivity(intent);
+
                 }
                 if (v == imagebutton03){//每日算命
 
