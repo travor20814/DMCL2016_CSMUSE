@@ -35,7 +35,7 @@ public class AccountLicence extends Activity {
                     Intent intentNewAccount = new Intent(AccountLicence.this,
                                                         CreateNewAccount.class);
                     AccountLicence.this.startActivity(intentNewAccount);
-                    finish();
+                    finish();;;;;
                 }
             }
         };
