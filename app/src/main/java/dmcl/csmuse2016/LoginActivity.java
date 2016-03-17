@@ -17,9 +17,8 @@ import android.widget.EditText;
 
 public class LoginActivity extends Activity {
     private ProgressDialog pDialog;
-    private boolean check=false;
-    //try delete this comment line
-    
+    private boolean check = true; //原本是false
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
