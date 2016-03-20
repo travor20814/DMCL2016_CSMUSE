@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@mipmap/background_color01"
+
+
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:background="@mipmap/title01"
+        android:layout_above="@+id/textView"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/newNameText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="姓名"
+        android:textSize="20dp"
+        android:id="@+id/textView"
+        android:layout_toLeftOf="@+id/newNameText"
+        android:layout_alignBottom="@+id/newNameText"
+        android:layout_alignBaseline="@+id/newNameText"
+        android:layout_marginRight="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+
+        android:id="@+id/newAccountText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/newNameText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="帳號"
+        android:textSize="20dp"
+        android:id="@+id/textView2"
+        android:layout_toLeftOf="@+id/newAccountText"
+        android:layout_alignBaseline="@+id/newAccountText"
+        android:layout_marginRight="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+
+        android:id="@+id/newpasswordText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/newAccountText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="密碼"
+        android:id="@+id/textView3"
+        android:textSize="20dp"
+        android:layout_alignBaseline="@+id/newpasswordText"
+        android:layout_toLeftOf="@+id/newpasswordText"
+        android:layout_marginRight="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="申請"
+        android:background="@drawable/mybutton"
+        android:id="@+id/applyNewAccount"
+        android:layout_below="@+id/newpasswordText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:onClick="applyNewAccount" />
+
+</RelativeLayout>

@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme.Base" parent="Theme.AppCompat">
+        <!-- action bar color -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorBarWhite</item>
+        <item name="colorPrimaryDark">@color/accent_material_light</item>
+        <item name="colorAccent">@color/dim_foreground_material_dark</item>
+        <item name="android:windowBackground">@mipmap/background_color01</item>
+    </style>
+
+</resources>
