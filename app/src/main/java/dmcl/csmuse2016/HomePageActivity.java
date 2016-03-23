@@ -43,7 +43,8 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton04){//付費專區
-
+                    Intent intent = new Intent(HomePageActivity.this,fufay.class);
+                    HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton05){//會員專區
 

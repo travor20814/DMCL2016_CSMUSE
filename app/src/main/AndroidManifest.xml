@@ -53,7 +53,10 @@
             android:name=".FreeActivity"
             android:label="免費卜卦"
             android:theme="@style/AppTheme.Base"></activity>
-
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".fufay"
+            android:theme="@style/AppTheme.NoActionBar" >></activity>
     </application>
 
 </manifest>
