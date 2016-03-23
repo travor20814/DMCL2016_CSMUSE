@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/DMCL2016_CSMUSE2.iml" filepath="$PROJECT_DIR$/DMCL2016_CSMUSE2.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/DMCL.iml" filepath="$PROJECT_DIR$/DMCL.iml" />
+>>>>>>> e4db5b254f926369af92c09deaeacb53189f363d
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

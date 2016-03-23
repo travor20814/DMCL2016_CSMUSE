@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import java.security.AccessControlContext;
 
@@ -20,12 +22,16 @@ public class AccountLicence extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.acceptaccount);
-
+/*
         WebView licenceWeb = (WebView) findViewById(R.id.licenceWeb); //initial webview
         licenceWeb.getSettings().setJavaScriptEnabled(true);
         licenceWeb.requestFocus();
         licenceWeb.setWebViewClient(new myWebViewClient());
         licenceWeb.loadUrl("https://play.google.com/intl/ALL_tw/about/developer-distribution-agreement.html");
+*/
+        TextView licenceView = (TextView) findViewById(R.id.licence);
+        licenceView.setMovementMethod(new ScrollingMovementMethod());
+
 
         final Button licenceAcceptButton = (Button)findViewById(R.id.licenceAcceptButton);
 
@@ -35,7 +41,7 @@ public class AccountLicence extends Activity {
                     Intent intentNewAccount = new Intent(AccountLicence.this,
                                                         CreateNewAccount.class);
                     AccountLicence.this.startActivity(intentNewAccount);
-                    finish();;;;;
+                    finish();
                 }
             }
         };
@@ -43,14 +49,14 @@ public class AccountLicence extends Activity {
 
     }
 
-
+/*
     private class myWebViewClient extends WebViewClient{ //定義webview用的東西
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             return super.shouldOverrideUrlLoading(view, url);
         }
     }
-
+*/
     public void checkBoxchecked(View v){ //使用者需同意條款
         CheckBox seeifchecked = (CheckBox)findViewById(R.id.licenceCheckBox);
         Button nextstepbutton = (Button) findViewById(R.id.licenceAcceptButton);

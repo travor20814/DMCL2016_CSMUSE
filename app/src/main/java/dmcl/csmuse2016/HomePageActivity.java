@@ -30,20 +30,22 @@ public class HomePageActivity extends Activity {
 
         View.OnClickListener handler = new View.OnClickListener() {
             public void onClick(View v) {
-                if (v == imagebutton01){ //命盤畫面
+
+                if (v == imagebutton01){ //卜卦畫面
+                    Intent intent = new Intent(HomePageActivity.this,FreeActivity.class);
+                    HomePageActivity.this.startActivity(intent);
+                }
+                if (v == imagebutton02){ //命書畫面
+
+                }
+                if (v == imagebutton03){//命盤畫面
                     Intent intent = new Intent(HomePageActivity.this,MinpanActivity.class);
                     HomePageActivity.this.startActivity(intent);
                 }
-                if (v == imagebutton02){ //卜卦畫面
+                if (v == imagebutton04){//付費專區
 
                 }
-                if (v == imagebutton03){//每日算命
-
-                }
-                if (v == imagebutton04){//萬年曆
-
-                }
-                if (v == imagebutton05){//紫微精論
+                if (v == imagebutton05){//會員專區
 
                 }
             }
