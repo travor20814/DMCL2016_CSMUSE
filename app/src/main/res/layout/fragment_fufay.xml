@@ -25,11 +25,11 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/button"
+            android:id="@+id/fufay_btn"
             android:layout_weight="1"
             android:layout_margin="0dp"
-            android:background="@drawable/fufay_btn"/>
+            android:background="@drawable/fufay_btn"
+            />
 
     </TableRow>
 

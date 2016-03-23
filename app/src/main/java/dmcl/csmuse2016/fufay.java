@@ -1,6 +1,8 @@
 package dmcl.csmuse2016;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +25,7 @@ import android.view.ViewGroup;
 
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +69,7 @@ public class fufay extends AppCompatActivity {
         // App Logo
         toolbar.setLogo(R.mipmap.title02);
         // Title
-        toolbar.setTitle("付費算命");
+        toolbar.setTitle("紫微精論");
         toolbar.setTitleTextColor(Color.BLACK);
         // Sub Title
         toolbar.setSubtitle("88Say幫您及時掌握未來");
@@ -78,6 +82,7 @@ public class fufay extends AppCompatActivity {
         //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
         // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
+
 
 
     }
@@ -152,10 +157,9 @@ public class fufay extends AppCompatActivity {
             String msg = "";
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
-                    Intent intent = new Intent(fufay.this,HomePageActivity.class);
+                    Intent intent = new Intent(fufay.this, HomePageActivity.class);
                     fufay.this.startActivity(intent);
                     finish();
-
                     break;
                 case R.id.action_settings: //setting鍵
                     msg += "Click setting";
@@ -201,26 +205,34 @@ public class fufay extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_fufay, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_fufay, container, false);
+            Button fragment_btn = (Button) rootView.findViewById(R.id.fufay_btn);
             WebView wv =(WebView) rootView.findViewById(R.id.webView);
+
             WebSettings settings = wv.getSettings();
             settings.setJavaScriptEnabled(true);
+
             switch(getArguments().getInt(ARG_SECTION_NUMBER)) {
 
                 case 1:
                     wv.loadUrl(url_2016);
+                    fragment_btn.setText("2016運勢詳批");
                     break;
                 case 2:
                     wv.loadUrl(url_life);
+                    fragment_btn.setText("財富命盤");
                     break;
                 case 3:
                     wv.loadUrl(url_love);
+                    fragment_btn.setText("超猛愛情靈卦");
                     break;
                 case 4:
                     wv.loadUrl(url_lover);
+                    fragment_btn.setText("情人之間");
                     break;
                 case 5:
                     wv.loadUrl(url_work);
+                    fragment_btn.setText("職場運勢");
                     break;
             }
             return rootView;
