@@ -69,6 +69,7 @@ public class MinpanActivity extends ActionBarActivity {
                     Intent intent = new Intent(MinpanActivity.this,HomePageActivity.class);
                     MinpanActivity.this.startActivity(intent);
                     finish();
+
                     break;
                 case R.id.action_settings: //setting鍵
                     msg += "Click setting";
