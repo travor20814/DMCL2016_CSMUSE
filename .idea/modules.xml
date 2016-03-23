@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DMCL2016_CSMUSE2.iml" filepath="$PROJECT_DIR$/DMCL2016_CSMUSE2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DMCL.iml" filepath="$PROJECT_DIR$/DMCL.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/unionpaysdkv1/unionpaysdkv1.iml" filepath="$PROJECT_DIR$/unionpaysdkv1/unionpaysdkv1.iml" />
     </modules>
