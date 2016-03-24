@@ -36,7 +36,8 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton02){ //命書畫面
-
+                    Intent intent = new Intent(HomePageActivity.this,MinsuActivity.class);
+                    HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton03){//命盤畫面
                     Intent intent = new Intent(HomePageActivity.this,MinpanActivity.class);
