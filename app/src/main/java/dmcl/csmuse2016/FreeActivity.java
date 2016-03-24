@@ -125,6 +125,7 @@ public class FreeActivity extends AppCompatActivity {
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
     }
+
     public void replaceFragment(){
 
         Fragment newFragment = new FragmentForFree();

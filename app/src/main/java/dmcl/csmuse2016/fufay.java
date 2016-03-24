@@ -321,7 +321,10 @@ public class fufay extends AppCompatActivity {
 
             WebSettings settings = wv.getSettings();
             settings.setJavaScriptEnabled(true);
-
+            settings.setSupportZoom(true);
+            settings.setBuiltInZoomControls(true);
+            settings.setUseWideViewPort(true);
+            settings.setLoadWithOverviewMode(true);
             switch(getArguments().getInt(ARG_SECTION_NUMBER)) {
 
                 case 1:
