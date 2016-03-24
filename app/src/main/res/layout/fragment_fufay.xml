@@ -29,6 +29,7 @@
             android:layout_weight="1"
             android:layout_margin="0dp"
             android:background="@drawable/fufay_btn"
+            android:onClick="showEditDialog"
             />
 
     </TableRow>
