@@ -55,6 +55,11 @@
             android:theme="@style/AppTheme.Base"></activity>
         <activity
             android:screenOrientation="portrait"
+            android:name=".MinsuActivity"
+            android:label="紫微命書"
+            android:theme="@style/AppTheme.Base"></activity>
+        <activity
+            android:screenOrientation="portrait"
             android:name=".fufay"
             android:theme="@style/AppTheme.NoActionBar" >></activity>
         <activity
