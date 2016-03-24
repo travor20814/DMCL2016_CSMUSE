@@ -30,6 +30,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.w3c.dom.Text;
 
+
 public class CreateNewAccount extends Activity {
 
     int flag1 = 0;
