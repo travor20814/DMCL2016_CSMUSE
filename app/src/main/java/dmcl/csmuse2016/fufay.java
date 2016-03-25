@@ -1,14 +1,10 @@
 package dmcl.csmuse2016;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.WindowDecorActionBar;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -26,8 +22,11 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.unionpaysdk.main.ICheckOrderCallback;
+import com.unionpaysdk.main.IPaymentCallback;
+import com.unionpaysdk.main.UnionPaySDK;
 
 public class fufay extends AppCompatActivity {
 
@@ -45,13 +44,23 @@ public class fufay extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    private UnionPaySDK unionPaySDK =null;
+    private Context ctx =null;
+    //this will be provided UnionSDK
+    private static String scode="EID001301";
+    //this should be applied by CP and will be provided UnionSDK
+    private static String key="A&4&aHnh7N";
+    //CP should provide this to UnionSDK
+    private static String payCallBackUrl="https://payment.skillfully.com.tw/back.aspx";
+    //this should be on the CP' own server, which has nothing to do with SDK, and should be handle by CP self
+    private String orderid ="";
+    private double amount = 1.0;
+    private String memo ="This is a memo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fufay);
-
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -84,10 +93,81 @@ public class fufay extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
 
 
+        ctx=this;
 
+        unionPaySDK = UnionPaySDK.getInstance();
+        //must Initialize first
+        unionPaySDK.Initialize(ctx, scode, key, true);
     }
 
 
+    private static String getRandomString(int len)
+    {
+
+
+        String str = "0123456789abcdefghijklmnopqrstuvwxyz";
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < len; i++)
+        {
+            int idx = (int)(Math.random() * str.length());
+            sb.append(str.charAt(idx));
+        }
+        String result = sb.toString();
+
+
+        return result;
+
+    }
+
+    private void show(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(fufay.this,message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private IPaymentCallback paymentCallback = new IPaymentCallback()
+    {
+
+        @Override
+        public void onOrderFinished() {
+            show("Order Finished~");
+            // after the order is finished, the client should immediately request the response
+            //from CP's own server to get to know the result of the order
+
+
+
+        }
+
+        @Override
+        public void onOrderNotFinished() {
+            show("Order NotFinished~");
+
+
+        }
+
+
+    };
+
+
+    private ICheckOrderCallback checkOrderCallBack = new ICheckOrderCallback()
+    {
+
+        @Override
+        public void onSuccess(String json) {
+
+            show("json is "+ json);
+
+        }
+
+        @Override
+        public void onFailed() {
+
+
+        }
+
+    };
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -151,15 +231,44 @@ public class fufay extends AppCompatActivity {
             return null;
         }
     }
+    public void showEditDialog(View view)
+    {
+        fufay_dialogFragment editNameDialog =  fufay_dialogFragment.newInstance("確定要購買嗎？", "商品：price", "取消", "確定");
+        editNameDialog.show(getFragmentManager(), "EditNameDialog");
+    }
+    public void home_showEditDialog(){
+        fufay_home_dialog editNameDialog =  fufay_home_dialog.newInstance("確定要離開嗎？", "左右滑可以看到更多範例喔！", "取消", "確定");
+        editNameDialog.show(getFragmentManager(), "EditNameDialog");
+    }
+    public void doPositiveClick() {//positive 在畫面右邊
+        // Do stuff here.
+        Log.i("FragmentAlertDialog", "Positive click!");
+    }
+
+    public void doNegativeClick() {
+        // Do stuff here.
+        orderid = getRandomString(10);
+        unionPaySDK.payOrderRequest(fufay.this, orderid, amount, memo, payCallBackUrl, paymentCallback);
+        Log.i("FragmentAlertDialog", "Negative click!");
+    }
+    public void home_doPositiveClick() {
+        // Do stuff here.
+
+    }
+
+    public void home_doNegativeClick() {
+        // Do stuff here.
+        Intent intent = new Intent(fufay.this, HomePageActivity.class);
+        fufay.this.startActivity(intent);
+        finish();
+    }
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             String msg = "";
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
-                    Intent intent = new Intent(fufay.this, HomePageActivity.class);
-                    fufay.this.startActivity(intent);
-                    finish();
+                    home_showEditDialog();
                     break;
                 case R.id.action_settings: //setting鍵
                     msg += "Click setting";
@@ -172,6 +281,7 @@ public class fufay extends AppCompatActivity {
             return true;
         }
     };
+
     /**
      * A placeholder fragment containing a simple view.
      */
