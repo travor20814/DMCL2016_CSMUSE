@@ -8,7 +8,7 @@
 
                 android:angle="270" />
 
-            <stroke android:width="1dip" android:color="#ffffff" />
+            <stroke android:width="1dip" android:color="#1e1f23" />
 
             <corners android:radius="2dp" />
 
@@ -48,7 +48,7 @@
 
                 android:angle="135" />
 
-            <stroke android:width="1dip" android:color="#ffffff" />
+            <stroke android:width="1dip" android:color="#1e1f23" />
 
             <corners android:radius="5dip" />
 

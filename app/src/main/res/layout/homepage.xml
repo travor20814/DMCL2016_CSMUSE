@@ -1,99 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/background_color01"
-    >
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_color">
 
-
-    <ImageView
-        android:layout_width="1px"
-        android:layout_height="1px"
-        android:id="@+id/imageView3"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <ImageButton
-        android:layout_height="wrap_content"
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:id="@+id/button_middle"
-        android:src="@mipmap/minpan_correct01"
-        android:background="@drawable/imagebuttonshape"
-        android:layout_marginBottom="5px"
-        android:scaleType="fitXY"
-        android:padding="0px"
-        android:layout_marginTop="5px"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="5px"
-        android:layout_marginRight="5px"
-        android:layout_gravity="center"
-        />
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView" >
 
-    <ImageButton
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/button_topleft"
-        android:src="@mipmap/pugua_correct02"
-        android:background="@drawable/imagebuttonshape"
-        android:layout_marginTop="5px"
-        android:scaleType="fitXY"
-        android:padding="0px"
-        android:layout_centerHorizontal="true"
-        android:layout_alignLeft="@+id/button_middle"
-        android:layout_above="@+id/button_middle"
-        android:layout_toLeftOf="@+id/imageView3" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-    <ImageButton
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:src="@mipmap/minbook_correct02"
-        android:background="@drawable/imagebuttonshape"
-        android:id="@+id/button_topright"
-        android:layout_marginTop="5px"
-        android:scaleType="fitXY"
-        android:padding="0px"
-        android:layout_toRightOf="@+id/button_topleft"
-        android:layout_marginLeft="5px"
-        android:layout_alignRight="@+id/button_middle"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button_middle"
-        android:layout_gravity="right|top" />
+                <ImageButton
 
-    <ImageButton
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:src="@mipmap/member_correct01"
-        android:background="@drawable/imagebuttonshape"
-        android:id="@+id/button_bottomright"
-        android:layout_alignRight="@+id/button_middle"
-        android:layout_below="@+id/button_middle"
-        android:scaleType="fitXY"
-        android:padding="0px"
-        android:layout_toRightOf="@+id/button_bottomleft"
-        android:layout_marginLeft="5px"
-        android:layout_marginBottom="5px"
-        android:layout_gravity="right|bottom" />
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/button_topleft"
+                    android:src="@mipmap/pugua_correct02"
+                    android:background="@drawable/imagebuttonshape"
+                    android:scaleType="fitXY"
+                    android:layout_margin="3dp" />
+                <ImageButton
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/minbook_correct02"
+                    android:background="@drawable/imagebuttonshape"
+                    android:id="@+id/button_topright"
+                    android:scaleType="fitXY"
+                    android:layout_margin="3dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-    <ImageButton
+                <ImageButton
+                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/button_middle"
+                    android:src="@mipmap/minpan_correct01"
+                    android:background="@drawable/imagebuttonshape"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp" />
 
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/button_bottomleft"
-        android:src="@mipmap/money_correct02"
-        android:background="@drawable/imagebuttonshape"
-        android:layout_below="@+id/button_middle"
-        android:layout_alignLeft="@+id/button_middle"
-        android:scaleType="fitXY"
-        android:padding="0px"
-        android:layout_marginBottom="5px"
-        android:layout_gravity="left|bottom"
-        android:layout_toLeftOf="@+id/imageView3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/button_middle_bottom"
+                    android:src="@mipmap/gua_correct01"
+                    android:background="@drawable/imagebuttonshape"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp" />
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_weight="1">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/button_bottomleft"
+                    android:src="@mipmap/money_correct02"
+                    android:background="@drawable/imagebuttonshape"
+
+                    android:scaleType="fitXY"
+                    android:layout_gravity="left|bottom"
+                    android:layout_margin="3dp" />
+                <ImageButton
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/member_correct01"
+                    android:background="@drawable/imagebuttonshape"
+                    android:id="@+id/button_bottomright"
+
+                    android:scaleType="fitXY"
+                    android:layout_margin="3dp" />
+            </LinearLayout>
+        </LinearLayout>
 
 
-</RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

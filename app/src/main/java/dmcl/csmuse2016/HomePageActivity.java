@@ -2,11 +2,11 @@ package dmcl.csmuse2016;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
-
 
 public class HomePageActivity extends Activity {
 
@@ -15,6 +15,7 @@ public class HomePageActivity extends Activity {
     private ImageButton imagebutton03;
     private ImageButton imagebutton04;
     private ImageButton imagebutton05;
+    private ImageButton imagebutton06;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class HomePageActivity extends Activity {
         imagebutton03 = (ImageButton)findViewById(R.id.button_middle);
         imagebutton04 = (ImageButton)findViewById(R.id.button_bottomleft);
         imagebutton05 = (ImageButton)findViewById(R.id.button_bottomright);
+        //new for 八卦命盤
+        imagebutton06 = (ImageButton)findViewById(R.id.button_middle_bottom);
 
         View.OnClickListener handler = new View.OnClickListener() {
             public void onClick(View v) {
@@ -36,7 +39,8 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton02){ //命書畫面
-
+                    Intent intent = new Intent(HomePageActivity.this,MinsuActivity.class);
+                    HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton03){//命盤畫面
                     Intent intent = new Intent(HomePageActivity.this,MinpanActivity.class);
@@ -47,6 +51,9 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton05){//會員專區
+
+                }
+                if (v == imagebutton06){//八卦命盤
 
                 }
             }
