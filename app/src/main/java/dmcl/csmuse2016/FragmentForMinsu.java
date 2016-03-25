@@ -16,7 +16,7 @@ public class FragmentForMinsu extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private Button button_A,button_B,button_C,button_D;//A命宮主星B優缺C課題D風采
+    private Button button_A,button_B,button_C,button_D;//A命宮主星 B優缺 C課題 D風采
     private TextView content2;
     String return_A,return_B,return_C,return_D;//這4個用來記錄回傳的資料
     @Override
@@ -24,11 +24,11 @@ public class FragmentForMinsu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragmentforminsu, container, false);
 //這裡我有改
-/*
-        return_A = getArguments().getString("A");
-        return_B = getArguments().getString("B");
-        return_C = getArguments().getString("C");
-        return_D = getArguments().getString("D");
+
+        return_A = getArguments().getString("Reslut_Star");
+        return_B = getArguments().getString("Result_Good_Bad");
+        return_C = getArguments().getString("Reslut_Issue");
+        return_D = getArguments().getString("Reslut_Desc");
 
         button_A = (Button)v.findViewById(R.id.button_A);
         button_B = (Button)v.findViewById(R.id.button_B);
@@ -57,7 +57,14 @@ public class FragmentForMinsu extends Fragment {
                 content2.setBackgroundColor(Color.parseColor("#fff370"));
             }
         });
-*/
+        button_D.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content2.setText(return_D);//把回傳的A命宮主星顯示出來
+                content2.setBackgroundColor(Color.parseColor("#fff320"));
+            }
+        });
+
         return v;
     }
 }
