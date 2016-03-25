@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DMCL.iml" filepath="$PROJECT_DIR$/DMCL.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/csmuse2016.iml" filepath="$PROJECT_DIR$/csmuse2016.iml" />
-      <module fileurl="file://$PROJECT_DIR$/unionpaysdkv1/unionpaysdkv1.iml" filepath="$PROJECT_DIR$/unionpaysdkv1/unionpaysdkv1.iml" />
       <module fileurl="file://$PROJECT_DIR$/unionpaysdkv1/unionpaysdkv1.iml" filepath="$PROJECT_DIR$/unionpaysdkv1/unionpaysdkv1.iml" />
     </modules>
   </component>

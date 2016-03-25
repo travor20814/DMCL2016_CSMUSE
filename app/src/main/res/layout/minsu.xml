@@ -56,34 +56,37 @@
             android:layout_below="@+id/editText_Birthday"
             android:orientation="horizontal"
             android:id="@+id/Gruop_YearType">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:text="西元"
-                android:textSize="25dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_weight="0.5"
-                android:checked="true" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="民國"
+                android:id="@+id/radio_west"
+                android:text="西元"
                 android:textSize="25dp"
                 android:textColor="#000000"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
+                android:checked="true" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_guo"
+                android:text="國曆"
+                android:textSize="25dp"
+                android:textColor="#000000"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:checked="false" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/radio_non"
                 android:text="農曆"
                 android:textSize="25dp"
                 android:textColor="#000000"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:checked="false" />
         </RadioGroup>
         <LinearLayout
@@ -174,7 +177,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:id="@+id/L2"></LinearLayout>
     </LinearLayout>
 </LinearLayout>

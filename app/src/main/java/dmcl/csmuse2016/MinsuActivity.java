@@ -32,10 +32,11 @@ public class MinsuActivity extends AppCompatActivity {
 
     Bundle bundle = new Bundle();
     private Button button_Submit2;
-    private RadioGroup Gruop_Sex2;
+    private RadioGroup Gruop_Sex2,Gruop_YearType;
     private EditText editText_Question2;//輸入問題的地方
     String question="";
     String which_sex="女";//性別，預設為女
+    String which_yeartype="";//記錄哪一個(西元or民國or農曆)
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,7 @@ public class MinsuActivity extends AppCompatActivity {
 
     void addFragment(){
         //建立一個 MyFirstFragment 的實例(Instantiate)
-        Fragment newFragment = new FragmentForFree();
+        Fragment newFragment = new FragmentForMinsu();
         newFragment.setArguments(bundle);
         //使用getFragmentManager()獲得FragmentTransaction物件，並呼叫 beginTransaction() 開始執行Transaction
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -136,33 +137,43 @@ public class MinsuActivity extends AppCompatActivity {
     }
     //送出資料的button
     void ButtonSummit(){
-        button_Submit2 = (Button)findViewById(R.id.button_Submit);
+        button_Submit2 = (Button)findViewById(R.id.button_Submit2);
 
         button_Submit2.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                editText_Question2 = (EditText) findViewById(R.id.editText_Question);
+                editText_Question2 = (EditText) findViewById(R.id.editText_Question2);
                 question = editText_Question2.getText().toString();//記錄問題
-                Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_Sex);
+                Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_Sex2);
                 int select_id = Gruop_Sex2.getCheckedRadioButtonId();
+                Gruop_YearType = (RadioGroup)findViewById(R.id.Gruop_YearType);
+                int select_type = Gruop_YearType.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
+                //editText_Question2.setText(String.valueOf(select_type));//測試用
                 // 問題輸入轉換為string
-
-                if (select_id == 2131492997) {
+                if (select_id == 2131493022) {
                     which_sex = "0"; //API上，女 = 0
                 } else {
                     which_sex = "1"; //API上，男 = 0
                 }
+
+                if (select_type == 2131493021) {
+                    which_yeartype = "0"; //API上，西元 = 0
+                } else if (select_id == 2131493022){
+                    which_yeartype = "1"; //API上，國曆 = 1
+                }else {
+                    which_yeartype = "2"; //API上，農曆 = 2
+                }
                 // 產生對映的url，使用Catch_say88_API_info函式
-                String url = Catch_say88_API_info(question, which_sex);
-                //產生異構Task，因為網路部分不能在main裡面進行，接著執行
-                RequestTask request = new RequestTask();
-                request.execute(url);
+//                String url = Catch_say88_API_info(question, which_sex);
+//                //產生異構Task，因為網路部分不能在main裡面進行，接著執行
+//                RequestTask request = new RequestTask();
+//                request.execute(url);
             }
         });
     }
 
-    public String Catch_say88_API_info(String ques,String sex){
+/*    public String Catch_say88_API_info(String ques,String sex){
         // token就是識別證，question和sex為使用者輸入
         String url = "http://newtest.88say.com/Api/FreeGua.aspx?";
         url += "token=D5DF5A998BF46E8D37E3D600C022D8B0D76D68BABCF7CFC75304E8EF5168A48B";
@@ -234,4 +245,5 @@ public class MinsuActivity extends AppCompatActivity {
 
         }
     }
+*/
 }
