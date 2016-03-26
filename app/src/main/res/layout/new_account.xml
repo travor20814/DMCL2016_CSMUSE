@@ -244,4 +244,13 @@
         android:onClick="applyNewAccount"
          />
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="是否同意訂閱電子報?"
+        android:id="@+id/newsCheckBox"
+        android:layout_above="@+id/applyNewAccount"
+        android:layout_alignLeft="@+id/textView9"
+        android:onClick="newsBoxChecked" />
+
 </RelativeLayout>
