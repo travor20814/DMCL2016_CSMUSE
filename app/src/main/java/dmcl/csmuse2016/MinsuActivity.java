@@ -197,14 +197,69 @@ public class MinsuActivity extends AppCompatActivity {
                 }else {
                     which_yeartype = "2"; //API上，農曆 = 2
                 }
-
-                // 產生對映的url，使用Catch_say88_API_info函式
-                String url = Catch_say88_API_info(which_yeartype, s_year,s_month,s_day,hour,which_sex);
-               //產生異構Task，因為網路部分不能在main裡面進行，接著執行
-               RequestTask request = new RequestTask();
-               request.execute(url);
+                if(!s_year.equals("")&&!s_month.equals("")&&!s_day.equals("")) {
+                    if (time_check(s_year, s_month, s_day)) {
+                        // 產生對映的url，使用Catch_say88_API_info函式
+                        String url = Catch_say88_API_info(which_yeartype, s_year, s_month, s_day, hour, which_sex);
+                        //產生異構Task，因為網路部分不能在main裡面進行，接著執行
+                        RequestTask request = new RequestTask();
+                        request.execute(url);
+                    } else {
+                        bundle.putString("Reslut_Star", "輸入時間有誤");
+                        bundle.putString("Result_Good_Bad", "輸入時間有誤");
+                        bundle.putString("Reslut_Issue", "輸入時間有誤");
+                        bundle.putString("Reslut_Desc", "輸入時間有誤");
+                        replaceFragment();
+                    }
+                }else {
+                    bundle.putString("Reslut_Star", "輸入時間有誤");
+                    bundle.putString("Result_Good_Bad", "輸入時間有誤");
+                    bundle.putString("Reslut_Issue", "輸入時間有誤");
+                    bundle.putString("Reslut_Desc", "輸入時間有誤");
+                    replaceFragment();
+                }
             }
         });
+    }
+
+    public boolean time_check(String s_year,String s_month,String s_day){
+        int i_year, i_month, i_day;
+        i_year = Integer.parseInt(s_year);
+        i_month = Integer.parseInt(s_month);
+        i_day = Integer.parseInt(s_day);
+
+        if (i_year >= 1900 && i_year < 2032 && i_month > 0 && i_month < 13 && i_day > 0) {
+            if (i_year % 4 == 0 && i_month == 2 && i_day == 29) {
+                return true;
+            } else if (i_month == 1 && i_day <= 31) {
+                return true;
+            } else if (i_month == 2 && i_day <= 28) {
+                return true;
+            } else if (i_month == 3 && i_day <= 31) {
+                return true;
+            } else if (i_month == 4 && i_day <= 30) {
+                return true;
+            } else if (i_month == 5 && i_day <= 31) {
+                return true;
+            } else if (i_month == 6 && i_day <= 30) {
+                return true;
+            } else if (i_month == 7 && i_day <= 31) {
+                return true;
+            } else if (i_month == 8 && i_day <= 31) {
+                return true;
+            } else if (i_month == 9 && i_day <= 30) {
+                return true;
+            } else if (i_month == 10 && i_day <= 31) {
+                return true;
+            } else if (i_month == 11 && i_day <= 30) {
+                return true;
+            } else if (i_month == 12 && i_day <= 31) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
     public String Catch_say88_API_info(String birthType,String Year,String Month , String Day ,String Hour,String Sex){
