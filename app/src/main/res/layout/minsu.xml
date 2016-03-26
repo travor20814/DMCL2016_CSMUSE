@@ -38,16 +38,11 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="紫微命書--命宮主星之卷" />
 
-
-            <EditText
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="請輸入您的問題 "
-                android:textColor="#000000"
-                android:textColorHint="#000000"
-                android:backgroundTint="#000000"
-                android:gravity="center"
-                android:id="@+id/editText_Question2" />
+                android:layout_height="@dimen/activity_horizontal_margin" />
+
+
         </LinearLayout>
 
         <RadioGroup
@@ -99,27 +94,33 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="出生年"
+                android:id="@+id/input_year_m"
                 android:textColor="#000000"
                 android:textColorHint="#000000"
                 android:backgroundTint="#000000"
+                android:inputType="number"
                 android:gravity="center"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="出生月"
+                android:id="@+id/input_month_m"
                 android:textColor="#000000"
                 android:textColorHint="#000000"
                 android:backgroundTint="#000000"
+                android:inputType="number"
                 android:gravity="center"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="出生日"
+                android:id="@+id/input_day_m"
                 android:textColor="#000000"
                 android:textColorHint="#000000"
                 android:backgroundTint="#000000"
+                android:inputType="number"
                 android:gravity="center"/>
         </LinearLayout>
 
@@ -152,6 +153,22 @@
                 android:checked="false" />
         </RadioGroup>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_horizontal_margin" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#bd000000"
+            android:id="@+id/spinner" />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center_horizontal" />
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -165,6 +182,8 @@
                 android:background="#fffdb7"
                 android:id="@+id/button_Submit2" />
         </LinearLayout>
+
+
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
