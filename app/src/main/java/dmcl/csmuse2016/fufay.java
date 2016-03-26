@@ -233,11 +233,11 @@ public class fufay extends AppCompatActivity {
     }
     public void showEditDialog(View view)
     {
-        fufay_dialogFragment editNameDialog =  fufay_dialogFragment.newInstance("確定要購買嗎？", "商品：price", "取消", "確定");
+        fufay_buy_dialogFragment editNameDialog =  fufay_buy_dialogFragment.newInstance("確定要購買嗎？", "商品：price", "取消", "確定");
         editNameDialog.show(getFragmentManager(), "EditNameDialog");
     }
     public void home_showEditDialog(){
-        fufay_home_dialog editNameDialog =  fufay_home_dialog.newInstance("確定要離開嗎？", "左右滑可以看到更多範例喔！", "取消", "確定");
+        fufay_home_dialogFragment editNameDialog =  fufay_home_dialogFragment.newInstance("確定要離開嗎？", "左右滑可以看到更多範例喔！", "取消", "確定");
         editNameDialog.show(getFragmentManager(), "EditNameDialog");
     }
     public void doPositiveClick() {//positive 在畫面右邊
