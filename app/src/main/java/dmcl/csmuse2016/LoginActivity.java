@@ -40,13 +40,12 @@ public class LoginActivity extends Activity {
                     Intent intentHome = new Intent(LoginActivity.this,
                                                     HomePageActivity.class);
                     LoginActivity.this.startActivity(intentHome);
-                    finish(); //using ondestroy to replace "finish" function
+
                 }
                 if (v == newAccount){
                     Intent intentNewAccount = new Intent(LoginActivity.this,
                                                         AccountLicence.class);
                     LoginActivity.this.startActivity(intentNewAccount);
-                    Log.i("Content","layout to newaccount");
                 }
             }
         };

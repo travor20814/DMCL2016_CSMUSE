@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="申請帳號/密碼"
         android:id="@+id/newAccount"
-        android:background="@drawable/fufay_btn"
+        android:background="@drawable/login_btn"
         android:layout_toRightOf="@+id/guestlogin"
         android:layout_alignParentBottom="true"
         android:onClick="newAccount"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:text="訪客使用"
         android:id="@+id/guestlogin"
-        android:background="@drawable/fufay_btn"
+        android:background="@drawable/login_btn"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="false"
         android:layout_margin="5px" />
@@ -95,15 +95,16 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="false"
         android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false">
+        android:layout_alignParentStart="false"
+        android:layout_above="@+id/Account">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
-            android:background="@mipmap/top_02"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:background="@mipmap/titletest01"
+            android:layout_alignParentTop="false"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 
 
