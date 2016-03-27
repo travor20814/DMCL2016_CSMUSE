@@ -1,10 +1,16 @@
 package dmcl.csmuse2016;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Boyu on 2016/3/27.
@@ -14,9 +20,76 @@ public class MinpanCatchActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.minpan_catch);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_catch);
+        setSupportActionBar(toolbar);
+
+        // App Logo
+        toolbar.setLogo(R.mipmap.title02);
+        // Title
+        toolbar.setTitle("紫微命盤");
+        toolbar.setTitleTextColor(Color.BLACK);
+        // Sub Title
+        toolbar.setSubtitle("88Say幫您及時掌握未來");
+        toolbar.setSubtitleTextColor(Color.BLACK);
+
+        setSupportActionBar(toolbar);
+
+        // Navigation Icon 要設定在 setSupoortActionBar 才有作用
+        // 否則會出現 back bottom
+        //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
+        toolbar.setOnMenuItemClickListener(onMenuItemClick);
+
         getInfo();
         ReturnButton();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    //toolbar按鈕被按時
+    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            String msg = "";
+            switch (menuItem.getItemId()) {
+                case R.id.action_home: //home鍵被按時
+                    Intent intent = new Intent(MinpanCatchActivity.this,HomePageActivity.class);
+                    MinpanCatchActivity.this.startActivity(intent);
+                    finish();
+
+                    break;
+                case R.id.action_settings: //setting鍵
+                    msg += "Click setting";
+                    break;
+            }
+
+            if(!msg.equals("")) {
+                Toast.makeText(MinpanCatchActivity.this, msg, Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+    };
+
     public void getInfo() {
         Bundle info_bundle = this.getIntent().getExtras();
         String Reslut_Sex = info_bundle.getString("Reslut_Sex");
@@ -422,6 +495,7 @@ public class MinpanCatchActivity  extends AppCompatActivity {
                 //Intent intent = new Intent();
                 // intent.setClass(CatchActivity.this, MainActivity.class);
                 // startActivity(intent);
+                MinpanActivity.errorMs.setText("請輸入內容");
                 MinpanCatchActivity.this.finish();
             }
         });

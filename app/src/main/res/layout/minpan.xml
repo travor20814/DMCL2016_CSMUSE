@@ -192,7 +192,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="請輸入內容"
             android:textSize="30dp"
             android:textColor="#f70202"
             android:gravity="center"

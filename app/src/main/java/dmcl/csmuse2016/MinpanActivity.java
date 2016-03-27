@@ -50,6 +50,8 @@ public class MinpanActivity extends AppCompatActivity {
             "18:00~18:59(酉時)","19:00~19:59(戌時)","20:00~20:59(戌時)","21:00~21:59(亥時)","22:00~22:59(亥時)","23:00~23:59(子時)",};
     private ArrayAdapter<String> listAdapter;
     private Spinner spinner;
+    public static TextView errorMs;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,7 +152,7 @@ public class MinpanActivity extends AppCompatActivity {
         button_Submit2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView errorMs = (TextView)findViewById(R.id.textViewError);
+                errorMs = (TextView)findViewById(R.id.textViewError);
                 input_year = (EditText) findViewById(R.id.input_minpan_year);
                 String s_year = input_year.getText().toString();
                 input_month = (EditText) findViewById(R.id.input_minpan_month);
@@ -182,6 +184,7 @@ public class MinpanActivity extends AppCompatActivity {
                 if (!s_year.equals("") && !s_month.equals("") && !s_day.equals("")) {
                     if (time_check(s_year, s_month, s_day)) {
                         // 產生對映的url，使用Catch_say88_API_info函式
+                        errorMs.setText("資料讀取中，請稍候.....");
                         String url = Catch_say88_API_info(which_yeartype, s_year, s_month, s_day, hour, which_sex);
                         //產生異構Task，因為網路部分不能在main裡面進行，接著執行
                         RequestTask request = new RequestTask();
