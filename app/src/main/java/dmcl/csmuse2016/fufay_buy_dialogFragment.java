@@ -2,18 +2,21 @@ package dmcl.csmuse2016;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.app.DialogFragment;
 
 /**
- * Created by chenhaowei on 16/3/24.
+ * Created by chenhaowei on 16/3/23.
  */
-public class fufay_home_dialog extends DialogFragment
-{
 
-    public static fufay_home_dialog newInstance(String title,String message,String positivebutton,String negativebutton){
-        fufay_home_dialog frag = new fufay_home_dialog();
+
+
+public class fufay_buy_dialogFragment extends DialogFragment
+        {
+
+    public static fufay_buy_dialogFragment newInstance(String title,String message,String positivebutton,String negativebutton){
+        fufay_buy_dialogFragment frag = new fufay_buy_dialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         args.putString("message",message);
@@ -35,13 +38,13 @@ public class fufay_home_dialog extends DialogFragment
                 .setMessage(message)
                 .setPositiveButton(positivebutton, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                ((fufay)getActivity()).home_doPositiveClick();
+                                ((fufay)getActivity()).doPositiveClick();
                             }
                         }
                 )
                 .setNegativeButton(negativebutton, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        ((fufay)getActivity()).home_doNegativeClick();
+                        ((fufay)getActivity()).doNegativeClick();
                     }
                 })
                 .setCancelable(false);

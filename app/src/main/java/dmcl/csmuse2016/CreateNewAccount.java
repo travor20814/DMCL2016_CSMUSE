@@ -13,6 +13,8 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
@@ -34,11 +36,13 @@ import org.w3c.dom.Text;
 public class CreateNewAccount extends Activity {
 
     int flag1 = 0;
-    int sex = 1;
-    int yyyy = 1911;
-    int MM = 1;
-    int dd = 1;
-    int hh = 0;
+    int flagForConfirmData = 0;
+    int sex = 1; //性別
+    int yyyy = 1911; //年
+    int MM = 1; //月
+    int dd = 1; //日
+    int hh = 0; //時辰
+    int mailCheck = 0; //電子報
     private ProgressDialog pDialog;
     InputStream is=null;
     private RadioButton Man;
@@ -51,6 +55,7 @@ public class CreateNewAccount extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.new_account);
+        flagForConfirmData = 0; // reset
         //性別
         Man = (RadioButton)findViewById(R.id.man);
         Woman = (RadioButton)findViewById(R.id.woman);
@@ -59,7 +64,7 @@ public class CreateNewAccount extends Activity {
         //生日
         NumberPicker year = (NumberPicker)findViewById(R.id.yearPick);
         NumberPicker month = (NumberPicker)findViewById(R.id.monthPick);
-        NumberPicker day = (NumberPicker)findViewById(R.id.dayPick);
+        final NumberPicker day = (NumberPicker)findViewById(R.id.dayPick);
         NumberPicker time = (NumberPicker)findViewById(R.id.timePick);
         time.setMaxValue(23);
         time.setMinValue(0);
@@ -78,15 +83,24 @@ public class CreateNewAccount extends Activity {
         month.setMaxValue(12);
         month.setMinValue(1);
         month.setWrapSelectorWheel(true);
-        day.setMaxValue(31);
-        day.setMinValue(1);
-        day.setWrapSelectorWheel(true);
+
 
         year.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 //Display the newly selected number from picker
                 yyyy = newVal;
+                if (MM == 2){
+                    if(yyyy % 4 == 0){ //算閏年 但並不完整
+                        day.setMaxValue(29);
+                        day.setMinValue(1);
+                    }
+                    else {
+                        day.setMaxValue(28);
+                        day.setMinValue(1);
+                    }
+                }
+                flagForConfirmData = 1;
                 //tv.setText("Selected year : " + yyyy); //創一個textview id="tv" 即可測試
             }
         });
@@ -94,6 +108,25 @@ public class CreateNewAccount extends Activity {
           @Override
           public void onValueChange(NumberPicker picker,int oldVal, int newVal){
               MM = newVal;
+              day.setWrapSelectorWheel(true);
+              if(MM == 2 ){
+                  if(yyyy % 4 == 0){ //算閏年 但並不完整
+                      day.setMaxValue(29);
+                      day.setMinValue(1);
+                  }
+                  else {
+                      day.setMaxValue(28);
+                      day.setMinValue(1);
+                  }
+              }
+              else if(MM == 4 || MM == 6 || MM == 9 || MM == 11){
+                  day.setMaxValue(30);
+                  day.setMinValue(1);
+              }
+              else{
+                  day.setMaxValue(31);
+                  day.setMinValue(1);
+              }
               //tv.setText("Selected month : " + MM);
           }
         });
@@ -101,6 +134,7 @@ public class CreateNewAccount extends Activity {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 dd = newVal;
+
                 //tv.setText("Selected day : " + dd);
             }
         });
@@ -130,29 +164,37 @@ public class CreateNewAccount extends Activity {
 
         }
     };
+    public void newsBoxChecked(View v){ //同意接收電子報
+        CheckBox ifchecked = (CheckBox)findViewById(R.id.newsCheckBox);
+        if (ifchecked.isChecked()==true) {
+            mailCheck = 1;
+        }
+        else{
+            mailCheck = 0;
+        }
+    }
     //抓edittext上使用者輸入的字
     public void applyNewAccount(View v){
 
         EditText EditTextname = (EditText)findViewById(R.id.newNameText);
         Editable nameName;
         nameName = EditTextname.getText();
-        String username =nameName.toString();
+        String username =nameName.toString(); //姓
 
         EditText EditTextSubName = (EditText)findViewById(R.id.newsubNameText);
         Editable subnameName;
         subnameName = EditTextSubName.getText();
-        String userSubname = subnameName.toString();
+        String userSubname = subnameName.toString(); //名
 
         EditText EditTextaccount = (EditText)findViewById(R.id.newAccountText);
         Editable AccountName;
         AccountName = EditTextaccount.getText();
-        String Account =AccountName.toString();
+        String Account =AccountName.toString(); //email(帳號)
 
         EditText EditTextpassword = (EditText)findViewById(R.id.newpasswordText);
         Editable passwordName;
         passwordName = EditTextpassword.getText();
-        String password =passwordName.toString();
-
+        String password =passwordName.toString();//密碼
 
 
         flag1 = 0; //用一個flag來確認帳號是否重複
@@ -182,6 +224,17 @@ public class CreateNewAccount extends Activity {
             new AlertDialog.Builder(CreateNewAccount.this)
                     .setTitle("申請失敗")
                     .setMessage("請輸入密碼")
+                    .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
+        }
+        else if(flagForConfirmData == 0){
+            new AlertDialog.Builder(CreateNewAccount.this)
+                    .setTitle("申請失敗")
+                    .setMessage("請確認資料輸入完整")
                     .setPositiveButton("OK",new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -303,28 +356,44 @@ public class CreateNewAccount extends Activity {
         @Override
         protected Void doInBackground(Void... arg0) {
             // TODO Auto-generated method stub
-
-            EditText EditTextname = (EditText)findViewById(R.id.newsubNameText);
+            EditText EditTextname = (EditText)findViewById(R.id.newNameText);
             Editable nameName;
             nameName = EditTextname.getText();
-            String username =nameName.toString();
+            String username =nameName.toString(); //姓
+
+            EditText EditTextSubName = (EditText)findViewById(R.id.newsubNameText);
+            Editable subnameName;
+            subnameName = EditTextSubName.getText();
+            String userSubname = subnameName.toString(); //名
 
             EditText EditTextaccount = (EditText)findViewById(R.id.newAccountText);
             Editable AccountName;
             AccountName = EditTextaccount.getText();
-            String Account =AccountName.toString();
+            String Account =AccountName.toString(); //email(帳號)
 
             EditText EditTextpassword = (EditText)findViewById(R.id.newpasswordText);
             Editable passwordName;
             passwordName = EditTextpassword.getText();
-            String Password =passwordName.toString();
+            String password =passwordName.toString();//密碼
             //new connect();
+            String userSex = String.valueOf(sex);//性別
+            String userYear = String.valueOf(yyyy);//年
+            String userMonth = String.valueOf(MM);//月
+            String userDay = String.valueOf(dd);//日
+            String userHour = String.valueOf(hh);//時辰
+            String userNewsCheck = String.valueOf(mailCheck);//電子報
 
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
+            nameValuePairs.add(new BasicNameValuePair("Surname", username));
+            nameValuePairs.add(new BasicNameValuePair("Name", userSubname));
             nameValuePairs.add(new BasicNameValuePair("Account", Account));
-            nameValuePairs.add(new BasicNameValuePair("Password",Password));
-            //nameValuePairs.add(new BasicNameValuePair("Name", username));
+            nameValuePairs.add(new BasicNameValuePair("Password",password));
+            nameValuePairs.add(new BasicNameValuePair("sex", userSex));
+            nameValuePairs.add(new BasicNameValuePair("year", userYear));
+            nameValuePairs.add(new BasicNameValuePair("month", userMonth));
+            nameValuePairs.add(new BasicNameValuePair("day", userDay));
+            nameValuePairs.add(new BasicNameValuePair("hour", userHour));
+            nameValuePairs.add(new BasicNameValuePair("news", userNewsCheck));
 
 
             try
