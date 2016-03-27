@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_color"
@@ -8,16 +9,201 @@
     tools:context=".MinpanActivity">
 
 <!--這是測試用的textview 實際內容應該放各種主題 *layout_below-->
-<TextView
-    android:layout_below="@+id/toolbar"
-    android:text=""
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"/>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_minpan"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
 
-<android.support.v7.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_height="?attr/actionBarSize"
-    android:layout_width="match_parent"
-    android:background="?attr/colorPrimary">
-</android.support.v7.widget.Toolbar>
-</RelativeLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20px"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff12d"
+        android:layout_weight="1"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#000000"
+
+                android:textSize="30dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="紫微命盤" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_horizontal_margin" />
+
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_minpan_Birthday"
+            android:orientation="horizontal"
+            android:id="@+id/Gruo_minpanp_YearType">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_west"
+                android:text="西元"
+                android:textSize="25dp"
+                android:textColor="#000000"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
+                android:checked="true" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_guo"
+                android:text="國曆"
+                android:textSize="25dp"
+                android:textColor="#000000"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
+                android:checked="false" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_non"
+                android:text="農曆"
+                android:textSize="25dp"
+                android:textColor="#000000"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
+                android:checked="false" />
+        </RadioGroup>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="出生年"
+                android:id="@+id/input_minpan_year"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"
+                android:inputType="number"
+                android:gravity="center"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="出生月"
+                android:id="@+id/input_minpan_month"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"
+                android:inputType="number"
+                android:gravity="center"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="出生日"
+                android:id="@+id/input_minpan_day"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"
+                android:inputType="number"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_minpan_Birthday"
+            android:orientation="horizontal"
+            android:id="@+id/Gruop_minpan_Sex2">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:text="女"
+                android:textSize="25dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/radio_Female2"
+                android:layout_weight="0.5"
+                android:checked="true" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"
+                android:textSize="25dp"
+                android:textColor="#000000"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/radio_Male2"
+                android:layout_weight="0.5"
+                android:checked="false" />
+        </RadioGroup>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_horizontal_margin" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#bd000000"
+            android:id="@+id/minpan_spinner" />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="命理分析--立即算"
+                android:textColor="#000000"
+                android:background="#fffdb7"
+                android:id="@+id/button_minpan_Submit2" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="30dp"
+            android:textColor="#f70202"
+            android:gravity="center"
+            android:id="@+id/textViewError"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+
+    <Space
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="20px" />
+</LinearLayout>
