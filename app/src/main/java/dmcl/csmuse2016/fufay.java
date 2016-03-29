@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -259,7 +260,7 @@ public class fufay extends AppCompatActivity {
                     Price =listForm_mapFromJson.get(4).get("Price");}
                 break;
         }
-
+        amount = Integer.parseInt(Price);
         fufay_buy_dialogFragment editNameDialog =  fufay_buy_dialogFragment.newInstance("確定要購買嗎？", "商品：\t"+Price, "取消", "確定");
         editNameDialog.show(getFragmentManager(), "EditNameDialog");
     }
@@ -285,11 +286,8 @@ public class fufay extends AppCompatActivity {
 
     public void home_doNegativeClick() {
         // Do stuff here.
-        Intent intent = new Intent(fufay.this, HomePageActivity.class);
-        fufay.this.startActivity(intent);
         finish();
     }
-
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -425,5 +423,15 @@ public class fufay extends AppCompatActivity {
         @Override
         protected void onPostExecute(String strFromDoInBg) {
         }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            fufay_home_dialogFragment editNameDialog =  fufay_home_dialogFragment.newInstance("確定要離開嗎？", "左右滑可以看到更多範例喔！", "取消", "確定");
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
+        return false;
     }
 }

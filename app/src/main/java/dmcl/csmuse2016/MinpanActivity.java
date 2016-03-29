@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -110,8 +111,6 @@ public class MinpanActivity extends AppCompatActivity {
             String msg = "";
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
-                    Intent intent = new Intent(MinpanActivity.this,HomePageActivity.class);
-                    MinpanActivity.this.startActivity(intent);
                     finish();
 
                     break;

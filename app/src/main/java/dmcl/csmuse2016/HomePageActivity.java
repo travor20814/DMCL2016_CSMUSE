@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
@@ -37,22 +38,18 @@ public class HomePageActivity extends Activity {
                 if (v == imagebutton01){ //卜卦畫面
                     Intent intent = new Intent(HomePageActivity.this,FreeActivity.class);
                     HomePageActivity.this.startActivity(intent);
-                    finish();
                 }
                 if (v == imagebutton02){ //命書畫面
                     Intent intent = new Intent(HomePageActivity.this,MinsuActivity.class);
                     HomePageActivity.this.startActivity(intent);
-                    finish();
                 }
                 if (v == imagebutton03){//命盤畫面
                     Intent intent = new Intent(HomePageActivity.this,MinpanActivity.class);
                     HomePageActivity.this.startActivity(intent);
-                    finish();
                 }
                 if (v == imagebutton04){//付費專區
                     Intent intent = new Intent(HomePageActivity.this,fufay.class);
                     HomePageActivity.this.startActivity(intent);
-                    finish();
                 }
                 if (v == imagebutton05){//會員專區
 
@@ -68,9 +65,22 @@ public class HomePageActivity extends Activity {
         imagebutton04.setOnClickListener(handler);
         imagebutton05.setOnClickListener(handler);
     }
-
+    public void back_doNegativeClick() {
+        // Do stuff here.
+        finish();
+    }
     @Override
     protected void onResume() {
         super.onResume();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            HomePageActivity_back_dialogFragment editNameDialog =  HomePageActivity_back_dialogFragment.newInstance("確定要離開嗎？", "?????", "取消", "確定");
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
+        return false;
     }
 }

@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -107,8 +108,6 @@ public class MinsuActivity extends AppCompatActivity {
             String msg = "";
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
-                    Intent intent = new Intent(MinsuActivity.this,HomePageActivity.class);
-                    MinsuActivity.this.startActivity(intent);
                     finish();
                     break;
                 case R.id.action_settings: //setting鍵
@@ -159,6 +158,7 @@ public class MinsuActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 hour = Integer.toString(position);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
@@ -170,17 +170,17 @@ public class MinsuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                input_year = (EditText)findViewById(R.id.input_year_m);
+                input_year = (EditText) findViewById(R.id.input_year_m);
                 String s_year = input_year.getText().toString();
-                input_month = (EditText)findViewById(R.id.input_month_m);
+                input_month = (EditText) findViewById(R.id.input_month_m);
                 String s_month = input_month.getText().toString();
-                input_day = (EditText)findViewById(R.id.input_day_m);
+                input_day = (EditText) findViewById(R.id.input_day_m);
                 String s_day = input_day.getText().toString();
 
                 //radioGroup
                 Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_Sex2);
                 int select_id = Gruop_Sex2.getCheckedRadioButtonId();
-                Gruop_YearType = (RadioGroup)findViewById(R.id.Gruop_YearType);
+                Gruop_YearType = (RadioGroup) findViewById(R.id.Gruop_YearType);
                 int select_type = Gruop_YearType.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
                 //editText_Question2.setText(String.valueOf(select_type));//測試用
                 // 問題輸入轉換為string
@@ -192,12 +192,12 @@ public class MinsuActivity extends AppCompatActivity {
 
                 if (select_type == 2131493021) {
                     which_yeartype = "0"; //API上，西元 = 0
-                } else if (select_id == 2131493022){
+                } else if (select_id == 2131493022) {
                     which_yeartype = "1"; //API上，國曆 = 1
-                }else {
+                } else {
                     which_yeartype = "2"; //API上，農曆 = 2
                 }
-                if(!s_year.equals("")&&!s_month.equals("")&&!s_day.equals("")) {
+                if (!s_year.equals("") && !s_month.equals("") && !s_day.equals("")) {
                     if (time_check(s_year, s_month, s_day)) {
                         // 產生對映的url，使用Catch_say88_API_info函式
                         String url = Catch_say88_API_info(which_yeartype, s_year, s_month, s_day, hour, which_sex);
@@ -211,7 +211,7 @@ public class MinsuActivity extends AppCompatActivity {
                         bundle.putString("Reslut_Desc", "輸入時間有誤");
                         replaceFragment();
                     }
-                }else {
+                } else {
                     bundle.putString("Reslut_Star", "輸入時間有誤");
                     bundle.putString("Result_Good_Bad", "輸入時間有誤");
                     bundle.putString("Reslut_Issue", "輸入時間有誤");

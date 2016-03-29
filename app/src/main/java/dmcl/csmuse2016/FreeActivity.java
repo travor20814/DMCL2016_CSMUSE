@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,8 +98,6 @@ public class FreeActivity extends AppCompatActivity {
             String msg = "";
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
-                    Intent intent = new Intent(FreeActivity.this,HomePageActivity.class);
-                    FreeActivity.this.startActivity(intent);
                     finish();
                     break;
                 case R.id.action_settings: //setting鍵
@@ -237,4 +236,5 @@ public class FreeActivity extends AppCompatActivity {
 
         }
     }
+
 }
