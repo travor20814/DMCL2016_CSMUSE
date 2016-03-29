@@ -4,6 +4,8 @@ package dmcl.csmuse2016;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.session.MediaSession;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -27,6 +29,15 @@ import android.widget.Toast;
 import com.unionpaysdk.main.ICheckOrderCallback;
 import com.unionpaysdk.main.IPaymentCallback;
 import com.unionpaysdk.main.UnionPaySDK;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URLConnection;
+import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class fufay extends AppCompatActivity {
 
@@ -56,12 +67,13 @@ public class fufay extends AppCompatActivity {
     private String orderid ="";
     private double amount = 1.0;
     private String memo ="This is a memo";
-
+    public static ArrayList<HashMap<String,String>> listForm_mapFromJson = new ArrayList<HashMap<String,String>>();
+    private static HashMap<String,String> mapFromJson = new HashMap<String,String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fufay);
-
+        new AsyncTaskParseJson().execute();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -91,7 +103,6 @@ public class fufay extends AppCompatActivity {
         //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
         // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
-
 
         ctx=this;
 
@@ -211,29 +222,45 @@ public class fufay extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
+            int fragment_number = listForm_mapFromJson.size();//tem
+            //Log.e("size",Integer.toString(fragment_number));
+
             return 5;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-                case 3:
-                    return "SECTION 4";
-                case 4:
-                    return "SECTION 5";
-            }
-            return null;
-        }
+
     }
     public void showEditDialog(View view)
     {
-        fufay_buy_dialogFragment editNameDialog =  fufay_buy_dialogFragment.newInstance("確定要購買嗎？", "商品：price", "取消", "確定");
+        String Price="";
+        Button fragment_btn = (Button) view.findViewById(R.id.fufay_btn);
+        Log.e("btn.text",fragment_btn.getText().toString());
+        int count=0;
+        switch(fragment_btn.getText().toString()) {
+
+            case "購買：2016運勢詳批":
+                if(listForm_mapFromJson!=null){
+                    Price =listForm_mapFromJson.get(0).get("Price");}
+                break;
+            case "購買：財富命盤":
+                if(listForm_mapFromJson!=null){
+                    Price =listForm_mapFromJson.get(1).get("Price");}
+                break;
+            case "購買：超猛愛情靈卦":
+                if(listForm_mapFromJson!=null){
+                    Price =listForm_mapFromJson.get(2).get("Price");}
+                break;
+            case "購買：情人之間":
+                if(listForm_mapFromJson!=null){
+                    Price =listForm_mapFromJson.get(3).get("Price");}
+                break;
+            case "購買：職場運勢":
+                if(listForm_mapFromJson!=null){
+                    Price =listForm_mapFromJson.get(4).get("Price");}
+                break;
+        }
+
+        fufay_buy_dialogFragment editNameDialog =  fufay_buy_dialogFragment.newInstance("確定要購買嗎？", "商品：\t"+Price, "取消", "確定");
         editNameDialog.show(getFragmentManager(), "EditNameDialog");
     }
     public void home_showEditDialog(){
@@ -262,6 +289,7 @@ public class fufay extends AppCompatActivity {
         fufay.this.startActivity(intent);
         finish();
     }
+
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -296,7 +324,8 @@ public class fufay extends AppCompatActivity {
         private final String url_love="http://newtest.88say.com/product/524/sample_524.htm";
         private final String url_lover="http://newtest.88say.com/product/267/sample_267.htm";
         private final String url_work="http://newtest.88say.com/product/402/sample_402.htm";
-
+        public static ArrayList<HashMap<String,String>> listForm_mapFromJson = new ArrayList<HashMap<String,String>>();
+        private static HashMap<String,String> mapFromJson = new HashMap<String,String>();
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -318,7 +347,6 @@ public class fufay extends AppCompatActivity {
             final View rootView = inflater.inflate(R.layout.fragment_fufay, container, false);
             Button fragment_btn = (Button) rootView.findViewById(R.id.fufay_btn);
             WebView wv =(WebView) rootView.findViewById(R.id.webView);
-
             WebSettings settings = wv.getSettings();
             settings.setJavaScriptEnabled(true);
             settings.setSupportZoom(true);
@@ -329,26 +357,73 @@ public class fufay extends AppCompatActivity {
 
                 case 1:
                     wv.loadUrl(url_2016);
-                    fragment_btn.setText("2016運勢詳批");
+                    fragment_btn.setText("購買：2016運勢詳批");
                     break;
                 case 2:
                     wv.loadUrl(url_life);
-                    fragment_btn.setText("財富命盤");
+                    fragment_btn.setText("購買：財富命盤");
                     break;
                 case 3:
                     wv.loadUrl(url_love);
-                    fragment_btn.setText("超猛愛情靈卦");
+                    fragment_btn.setText("購買：超猛愛情靈卦");
                     break;
                 case 4:
                     wv.loadUrl(url_lover);
-                    fragment_btn.setText("情人之間");
+                    fragment_btn.setText("購買：情人之間");
                     break;
                 case 5:
                     wv.loadUrl(url_work);
-                    fragment_btn.setText("職場運勢");
+                    fragment_btn.setText("購買：職場運勢");
                     break;
             }
             return rootView;
+        }
+    }
+    public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
+
+        // set your json string url here
+        String URL = "http://newtest.88say.com/Api/product/GetList.aspx?token=" +
+                "D5DF5A998BF46E8D37E3D600C022D8B0D76D68BABCF7CFC75304E8EF5168A48B";
+
+
+
+        // contacts JSONArray
+        JSONArray dataJsonArr = null;
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected String doInBackground(String... arg0) {
+
+            try {
+                JSONObject jsobj= new getJson(URL).getJSONFromUrl();
+                Log.e("jsobj",jsobj.toString());
+                dataJsonArr = jsobj.getJSONArray("Result");
+                for (int i = 0; i < dataJsonArr.length(); i++) {
+
+                    JSONObject c = dataJsonArr.getJSONObject(i);
+                    mapFromJson.put("Id", c.getString("Id"));
+                    mapFromJson.put("Name", c.getString("Name"));
+                    mapFromJson.put("Sample", c.getString("Sample"));
+                    mapFromJson.put("Price", c.getString("Price"));
+                    mapFromJson.put("Category1", c.getString("Category1"));
+                    mapFromJson.put("Category2", c.getString("Category2"));
+                    Log.e("ID", mapFromJson.get("Id"));
+                    listForm_mapFromJson.add(mapFromJson);
+                   Log.e("list", listForm_mapFromJson.get(i).get("Id"));
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String strFromDoInBg) {
         }
     }
 }

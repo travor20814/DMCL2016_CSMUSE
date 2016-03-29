@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -209,7 +210,7 @@ public class FreeActivity extends AppCompatActivity {
             String Result_marriage="";
             String Result_wish="";
             String Comment="";
-
+            Log.e("text",text);
             // 把JSON架構變成String
             try {
                 TxnCode = new JSONObject(text).getString("TxnCode");
