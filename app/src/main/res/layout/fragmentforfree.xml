@@ -15,7 +15,7 @@
             android:layout_height="fill_parent"
             android:text="卜卦代表"
             android:textColor="#000000"
-            android:background="#fcf7c9"
+            android:background="#d1a0e0e5"
             android:id="@+id/button_Title"
             android:layout_weight="1"/>
 
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#000000"
-            android:background="#fcf39d"
+            android:background="#d1a0e0e5"
             android:text="卜卦結果"
             android:id="@+id/button_Result"
             android:layout_weight="1"/>
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#000000"
-            android:background="#fff370"
+            android:background="#d1a0e0e5"
             android:text="卜卦諫言"
             android:id="@+id/button_Comment"
             android:layout_weight="1"/>
@@ -50,7 +50,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:gravity="center"
             android:textColor="#000000"
-            android:background="#fcf7c9"
+            android:background="#d1a0e7ed"
             android:text="請於上方輸入問題"
             android:id="@+id/content" />
     </LinearLayout>
