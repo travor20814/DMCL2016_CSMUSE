@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_member"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Surname"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:id="@+id/sur_name"
+            android:layout_margin="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/SurName_content"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Name"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:id="@+id/name_"
+            android:layout_margin="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/Name_content"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/E_mail"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:id="@+id/E_mail"
+            android:layout_margin="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/mail_content"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Password"
+            android:id="@+id/pass_word"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_margin="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/password_content"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Sex"
+            android:id="@+id/Sex"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_margin="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/sex_content"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BirthTitle"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:id="@+id/Birth_Title"
+            android:layout_margin="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1911"
+            android:id="@+id/BirthYY"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BirthY"
+            android:id="@+id/Birth_Year"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:id="@+id/BirthMM"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BirthM"
+            android:id="@+id/Birth_Month"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:id="@+id/BirthDD"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BirthD"
+            android:id="@+id/Birth_Day"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BirthT"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:id="@+id/Birth_Time"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/BirthTT"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
+</LinearLayout>

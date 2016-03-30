@@ -1,5 +1,6 @@
 package dmcl.csmuse2016;
 
+import android.app.Application;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -11,9 +12,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class connect {
+public class connect extends Application {
     //用於連接php的class
     private String urlString = "http://dmcl.twbbs.org/csmuse/userAccount.php?sql=";
+    private String urlgrab = "http://dmcl.twbbs.org/csmuse/grabAccount.php?sql=";
     private String getFromServer;
     private InputStream in;
     private String response;
@@ -30,7 +32,7 @@ public class connect {
 
     public String getServerConnect() {
         try {
-            String connectToDB=urlString+sqlCommand;
+            String connectToDB = urlString + sqlCommand;
             Log.v("connect1", connectToDB);
             URL url=new URL(connectToDB);
             in=url.openStream();
@@ -71,7 +73,7 @@ public class connect {
             }
             Log.v("connect",sb.toString());
             String[] check=sb.toString().split("###");
-            if(check.length>1)
+            if(check.length>2) //all check updated 2016/03/30
                 return true;
 
         } catch (MalformedURLException e) {
@@ -82,4 +84,5 @@ public class connect {
         }
         return false;
     }
+
 }

@@ -1,5 +1,6 @@
 package dmcl.csmuse2016;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -18,9 +19,10 @@ import android.widget.EditText;
 public class LoginActivity extends Activity {
     private ProgressDialog pDialog;
 
-    private boolean check=false;//
-    //try delete this comment line
-    
+    private boolean check=false;
+    private String userAccount = ""; //儲存使用者的帳號用於傳遞activity之間
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +86,6 @@ public class LoginActivity extends Activity {
 
 
     public void Login(View view) { //按下登入按鈕
-        Log.v("click","1");
         new loginbuttonclick().execute(); //給他一個執行緒(main thread)
     }
     //執行緒code
@@ -104,6 +105,7 @@ public class LoginActivity extends Activity {
             Editable AccountName;
             AccountName = EditTextAccount.getText();
             String Account =AccountName.toString();
+            userAccount = Account; //儲存使用者的帳號用於傳遞activity之間
 
             EditText EditTextPassword = (EditText)findViewById(R.id.password);
             Editable PasswordName;
@@ -112,7 +114,7 @@ public class LoginActivity extends Activity {
 
             //sending to php
             String command="select * from Account where Account ='"+Account+"' and Password = '"+Password+"'";
-            check=new connect(command).LoginCheck();
+            check = new connect(command).LoginCheck();
             Log.v("check", "check=" + String.valueOf(check));
             return null;
         }
@@ -122,11 +124,13 @@ public class LoginActivity extends Activity {
             if (pDialog.isShowing())
                 pDialog.dismiss(); //waiting dismiss
             if(check)
-            { //set page to homepage
-                Log.v("check", "1");
-                Intent intentNewAccount = new Intent(LoginActivity.this,
+            { //set page to homepage//
+               Intent intentHomePage = new Intent(getApplicationContext(),
                         HomePageActivity.class);
-                LoginActivity.this.startActivity(intentNewAccount);
+                Bundle extras = new Bundle();
+                extras.putString("mail",userAccount);
+                intentHomePage.putExtras(extras);
+                LoginActivity.this.startActivity(intentHomePage);
                 finish();
             }else{    // login denied by entering wrong account/password
                 new AlertDialog.Builder(LoginActivity.this)
@@ -144,6 +148,7 @@ public class LoginActivity extends Activity {
         }
 
     }
+
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub

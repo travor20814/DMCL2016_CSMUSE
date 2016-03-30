@@ -33,36 +33,44 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".LoginActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name">
+        </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".AccountLicence" ></activity>
+            android:name=".AccountLicence" >
+        </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".CreateNewAccount"></activity>
+            android:name=".CreateNewAccount">
+        </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".HomePageActivity"></activity>
+            android:name=".HomePageActivity">
+        </activity>
         <activity
             android:screenOrientation="portrait"
             android:name=".MinpanActivity"
             android:label="命盤"
-            android:theme="@style/AppTheme.Base"></activity>
+            android:theme="@style/AppTheme.Base">
+        </activity>
         <activity
             android:screenOrientation="portrait"
             android:name=".MinpanCatchActivity"
             android:label="命盤抓取"
-            android:theme="@style/AppTheme.Base"></activity>
+            android:theme="@style/AppTheme.Base">
+        </activity>
         <activity
             android:screenOrientation="portrait"
             android:name=".FreeActivity"
             android:label="免費卜卦"
-            android:theme="@style/AppTheme.Base"></activity>
+            android:theme="@style/AppTheme.Base">
+        </activity>
         <activity
             android:screenOrientation="portrait"
             android:name=".MinsuActivity"
             android:label="紫微命書"
-            android:theme="@style/AppTheme.Base"></activity>
+            android:theme="@style/AppTheme.Base">
+        </activity>
         <activity
             android:screenOrientation="portrait"
             android:name=".fufay"
@@ -71,6 +79,12 @@
             android:name="com.unionpaysdk.web.WebviewActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize|locale">
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".MemberActivity"
+            android:label="會員專區"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

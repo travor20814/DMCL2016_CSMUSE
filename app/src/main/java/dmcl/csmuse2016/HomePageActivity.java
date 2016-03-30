@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
-public class HomePageActivity extends Activity {
+import java.lang.reflect.Member;
 
+public class HomePageActivity extends Activity {
+    private String userMail="";
+    private String userName="";
     private ImageButton imagebutton01;
     private ImageButton imagebutton02;
     private ImageButton imagebutton03;
@@ -22,8 +26,12 @@ public class HomePageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Bundle getExtra = getIntent().getExtras();
+        if (getExtra != null){
+            userMail = getExtra.getString("mail");
+            //userName = getExtra.getString("Surname");
+        }
         setContentView(R.layout.homepage);
-
         imagebutton01 = (ImageButton)findViewById(R.id.button_topleft);
         imagebutton02 = (ImageButton)findViewById(R.id.button_topright);
         imagebutton03 = (ImageButton)findViewById(R.id.button_middle);
@@ -52,7 +60,9 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton05){//會員專區
-
+                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
+                    intentMember.putExtra("mail",userMail); //send mail to next activity
+                    HomePageActivity.this.startActivity(intentMember);
                 }
                 if (v == imagebutton06){//八卦命盤
 
