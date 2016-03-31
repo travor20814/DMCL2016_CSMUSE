@@ -65,7 +65,8 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intentMember);
                 }
                 if (v == imagebutton06){//八卦命盤
-
+                    Intent intent = new Intent(HomePageActivity.this,EightWordMinpanActivity.class);
+                    HomePageActivity.this.startActivity(intent);
                 }
             }
         };
@@ -74,6 +75,7 @@ public class HomePageActivity extends Activity {
         imagebutton03.setOnClickListener(handler);
         imagebutton04.setOnClickListener(handler);
         imagebutton05.setOnClickListener(handler);
+        imagebutton06.setOnClickListener(handler);
     }
     public void back_doNegativeClick() {
         // Do stuff here.
