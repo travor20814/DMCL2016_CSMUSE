@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_color"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MinpanActivity">
 
-<!--這是測試用的textview 實際內容應該放各種主題 *layout_below-->
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_minpan"
         android:layout_height="?attr/actionBarSize"

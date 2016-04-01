@@ -26,11 +26,15 @@ public class HomePageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //傳值確認帳號
+        //////////////////////////////////////////////////////
         Bundle getExtra = getIntent().getExtras();
         if (getExtra != null){
             userMail = getExtra.getString("mail");
             //userName = getExtra.getString("Surname");
         }
+        /////////////////////////////////////////////////////
+
         setContentView(R.layout.homepage);
         imagebutton01 = (ImageButton)findViewById(R.id.button_topleft);
         imagebutton02 = (ImageButton)findViewById(R.id.button_topright);
@@ -83,6 +87,7 @@ public class HomePageActivity extends Activity {
     protected void onResume() {
         super.onResume();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {

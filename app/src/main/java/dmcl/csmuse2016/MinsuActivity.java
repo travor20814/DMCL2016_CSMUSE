@@ -111,7 +111,18 @@ public class MinsuActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.action_settings: //setting鍵
-                    msg += "Click setting";
+                    Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
+                    intent.putExtra("mail","test@gmail.com"); //暫時測試用的
+                    MinsuActivity.this.startActivity(intent);
+                    break;
+                case R.id.action_designer://製作群
+                    msg+="designer clicked";
+                    break;
+                case R.id.action_logout://登出
+                    msg+="logout clicked";
+                    break;
+                case R.id.action_login://訪客登入
+                    msg+="guest login";
                     break;
             }
 

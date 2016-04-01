@@ -39,9 +39,12 @@ public class LoginActivity extends Activity {
         View.OnClickListener handler = new View.OnClickListener(){
             public void onClick(View v){
                 if (v == guest_button){
-                    Intent intentHome = new Intent(LoginActivity.this,
-                                                    HomePageActivity.class);
-                    LoginActivity.this.startActivity(intentHome);
+                    Intent intentHomePage = new Intent(getApplicationContext(),
+                            HomePageActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString("mail","");
+                    intentHomePage.putExtras(extras);
+                    LoginActivity.this.startActivity(intentHomePage);
 
                 }
                 if (v == newAccount){
@@ -128,7 +131,7 @@ public class LoginActivity extends Activity {
                Intent intentHomePage = new Intent(getApplicationContext(),
                         HomePageActivity.class);
                 Bundle extras = new Bundle();
-                extras.putString("mail",userAccount);
+                extras.putString("mail", userAccount);
                 intentHomePage.putExtras(extras);
                 LoginActivity.this.startActivity(intentHomePage);
                 finish();

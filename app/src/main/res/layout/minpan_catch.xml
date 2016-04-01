@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MinpanActivity">
 
-<!--這是測試用的textview 實際內容應該放各種主題 *layout_below-->
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_catch"
         android:layout_height="?attr/actionBarSize"
