@@ -368,8 +368,12 @@
     </LinearLayout>
 
     <ImageButton
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/payAdImageButton" />
+        android:layout_width="match_parent"
+        android:id="@+id/payAdImageButton"
+        android:src="@mipmap/money_correct02"
+        android:background="@drawable/imagebuttonshape"
+        android:scaleType="fitXY"
+        android:layout_margin="3dp" />
 
 </LinearLayout>

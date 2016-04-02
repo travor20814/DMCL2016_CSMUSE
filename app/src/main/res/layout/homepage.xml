@@ -103,7 +103,6 @@
                     android:id="@+id/button_bottomleft"
                     android:src="@mipmap/money_correct02"
                     android:background="@drawable/imagebuttonshape"
-
                     android:scaleType="fitXY"
                     android:layout_gravity="left|bottom"
                     android:layout_margin="3dp" />
@@ -114,7 +113,6 @@
                     android:src="@mipmap/member_correct01"
                     android:background="@drawable/imagebuttonshape"
                     android:id="@+id/button_bottomright"
-
                     android:scaleType="fitXY"
                     android:layout_margin="3dp" />
             </LinearLayout>

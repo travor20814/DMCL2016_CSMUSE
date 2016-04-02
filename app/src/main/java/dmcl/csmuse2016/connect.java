@@ -29,11 +29,32 @@ public class connect extends Application {
             e.printStackTrace();
         }
     }
+    public String getServerUpdate() {
+        try {
+            String connectToDB = urlString + sqlCommand;
+            URL url = new URL(connectToDB);
+            in = url.openStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String n;
+            StringBuilder sb = new StringBuilder();
+            while((n = br.readLine())!=null){
+                sb.append(n);
+            }
+            getFromServer = "done";
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return getFromServer;
+    }
 
     public String getServerConnect() {
         try {
             String connectToDB = urlString + sqlCommand;
-            Log.v("connect1", connectToDB);
+            //Log.v("connect1", connectToDB);
             URL url=new URL(connectToDB);
             in=url.openStream();
             BufferedReader br=new BufferedReader(new InputStreamReader(in));
@@ -42,7 +63,7 @@ public class connect extends Application {
             while((n=br.readLine())!=null){
                 sb.append(n);
             }
-            Log.v("connect",sb.toString());
+            //Log.v("connect",sb.toString());
             String[] check=sb.toString().split(":");
             if(check[0].equals("Warning"))
                 getFromServer="wrong";

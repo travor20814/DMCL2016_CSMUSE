@@ -1,37 +1,30 @@
 package dmcl.csmuse2016;
 
-import android.app.ActionBar;
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class MemberActivity extends AppCompatActivity {
 
@@ -58,16 +51,14 @@ public class MemberActivity extends AppCompatActivity {
     private String MM ="";
     private String dd ="";
     private String hh ="";
-    private ProgressDialog pDialog;
+
     private Button editSurname;
     private Button editName;
     private Button editPassword;
     private Button editSex;
     private Button editBirthdays;
     private Button editBirthTime;
-
-    //connect getValues = new connect("1");
-
+    private ImageButton connectToFufay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +90,19 @@ public class MemberActivity extends AppCompatActivity {
         //thread call 抓資料庫
         new getDatas().execute();
 
+        //連到付費專區的image button
+        connectToFufay = (ImageButton)findViewById(R.id.payAdImageButton);
+
+        View.OnClickListener imagelisten = new View.OnClickListener() {
+            public void onClick(View v) {
+                if (v == connectToFufay){ //卜卦畫面
+                    Intent intent = new Intent(MemberActivity.this,fufay.class);
+                    MemberActivity.this.startActivity(intent);
+                    finish();
+                }
+            }
+        };
+        connectToFufay.setOnClickListener(imagelisten);
 
     }
     @Override
@@ -145,37 +149,42 @@ public class MemberActivity extends AppCompatActivity {
             return true;
         }
     };
-
+    //編輯姓
     public void editSurnameOnClick(View v){
         editSurname = (Button)findViewById(R.id.edit_surname);
         String name = "您的姓:";
         int id = 1;
         showPopup(v , name, id);
     }
+    //編輯名
     public void editNameOnClick(View v){
         editName = (Button)findViewById(R.id.edit_name);
         String name = "您的大名:";
         int id = 2;
         showPopup(v, name, id);
     }
+    //編輯密碼
     public void editPasswordOnClick(View v){
         editPassword = (Button)findViewById(R.id.edit_password);
         String name = "原密碼:";
         int id = 3;
         showPopup(v, name,id);
     }
+    //編輯性別
     public void editSexOnClick(View v){
         editSex = (Button)findViewById(R.id.edit_sex);
         String name = "您的性別:";
         int id = 4;
         showPopup(v, name,id);
     }
+    //編輯生日
     public void editBirthDaysOnClick(View v){
         editBirthdays = (Button)findViewById(R.id.edit_birthday);
         String name = "生日:";
         int id = 5;
         showPopup(v, name,id);
     }
+    //編輯時辰
     public void editBirthTimesOnClick(View v){
         editBirthTime = (Button)findViewById(R.id.edit_birthtime);
         String name = "時辰:";
@@ -183,17 +192,22 @@ public class MemberActivity extends AppCompatActivity {
         showPopup(v, name,id);
     }
 
-    public void showPopup(View anchorView , String titles, int id) {
+    //編輯按鈕按下時
+    public void showPopup(View anchorView , String titles, final int id) {
         switch (id){
             case 3:
                 View popupPassword = getLayoutInflater().inflate(R.layout.fragment_editpassword, null);
 
-                PopupWindow popupCaseThree = new PopupWindow(popupPassword,
+                final PopupWindow popupCaseThree = new PopupWindow(popupPassword,
                         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 TextView opassword = (TextView) popupPassword.findViewById(R.id.opassword);
                 TextView npassword = (TextView) popupPassword.findViewById(R.id.npassword);
                 TextView cpassword = (TextView) popupPassword.findViewById(R.id.cpassword);
+                final EditText origin = (EditText) popupPassword.findViewById(R.id.origin_password);
+                final EditText newpas = (EditText) popupPassword.findViewById(R.id.new_password);
+                final EditText confirmpas = (EditText) popupPassword.findViewById(R.id.confirm_password);
+                Button sendPassword = (Button)popupPassword.findViewById(R.id.edit_password_send);
 
                 opassword.setText(titles);
                 npassword.setText("新密碼:");
@@ -212,17 +226,50 @@ public class MemberActivity extends AppCompatActivity {
                 // Using location, the PopupWindow will be displayed right under anchorView
                 popupCaseThree.showAtLocation(anchorView, Gravity.NO_GRAVITY,
                         locationCaseThree[0], locationCaseThree[1] + anchorView.getHeight());
+
+                sendPassword.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Editable OriginString;
+                        Editable NewString;
+                        Editable ConfirmString;
+                        OriginString = origin.getText();
+                        NewString = newpas.getText();
+                        ConfirmString = confirmpas.getText();
+
+                        String opas = OriginString.toString();
+                        String npas = NewString.toString();
+                        String cpas = ConfirmString.toString();
+
+                        if (opas.equals(collectDatas[3])){ //如果原密碼正確
+                            if (npas.equals(cpas)){ //如果新密碼和確認密碼相同
+                                //TODO 編輯
+                                Password = npas;
+                                new updateDatas().execute(id); //execute thread
+                                popupCaseThree.dismiss(); //清除畫面
+                                Toast.makeText(MemberActivity.this, "密碼修改完成", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(MemberActivity.this, "您輸入的密碼不相符", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }else{
+                            Toast.makeText(MemberActivity.this, "原始密碼輸入錯誤", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
                 break;
             case 4:
                 View popupSex = getLayoutInflater().inflate(R.layout.fragment_editsex, null);
 
-                PopupWindow popupCaseFour = new PopupWindow(popupSex,
+                final PopupWindow popupCaseFour = new PopupWindow(popupSex,
                         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 TextView sext = (TextView) popupSex.findViewById(R.id.titlesex);
                 RadioButton Man = (RadioButton) popupSex.findViewById(R.id.manradio);
                 RadioButton Woman = (RadioButton) popupSex.findViewById(R.id.womanradio);
                 RadioGroup rgroup = (RadioGroup) popupSex.findViewById(R.id.editsexgroup);
+                Button sendSex = (Button) popupSex.findViewById(R.id.edit_sex_send);
 
                 rgroup.setOnCheckedChangeListener(listener); // 監聽radio button
 
@@ -244,19 +291,31 @@ public class MemberActivity extends AppCompatActivity {
 
                 if (collectDatas[4].equals("1")){
                    Man.setChecked(true); //initial state
+                    sex = "1";
                 } else{
                     Woman.setChecked(true); //initial state
+                    sex = "0";
                 }
+                sendSex.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new updateDatas().execute(id);
+                        popupCaseFour.dismiss();
+                        Toast.makeText(MemberActivity.this, "性別修改完成", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case 5:
-                View popupBirth = getLayoutInflater().inflate(R.layout.fragment_editbirthday, null);
+                final View popupBirth = getLayoutInflater().inflate(R.layout.fragment_editbirthday, null);
 
-                PopupWindow popupCaseFive = new PopupWindow(popupBirth,
+                final PopupWindow popupCaseFive = new PopupWindow(popupBirth,
                         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 TextView bd = (TextView) popupBirth.findViewById(R.id.birth);
                 NumberPicker year = (NumberPicker)popupBirth.findViewById(R.id.edityypicker);
                 NumberPicker month = (NumberPicker)popupBirth.findViewById(R.id.editmmpicker);
                 final NumberPicker day = (NumberPicker)popupBirth.findViewById(R.id.editddpicker);
+                Button sendBirthday = (Button)popupBirth.findViewById(R.id.edit_birthday_send);
+
                 bd.setText(titles);
                 //設定上限下限
                 year.setMaxValue(2016);
@@ -330,14 +389,25 @@ public class MemberActivity extends AppCompatActivity {
                             day.setMaxValue(31);
                             day.setMinValue(1);
                         }
-                        //tv.setText("Selected month : " + MM);
                     }
                 });
                 day.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                     @Override
                     public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                         d = newVal;
-                        //tv.setText("Selected day : " + dd);
+                    }
+                });
+
+                sendBirthday.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        yyyy = String.valueOf(y);
+                        MM = String.valueOf(M);
+                        dd = String.valueOf(d);
+
+                        new updateDatas().execute(id);
+                        popupCaseFive.dismiss();
+                        Toast.makeText(MemberActivity.this, "生日修改完成", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -345,17 +415,20 @@ public class MemberActivity extends AppCompatActivity {
             case 6:
                 View popupTime = getLayoutInflater().inflate(R.layout.fragment_edittime, null);
 
-                PopupWindow popupCaseSix = new PopupWindow(popupTime,
+                final PopupWindow popupCaseSix = new PopupWindow(popupTime,
                         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 TextView bt = (TextView) popupTime.findViewById(R.id.birtht);
                 NumberPicker time = (NumberPicker)popupTime.findViewById(R.id.edittimePick);
+                Button sendtime = (Button)popupTime.findViewById(R.id.edit_time_send);
+
                 bt.setText(titles);
                 //設定上限下限
                 time.setMaxValue(23);
                 time.setMinValue(0);
-                //設定初始值為使用者的原本時辰
-                int userOriginTime = Integer.parseInt(collectDatas[9]);
-                time.setValue(userOriginTime);
+
+                hh = collectDatas[9]; //先存到一個暫存以免值為null
+                h = Integer.parseInt(collectDatas[9]); //設定初始值為使用者的原本時辰
+                time.setValue(h);
 
                 time.setDisplayedValues(hour_list);
                 time.setWrapSelectorWheel(true);
@@ -373,9 +446,15 @@ public class MemberActivity extends AppCompatActivity {
                 time.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                     @Override
                     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
-                        //hh = newVal;
-                        //tv.setText("Selected hour : " + hh);
+                        hh = String.valueOf(newVal);
+                    }
+                });
+                sendtime.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new updateDatas().execute(id);
+                        popupCaseSix.dismiss();
+                        Toast.makeText(MemberActivity.this, "時辰修改完成", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -383,11 +462,13 @@ public class MemberActivity extends AppCompatActivity {
             default:
                 View popupView = getLayoutInflater().inflate(R.layout.fragment_edit_member, null);
 
-                PopupWindow popupWindow = new PopupWindow(popupView,
+                final PopupWindow popupWindow = new PopupWindow(popupView,
                         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                 TextView tv = (TextView) popupView.findViewById(R.id.somewords);
-                EditText edit = (EditText) popupView.findViewById(R.id.editor);
+                final EditText edit = (EditText) popupView.findViewById(R.id.editor);
+                Button sendDefault = (Button)popupView.findViewById(R.id.edit_member_send);
+
                 tv.setText(titles);
                 if (id == 1){ //表示現在的畫面是“姓”
                     edit.setText(collectDatas[0]); //initial
@@ -408,6 +489,22 @@ public class MemberActivity extends AppCompatActivity {
                 // Using location, the PopupWindow will be displayed right under anchorView
                 popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY,
                         location[0], location[1] + anchorView.getHeight());
+
+                sendDefault.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Editable strings;
+                        strings = edit.getText();
+                        if (id == 1) {
+                            Surname = strings.toString();
+                        } else if (id == 2) {
+                            Name = strings.toString();
+                        }
+                        new updateDatas().execute(id);
+                        popupWindow.dismiss();
+                        Toast.makeText(MemberActivity.this, "修改完成", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
     }
@@ -416,19 +513,17 @@ public class MemberActivity extends AppCompatActivity {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
                 case R.id.manradio:
-                    //sex = 1;
-                    Log.v("sex","man");
+                    sex = "1";
                     break;
                 case R.id.womanradio:
-                    //sex = 0;
-                    Log.v("sex","woman");
+                    sex = "0";
                     break;
             }
 
         }
     };
 
-
+    //進來時抓資料的thread
     class getDatas extends AsyncTask<Void,Void,Void> {
         @Override
         protected void onPreExecute(){
@@ -482,86 +577,130 @@ public class MemberActivity extends AppCompatActivity {
             yyyy.setText(collectDatas[6]);
             MM.setText(collectDatas[7]);
             DD.setText(collectDatas[8]);
-            switch (collectDatas[9]){
-                case "0":
-                    TT.setText("00:00~00:59(子時)");
-                    break;
-                case "1":
-                    TT.setText("1:00~1:59(丑時)");
-                    break;
-                case "2":
-                    TT.setText("2:00~2:59(丑時)");
-                    break;
-                case "3":
-                    TT.setText("3:00~3:59(寅時)");
-                    break;
-                case "4":
-                    TT.setText("4:00~4:59(寅時)");
-                    break;
-                case "5":
-                    TT.setText("5:00~5:59(卯時)");
-                    break;
-                case "6":
-                    TT.setText("6:00~6:59(卯時)");
-                    break;
-                case "7":
-                    TT.setText("7:00~7:59(辰時)");
-                    break;
-                case "8":
-                    TT.setText("8:00~8:59(辰時)");
-                    break;
-                case "9":
-                    TT.setText("9:00~9:59(巳時)");
-                    break;
-                case "10":
-                    TT.setText("10:00~10:59(巳時)");
-                    break;
-                case "11":
-                    TT.setText("11:00~11:59(午時)");
-                    break;
-                case "12":
-                    TT.setText("12:00~12:59(午時)");
-                    break;
-                case "13":
-                    TT.setText("13:00~13:59(未時)");
-                    break;
-                case "14":
-                    TT.setText("14:00~14:59(未時)");
-                    break;
-                case "15":
-                    TT.setText("15:00~15:59(申時)");
-                    break;
-                case "16":
-                    TT.setText("16:00~16:59(申時)");
-                    break;
-                case "17":
-                    TT.setText("17:00~17:59(酉時)");
-                    break;
-                case "18":
-                    TT.setText("18:00~18:59(酉時)");
-                    break;
-                case "19":
-                    TT.setText("19:00~19:59(戌時)");
-                    break;
-                case "20":
-                    TT.setText("20:00~20:59(戌時)");
-                    break;
-                case "21":
-                    TT.setText("21:00~21:59(亥時)");
-                    break;
-                case "22":
-                    TT.setText("22:00~22:59(亥時)");
-                    break;
-                case "23":
-                    TT.setText("23:00~23:59(子時)");
-                    break;
-                default:
-                    TT.setText("-----Error-----");
-                    break;
+            int index = Integer.parseInt(collectDatas[9]);
+            TT.setText(hour_list[index]);
+        }
+
+    }
+
+    //按下編輯後 送出資料進行update的thread
+    class updateDatas extends AsyncTask<Integer,Void,Integer> {
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+        }
+        @Override
+        protected Integer doInBackground(Integer... Cases) {
+            // TODO Auto-generated method stub
+            if (Cases[0] == 1){
+                String command = "UPDATE Account SET Surname='"+ Surname +"' WHERE Account='" +Email + "'";
+                String ans = new connect(command).getServerUpdate();
+                Log.v("getL", ans);
+                if(ans.equals("Warning")){
+                    Log.v("get","get an error from server");
+                }
+                return 1;
+            }
+            else if (Cases[0] == 2){
+                String command = "UPDATE Account SET Name='"+ Name +"' WHERE Account='" +Email + "'";
+                String ans = new connect(command).getServerUpdate();
+                Log.v("getL", ans);
+                if(ans.equals("Warning")){
+                    Log.v("get","get an error from server");
+                }
+                return 2;
+            }
+            else if (Cases[0] == 3){
+                String command = "UPDATE Account SET Password='"+ Password +"' WHERE Account='" +Email + "'";
+                String ans = new connect(command).getServerUpdate();
+                Log.v("getL", ans);
+                if(ans.equals("Warning")){
+                    Log.v("get","get an error from server");
+                }
+                return 3;
+            }
+            else if (Cases[0] == 4){
+                String command = "UPDATE Account SET sex='"+ sex +"' WHERE Account='" +Email + "'";
+                String ans = new connect(command).getServerUpdate();
+                Log.v("getL", ans);
+                if(ans.equals("Warning")){
+                    Log.v("get","get an error from server");
+                }
+                return 4;
+            }
+            else if (Cases[0] == 5){
+                String command = "UPDATE Account SET year='"+ yyyy +"', month='"+ MM + "',day='" +dd+
+                        "' WHERE Account='" +Email + "'";
+                String ans = new connect(command).getServerUpdate();
+                Log.v("getL", ans);
+                if(ans.equals("Warning")){
+                    Log.v("get","get an error from server");
+                }
+                return 5;
+            }
+            else if (Cases[0] == 6){
+                String command = "UPDATE Account SET hour = '"+ hh +"' WHERE Account='" +Email + "'";
+                String ans = new connect(command).getServerUpdate();
+                Log.v("getL", ans);
+                if(ans.equals("Warning")){
+                    Log.v("get","get an error from server");
+                }
+                return 6;
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+            if (result == 1){
+                TextView Surnames = (TextView)findViewById(R.id.SurName_content);
+                Surnames.setText(Surname);
+
+                collectDatas[0] = Surname; //回存,這樣可以反覆更改
+            }else if (result == 2){
+                TextView Names = (TextView)findViewById(R.id.Name_content);
+                Names.setText(Name);
+
+                collectDatas[1] = Name;//回存,這樣可以反覆更改
+            }else if (result == 3){
+                TextView Passwords = (TextView)findViewById(R.id.password_content);
+                hidePassword ="";
+                for (int i =0;i<Password.length();i++){
+                    hidePassword+="*";
+                }
+                Passwords.setText(hidePassword);
+                collectDatas[3] = Password;//回存,這樣可以反覆更改
+            }else if (result == 4){
+                TextView Sexs = (TextView)findViewById(R.id.sex_content);
+                if (sex == "1"){
+                    Sexs.setText("男");
+                    collectDatas[4] = sex;//回存,這樣可以反覆更改
+                }else{
+                    Sexs.setText("女");
+                    collectDatas[4] = sex;//回存,這樣可以反覆更改
+                }
+            }else if (result == 5){
+                TextView year = (TextView)findViewById(R.id.BirthYY);
+                TextView month = (TextView)findViewById(R.id.BirthMM);
+                TextView day = (TextView)findViewById(R.id.BirthDD);
+
+                year.setText(yyyy);
+                month.setText(MM);
+                day.setText(dd);
+
+                collectDatas[6] = yyyy;//回存,這樣可以反覆更改
+                collectDatas[7] = MM;//回存,這樣可以反覆更改
+                collectDatas[8] = dd;//回存,這樣可以反覆更改
+            }else if (result == 6){
+                TextView hour = (TextView)findViewById(R.id.BirthTT);
+                int index = Integer.parseInt(hh);
+                hour.setText(hour_list[index]);
+                collectDatas[9] = hh;//回存,這樣可以反覆更改
+            }
+
+
             }
         }
 
     }
 
-
-}
