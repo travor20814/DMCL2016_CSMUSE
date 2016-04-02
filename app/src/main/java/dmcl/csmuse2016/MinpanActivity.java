@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class MinpanActivity extends AppCompatActivity {
     EditText input_year,input_month,input_day;
     String which_sex="女";//性別，預設為女
     String which_yeartype="";//記錄哪一個(西元or民國or農曆)
+    RadioButton west , guo , non , male , female;
     int count;
     String hour="";
     private String[] hour_list = {"0:00~0:59(子時)","1:00~1:59(丑時)","2:00~2:59(丑時)","3:00~3:59(寅時)","4:00~4:59(寅時)","5:00~5:59(卯時)",
@@ -167,8 +169,12 @@ public class MinpanActivity extends AppCompatActivity {
                 String s_year = input_year.getText().toString();
                 input_month = (EditText) findViewById(R.id.input_minpan_month);
                 String s_month = input_month.getText().toString();
+
+
                 input_day = (EditText) findViewById(R.id.input_minpan_day);
                 String s_day = input_day.getText().toString();
+
+
 
                 //radioGroup
                 Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_minpan_Sex2);
@@ -177,16 +183,23 @@ public class MinpanActivity extends AppCompatActivity {
                 int select_type = Gruop_YearType.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
                 //editText_Question2.setText(String.valueOf(select_type));//測試用
 
+                west = (RadioButton)findViewById(R.id.radio_west);
+                guo = (RadioButton)findViewById(R.id.radio_guo);
+                non = (RadioButton)findViewById(R.id.radio_non);
+
+                male = (RadioButton)findViewById(R.id.radio_Male2);
+                female = (RadioButton)findViewById(R.id.radio_Female2);
+
                 // 問題輸入轉換為string
-                if (select_id == 2131493027) {
+                if (select_id == female.getId()) {
                     which_sex = "0"; //API上，女 = 0
                 } else {
                     which_sex = "1"; //API上，男 = 0
                 }
 
-                if (select_type == 2131493020) {
+                if (select_type == west.getId()) {
                     which_yeartype = "0"; //API上，西元 = 0
-                } else if (select_id == 2131493021) {
+                } else if (select_id == guo.getId()) {
                     which_yeartype = "1"; //API上，國曆 = 1
                 } else {
                     which_yeartype = "2"; //API上，農曆 = 2
