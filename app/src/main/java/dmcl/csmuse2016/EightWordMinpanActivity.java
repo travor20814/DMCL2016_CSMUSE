@@ -33,35 +33,35 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//命盤的activity
-public class MinsuActivity extends AppCompatActivity {
+//八字命盤的activity
+public class EightWordMinpanActivity extends AppCompatActivity {
 
     Bundle bundle = new Bundle();
-    private Button button_Submit2;
-    private RadioGroup Gruop_Sex2,Gruop_YearType;
-    EditText input_year,input_month,input_day;
+    private Button button_Submit3;
+    private RadioGroup Gruop_Sex3,Gruop_YearType2;
+    EditText input_year2,input_month2,input_day2;
     String which_sex="女";//性別，預設為女
     String which_yeartype="";//記錄哪一個(西元or民國or農曆)
     String hour="";
     private String[] hour_list = {"0:00~0:59(子時)","1:00~1:59(丑時)","2:00~2:59(丑時)","3:00~3:59(寅時)","4:00~4:59(寅時)","5:00~5:59(卯時)",
-                                "6:00~6:59(卯時)","7:00~7:59(辰時)","8:00~8:59(辰時)","9:00~9:59(巳時)","10:00~10:59(巳時)","11:00~11:59(午時)",
-                                "12:00~12:59(午時)","13:00~13:59(未時)","14:00~14:59(未時)","15:00~15:59(申時)","16:00~16:59(申時)","17:00~17:59(酉時)",
-                                "18:00~18:59(酉時)","19:00~19:59(戌時)","20:00~20:59(戌時)","21:00~21:59(亥時)","22:00~22:59(亥時)","23:00~23:59(子時)",};
+            "6:00~6:59(卯時)","7:00~7:59(辰時)","8:00~8:59(辰時)","9:00~9:59(巳時)","10:00~10:59(巳時)","11:00~11:59(午時)",
+            "12:00~12:59(午時)","13:00~13:59(未時)","14:00~14:59(未時)","15:00~15:59(申時)","16:00~16:59(申時)","17:00~17:59(酉時)",
+            "18:00~18:59(酉時)","19:00~19:59(戌時)","20:00~20:59(戌時)","21:00~21:59(亥時)","22:00~22:59(亥時)","23:00~23:59(子時)",};
     private ArrayAdapter<String> listAdapter;
-    private Spinner spinner;
+    private Spinner spinner2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.minsu);
+        setContentView(R.layout.eightwordminpan);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_minsu);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_eightwordminpan);
         setSupportActionBar(toolbar);
 
         // App Logo
         toolbar.setLogo(R.mipmap.title02);
         // Title
-        toolbar.setTitle("紫微命書");
+        toolbar.setTitle("八字命盤");
         toolbar.setTitleTextColor(Color.BLACK);
         // Sub Title
         toolbar.setSubtitle("88Say幫您及時掌握未來");
@@ -77,7 +77,7 @@ public class MinsuActivity extends AppCompatActivity {
         //函式
         ButtonSummit();
         //加入fragment的函式
-        addFragment();
+        //addFragment();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class MinsuActivity extends AppCompatActivity {
                 case R.id.action_settings: //setting鍵
                     Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
                     intent.putExtra("mail","test@gmail.com"); //暫時測試用的
-                    MinsuActivity.this.startActivity(intent);
+                    EightWordMinpanActivity.this.startActivity(intent);
                     finish();
                     break;
                 case R.id.action_designer://製作群
@@ -128,7 +128,7 @@ public class MinsuActivity extends AppCompatActivity {
             }
 
             if(!msg.equals("")) {
-                Toast.makeText(MinsuActivity.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(EightWordMinpanActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
             return true;
         }
@@ -142,7 +142,7 @@ public class MinsuActivity extends AppCompatActivity {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         //使用FragmentTransaction物件add()的方法將Fragment增加到Activity中
         //add()有三個參數，第一個是Fragment的ViewGroup；第二個是Fragment 的實例(Instantiate)；第三個是Fragment 的Tag
-        ft.add(R.id.L2, newFragment, "first");
+        ft.add(R.id.L3, newFragment, "first");
         //一旦FragmentTransaction出現變化，必須要呼叫commit()使之生效
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
@@ -152,20 +152,20 @@ public class MinsuActivity extends AppCompatActivity {
         Fragment newFragment = new FragmentForMinsu();
         newFragment.setArguments(bundle);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.L2, newFragment, "first");
+        ft.replace(R.id.L3, newFragment, "first");
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
 
     }
     //送出資料的button
     void ButtonSummit(){
-        button_Submit2 = (Button)findViewById(R.id.button_Submit2);
-        spinner = (Spinner)findViewById(R.id.spinner);
+        button_Submit3 = (Button)findViewById(R.id.button_Submit3);
+        spinner2 = (Spinner)findViewById(R.id.spinner2);
 
         listAdapter = new ArrayAdapter<String>(this, R.layout.myspinner, hour_list);
         listAdapter.setDropDownViewResource(R.layout.myspinner);
-        spinner.setAdapter(listAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner2.setAdapter(listAdapter);
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 hour = Integer.toString(position);
@@ -177,23 +177,23 @@ public class MinsuActivity extends AppCompatActivity {
             }
         });
 
-
-        button_Submit2.setOnClickListener(new View.OnClickListener() {
+/*
+        button_Submit3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                input_year = (EditText) findViewById(R.id.input_year_m);
-                String s_year = input_year.getText().toString();
-                input_month = (EditText) findViewById(R.id.input_month_m);
-                String s_month = input_month.getText().toString();
-                input_day = (EditText) findViewById(R.id.input_day_m);
-                String s_day = input_day.getText().toString();
+                input_year2 = (EditText) findViewById(R.id.input_year_m2);
+                String s_year = input_year2.getText().toString();
+                input_month2 = (EditText) findViewById(R.id.input_month_m2);
+                String s_month = input_month2.getText().toString();
+                input_day2 = (EditText) findViewById(R.id.input_day_m2);
+                String s_day = input_day2.getText().toString();
 
                 //radioGroup
-                Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_Sex2);
-                int select_id = Gruop_Sex2.getCheckedRadioButtonId();
-                Gruop_YearType = (RadioGroup) findViewById(R.id.Gruop_YearType);
-                int select_type = Gruop_YearType.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
+                Gruop_Sex3 = (RadioGroup) findViewById(R.id.Gruop_Sex3);
+                int select_id = Gruop_Sex3.getCheckedRadioButtonId();
+                Gruop_YearType2 = (RadioGroup) findViewById(R.id.Gruop_YearType2);
+                int select_type = Gruop_YearType2.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
                 //editText_Question2.setText(String.valueOf(select_type));//測試用
                 // 問題輸入轉換為string
                 if (select_id == 2131493022) {
@@ -272,7 +272,7 @@ public class MinsuActivity extends AppCompatActivity {
             }
         }
         return false;
-    }
+*/    }
 
     public String Catch_say88_API_info(String birthType,String Year,String Month , String Day ,String Hour,String Sex){
         // token就是識別證

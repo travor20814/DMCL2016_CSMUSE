@@ -31,7 +31,6 @@ public class HomePageActivity extends Activity {
         Bundle getExtra = getIntent().getExtras();
         if (getExtra != null){
             userMail = getExtra.getString("mail");
-            //userName = getExtra.getString("Surname");
         }
         /////////////////////////////////////////////////////
 
@@ -65,11 +64,12 @@ public class HomePageActivity extends Activity {
                 }
                 if (v == imagebutton05){//會員專區
                     Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
-                    intentMember.putExtra("mail",userMail); //send mail to next activity
+                    intentMember.putExtra("mail","test@gmail.com"); //send mail to next activity
                     HomePageActivity.this.startActivity(intentMember);
                 }
                 if (v == imagebutton06){//八卦命盤
-
+                    Intent intent = new Intent(HomePageActivity.this,EightWordMinpanActivity.class);
+                    HomePageActivity.this.startActivity(intent);
                 }
             }
         };
@@ -78,6 +78,7 @@ public class HomePageActivity extends Activity {
         imagebutton03.setOnClickListener(handler);
         imagebutton04.setOnClickListener(handler);
         imagebutton05.setOnClickListener(handler);
+        imagebutton06.setOnClickListener(handler);
     }
     public void back_doNegativeClick() {
         // Do stuff here.

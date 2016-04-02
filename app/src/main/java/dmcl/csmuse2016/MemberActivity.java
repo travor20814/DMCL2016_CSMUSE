@@ -1,32 +1,53 @@
 package dmcl.csmuse2016;
 
-import android.app.Activity;
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
-/**
- * Created by TravorLee on 16/3/27.
- */
 public class MemberActivity extends AppCompatActivity {
 
     private ArrayList<HashMap<String,String>> userDatas;
+    private String[] hour_list = {"0:00~0:59(子時)","1:00~1:59(丑時)","2:00~2:59(丑時)","3:00~3:59(寅時)","4:00~4:59(寅時)","5:00~5:59(卯時)",
+            "6:00~6:59(卯時)","7:00~7:59(辰時)","8:00~8:59(辰時)","9:00~9:59(巳時)","10:00~10:59(巳時)","11:00~11:59(午時)",
+            "12:00~12:59(午時)","13:00~13:59(未時)","14:00~14:59(未時)","15:00~15:59(申時)","16:00~16:59(申時)","17:00~17:59(酉時)",
+            "18:00~18:59(酉時)","19:00~19:59(戌時)","20:00~20:59(戌時)","21:00~21:59(亥時)","22:00~22:59(亥時)","23:00~23:59(子時)",};
+
+    int y = 1911; //年
+    int M = 1; //月
+    int d = 1; //日
+    int h = 0; //時辰
+
+    private String hidePassword="";
+
     private String[] collectDatas;
     private String Surname ="";
     private String Name ="";
@@ -38,6 +59,12 @@ public class MemberActivity extends AppCompatActivity {
     private String dd ="";
     private String hh ="";
     private ProgressDialog pDialog;
+    private Button editSurname;
+    private Button editName;
+    private Button editPassword;
+    private Button editSex;
+    private Button editBirthdays;
+    private Button editBirthTime;
 
     //connect getValues = new connect("1");
 
@@ -45,6 +72,7 @@ public class MemberActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //接收帳號傳給php當key 抓資料庫
         Bundle getExtra = getIntent().getExtras();
         if (getExtra != null){
             Email = getExtra.getString("mail");
@@ -55,6 +83,7 @@ public class MemberActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_member);
         setSupportActionBar(toolbar);
 
+        toolbar.setBackgroundColor(0xFFFFFFFF);
         // App Logo
         toolbar.setLogo(R.mipmap.title02);
         // Title
@@ -66,19 +95,16 @@ public class MemberActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        // Navigation Icon 要設定在 setSupoortActionBar 才有作用
-        // 否則會出現 back bottom
-        //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
-        // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
-
+        //thread call 抓資料庫
         new getDatas().execute();
+
 
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        getMenuInflater().inflate(R.menu.membermemu, menu);
         return true;
     }
 
@@ -104,10 +130,12 @@ public class MemberActivity extends AppCompatActivity {
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
                     finish();
-
                     break;
-                case R.id.action_settings: //setting鍵
-                    msg += "Click setting";
+                case R.id.action_designer://製作群
+                    msg+="designer clicked";
+                    break;
+                case R.id.action_logout://登出
+                    msg+="logout clicked";
                     break;
             }
 
@@ -117,6 +145,289 @@ public class MemberActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    public void editSurnameOnClick(View v){
+        editSurname = (Button)findViewById(R.id.edit_surname);
+        String name = "您的姓:";
+        int id = 1;
+        showPopup(v , name, id);
+    }
+    public void editNameOnClick(View v){
+        editName = (Button)findViewById(R.id.edit_name);
+        String name = "您的大名:";
+        int id = 2;
+        showPopup(v, name, id);
+    }
+    public void editPasswordOnClick(View v){
+        editPassword = (Button)findViewById(R.id.edit_password);
+        String name = "原密碼:";
+        int id = 3;
+        showPopup(v, name,id);
+    }
+    public void editSexOnClick(View v){
+        editSex = (Button)findViewById(R.id.edit_sex);
+        String name = "您的性別:";
+        int id = 4;
+        showPopup(v, name,id);
+    }
+    public void editBirthDaysOnClick(View v){
+        editBirthdays = (Button)findViewById(R.id.edit_birthday);
+        String name = "生日:";
+        int id = 5;
+        showPopup(v, name,id);
+    }
+    public void editBirthTimesOnClick(View v){
+        editBirthTime = (Button)findViewById(R.id.edit_birthtime);
+        String name = "時辰:";
+        int id = 6;
+        showPopup(v, name,id);
+    }
+
+    public void showPopup(View anchorView , String titles, int id) {
+        switch (id){
+            case 3:
+                View popupPassword = getLayoutInflater().inflate(R.layout.fragment_editpassword, null);
+
+                PopupWindow popupCaseThree = new PopupWindow(popupPassword,
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                TextView opassword = (TextView) popupPassword.findViewById(R.id.opassword);
+                TextView npassword = (TextView) popupPassword.findViewById(R.id.npassword);
+                TextView cpassword = (TextView) popupPassword.findViewById(R.id.cpassword);
+
+                opassword.setText(titles);
+                npassword.setText("新密碼:");
+                cpassword.setText("確認新密碼:");
+                // If the PopupWindow should be focusable
+                popupCaseThree.setFocusable(true);
+
+                // If you need the PopupWindow to dismiss when when touched outside
+                popupCaseThree.setBackgroundDrawable(new ColorDrawable());
+
+                int locationCaseThree[] = new int[2];
+
+                // Get the View's(the one that was clicked in the Fragment) location
+                anchorView.getLocationOnScreen(locationCaseThree);
+
+                // Using location, the PopupWindow will be displayed right under anchorView
+                popupCaseThree.showAtLocation(anchorView, Gravity.NO_GRAVITY,
+                        locationCaseThree[0], locationCaseThree[1] + anchorView.getHeight());
+                break;
+            case 4:
+                View popupSex = getLayoutInflater().inflate(R.layout.fragment_editsex, null);
+
+                PopupWindow popupCaseFour = new PopupWindow(popupSex,
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                TextView sext = (TextView) popupSex.findViewById(R.id.titlesex);
+                RadioButton Man = (RadioButton) popupSex.findViewById(R.id.manradio);
+                RadioButton Woman = (RadioButton) popupSex.findViewById(R.id.womanradio);
+                RadioGroup rgroup = (RadioGroup) popupSex.findViewById(R.id.editsexgroup);
+
+                rgroup.setOnCheckedChangeListener(listener); // 監聽radio button
+
+                sext.setText(titles);
+                // If the PopupWindow should be focusable
+                popupCaseFour.setFocusable(true);
+
+                // If you need the PopupWindow to dismiss when when touched outside
+                popupCaseFour.setBackgroundDrawable(new ColorDrawable());
+
+                int locationCaseFour[] = new int[2];
+
+                // Get the View's(the one that was clicked in the Fragment) location
+                anchorView.getLocationOnScreen(locationCaseFour);
+
+                // Using location, the PopupWindow will be displayed right under anchorView
+                popupCaseFour.showAtLocation(anchorView, Gravity.NO_GRAVITY,
+                        locationCaseFour[0], locationCaseFour[1] + anchorView.getHeight());
+
+                if (collectDatas[4].equals("1")){
+                   Man.setChecked(true); //initial state
+                } else{
+                    Woman.setChecked(true); //initial state
+                }
+                break;
+            case 5:
+                View popupBirth = getLayoutInflater().inflate(R.layout.fragment_editbirthday, null);
+
+                PopupWindow popupCaseFive = new PopupWindow(popupBirth,
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                TextView bd = (TextView) popupBirth.findViewById(R.id.birth);
+                NumberPicker year = (NumberPicker)popupBirth.findViewById(R.id.edityypicker);
+                NumberPicker month = (NumberPicker)popupBirth.findViewById(R.id.editmmpicker);
+                final NumberPicker day = (NumberPicker)popupBirth.findViewById(R.id.editddpicker);
+                bd.setText(titles);
+                //設定上限下限
+                year.setMaxValue(2016);
+                year.setMinValue(1911);
+                //設定初始值為使用者的原本year
+                int userOriginYear = Integer.parseInt(collectDatas[6]);
+                year.setValue(userOriginYear);
+                year.setWrapSelectorWheel(true);
+                y = Integer.parseInt(collectDatas[6]);
+
+                month.setMaxValue(12);
+                month.setMinValue(1);
+                //設定初始值為使用者的原本year
+                int userOriginMonth = Integer.parseInt(collectDatas[7]);
+                month.setValue(userOriginMonth);
+                month.setWrapSelectorWheel(true);
+                M = Integer.parseInt(collectDatas[7]);
+
+                day.setMaxValue(31);
+                day.setMinValue(1);
+                //設定初始值為使用者的原本year
+                int userOriginDay = Integer.parseInt(collectDatas[8]);
+                d = Integer.parseInt(collectDatas[8]);
+
+                day.setValue(userOriginDay);
+                day.setWrapSelectorWheel(true);
+                // If the PopupWindow should be focusable
+                popupCaseFive.setFocusable(true);
+                // If you need the PopupWindow to dismiss when when touched outside
+                popupCaseFive.setBackgroundDrawable(new ColorDrawable());
+                int locationCaseFive[] = new int[2];
+                // Get the View's(the one that was clicked in the Fragment) location
+                anchorView.getLocationOnScreen(locationCaseFive);
+                // Using location, the PopupWindow will be displayed right under anchorView
+                popupCaseFive.showAtLocation(anchorView, Gravity.NO_GRAVITY,
+                        locationCaseFive[0], locationCaseFive[1] + anchorView.getHeight());
+
+                year.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                        //Display the newly selected number from picker
+                        y = newVal;
+                        if (M == 2) {
+                            if (y % 4 == 0) { //算閏年 但並不完整
+                                day.setMaxValue(29);
+                                day.setMinValue(1);
+                            } else {
+                                day.setMaxValue(28);
+                                day.setMinValue(1);
+                            }
+                        }
+                    }
+                });
+                month.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                        M = newVal;
+                        day.setWrapSelectorWheel(true);
+                        if (M == 2) {
+                            if (y % 4 == 0) { //算閏年 但並不完整
+                                day.setMaxValue(29);
+                                day.setMinValue(1);
+                            } else {
+                                day.setMaxValue(28);
+                                day.setMinValue(1);
+                            }
+                        } else if (M == 4 || M == 6 || M == 9 || M == 11) {
+                            day.setMaxValue(30);
+                            day.setMinValue(1);
+                        } else {
+                            day.setMaxValue(31);
+                            day.setMinValue(1);
+                        }
+                        //tv.setText("Selected month : " + MM);
+                    }
+                });
+                day.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                        d = newVal;
+                        //tv.setText("Selected day : " + dd);
+                    }
+                });
+
+                break;
+            case 6:
+                View popupTime = getLayoutInflater().inflate(R.layout.fragment_edittime, null);
+
+                PopupWindow popupCaseSix = new PopupWindow(popupTime,
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                TextView bt = (TextView) popupTime.findViewById(R.id.birtht);
+                NumberPicker time = (NumberPicker)popupTime.findViewById(R.id.edittimePick);
+                bt.setText(titles);
+                //設定上限下限
+                time.setMaxValue(23);
+                time.setMinValue(0);
+                //設定初始值為使用者的原本時辰
+                int userOriginTime = Integer.parseInt(collectDatas[9]);
+                time.setValue(userOriginTime);
+
+                time.setDisplayedValues(hour_list);
+                time.setWrapSelectorWheel(true);
+                // If the PopupWindow should be focusable
+                popupCaseSix.setFocusable(true);
+                // If you need the PopupWindow to dismiss when when touched outside
+                popupCaseSix.setBackgroundDrawable(new ColorDrawable());
+                int locationCaseSix[] = new int[2];
+                // Get the View's(the one that was clicked in the Fragment) location
+                anchorView.getLocationOnScreen(locationCaseSix);
+                // Using location, the PopupWindow will be displayed right under anchorView
+                popupCaseSix.showAtLocation(anchorView, Gravity.NO_GRAVITY,
+                        locationCaseSix[0], locationCaseSix[1] + anchorView.getHeight());
+
+                time.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+                        //hh = newVal;
+                        //tv.setText("Selected hour : " + hh);
+                    }
+                });
+
+                break;
+            default:
+                View popupView = getLayoutInflater().inflate(R.layout.fragment_edit_member, null);
+
+                PopupWindow popupWindow = new PopupWindow(popupView,
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                TextView tv = (TextView) popupView.findViewById(R.id.somewords);
+                EditText edit = (EditText) popupView.findViewById(R.id.editor);
+                tv.setText(titles);
+                if (id == 1){ //表示現在的畫面是“姓”
+                    edit.setText(collectDatas[0]); //initial
+                } else if (id == 2){ //畫面為“名"
+                    edit.setText(collectDatas[1]); //initial
+                }
+                // If the PopupWindow should be focusable
+                popupWindow.setFocusable(true);
+
+                // If you need the PopupWindow to dismiss when when touched outside
+                popupWindow.setBackgroundDrawable(new ColorDrawable());
+
+                int location[] = new int[2];
+
+                // Get the View's(the one that was clicked in the Fragment) location
+                anchorView.getLocationOnScreen(location);
+
+                // Using location, the PopupWindow will be displayed right under anchorView
+                popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY,
+                        location[0], location[1] + anchorView.getHeight());
+                break;
+        }
+    }
+    private RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener(){
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            switch (checkedId) {
+                case R.id.manradio:
+                    //sex = 1;
+                    Log.v("sex","man");
+                    break;
+                case R.id.womanradio:
+                    //sex = 0;
+                    Log.v("sex","woman");
+                    break;
+            }
+
+        }
+    };
+
 
     class getDatas extends AsyncTask<Void,Void,Void> {
         @Override
@@ -155,7 +466,11 @@ public class MemberActivity extends AppCompatActivity {
             Surname.setText(collectDatas[0]);
             Name.setText(collectDatas[1]);
             E_mail.setText(collectDatas[2]);
-            Password.setText(collectDatas[3]);
+            //將密碼蓋成"*"
+            for (int i = 0 ; i<collectDatas[3].length() ; i++){
+                hidePassword += "*";
+            }
+            Password.setText(hidePassword);
             
             if(collectDatas[4].equals("1")){
                 Sex.setText("男");
@@ -244,11 +559,6 @@ public class MemberActivity extends AppCompatActivity {
                     TT.setText("-----Error-----");
                     break;
             }
-
-            // Dismiss the progress dialog
-            //	if (pDialog.isShowing())
-            //		pDialog.dismiss();
-
         }
 
     }

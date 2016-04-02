@@ -104,6 +104,7 @@ public class FreeActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
                     intent.putExtra("mail","test@gmail.com"); //暫時測試用的
                     FreeActivity.this.startActivity(intent);
+                    finish();
                     break;
                 case R.id.action_designer://製作群
                     msg+="designer clicked";
