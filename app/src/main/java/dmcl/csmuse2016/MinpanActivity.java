@@ -46,13 +46,34 @@ public class MinpanActivity extends AppCompatActivity {
     String which_yeartype="";//記錄哪一個(西元or民國or農曆)
     RadioButton west , guo , non , male , female;
     int count;
-    String hour="";
+    String hour="",s_year="",s_month="",s_day="";
     private String[] hour_list = {"0:00~0:59(子時)","1:00~1:59(丑時)","2:00~2:59(丑時)","3:00~3:59(寅時)","4:00~4:59(寅時)","5:00~5:59(卯時)",
             "6:00~6:59(卯時)","7:00~7:59(辰時)","8:00~8:59(辰時)","9:00~9:59(巳時)","10:00~10:59(巳時)","11:00~11:59(午時)",
             "12:00~12:59(午時)","13:00~13:59(未時)","14:00~14:59(未時)","15:00~15:59(申時)","16:00~16:59(申時)","17:00~17:59(酉時)",
             "18:00~18:59(酉時)","19:00~19:59(戌時)","20:00~20:59(戌時)","21:00~21:59(亥時)","22:00~22:59(亥時)","23:00~23:59(子時)",};
-    private ArrayAdapter<String> listAdapter;
-    private Spinner spinner;
+
+    private String[] year_list = {"1901","1902","1903","1904","1905","1906","1907","1908","1909",
+                                    "1910","1911","1912","1913","1914","1915","1916","1917","1918","1919",
+                                    "1920","1921","1922","1923","1924","1925","1926","1927","1928","1929",
+                                    "1930","1931","1932","1933","1934","1935","1936","1937","1938","1939",
+                                    "1940","1941","1942","1943","1944","1945","1946","1947","1948","1949",
+                                    "1950","1951","1952","1953","1954","1955","1956","1957","1958","1959",
+                                    "1960","1961","1962","1963","1964","1965","1966","1967","1968","1969",
+                                    "1970","1971","1972","1973","1974","1975","1976","1977","1978","1979",
+                                    "1980","1981","1982","1983","1984","1985","1986","1987","1988","1989",
+                                    "1990","1991","1992","1993","1994","1995","1996","1997","1998","1999",
+                                    "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
+                                    "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019",
+                                    "2020","2021","2022","2023","2024","2025","2026","2027","2028","2029"};
+
+    private  String[] month_list = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+
+    private  String[] day_list = {"1","2","3","4","5","6","7","8","9","10",
+                                  "11","12","13","14","15","16","17","18","19","20",
+                                  "21","22","23","24","25","26","27","28","29","30",
+                                  "31"};
+    private ArrayAdapter<String> listAdapter , listAdapter_year,listAdapter_month,listAdapter_day;
+    private Spinner spinner , spinner_year , spinner_month , spinner_day;
     public static TextView errorMs;
 
 
@@ -144,8 +165,8 @@ public class MinpanActivity extends AppCompatActivity {
 
     void ButtonSummit(){
         button_Submit2 = (Button)findViewById(R.id.button_minpan_Submit2);
+        // 時辰
         spinner = (Spinner)findViewById(R.id.minpan_spinner);
-
         listAdapter = new ArrayAdapter<String>(this, R.layout.myspinner, hour_list);
         listAdapter.setDropDownViewResource(R.layout.myspinner);
         spinner.setAdapter(listAdapter);
@@ -159,20 +180,57 @@ public class MinpanActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
             }
         });
+        // 年
+        spinner_year = (Spinner)findViewById(R.id.input_minpan_year);
+        listAdapter_year = new ArrayAdapter<String>(this, R.layout.myspinner, year_list);
+        listAdapter_year.setDropDownViewResource(R.layout.myspinner);
+        spinner_year.setAdapter(listAdapter_year);
+        spinner_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                s_year = year_list[position];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+        // 月
+        spinner_month = (Spinner)findViewById(R.id.input_minpan_month);
+        listAdapter_month = new ArrayAdapter<String>(this, R.layout.myspinner, month_list);
+        listAdapter_month.setDropDownViewResource(R.layout.myspinner);
+        spinner_month.setAdapter(listAdapter_month);
+        spinner_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                s_month =month_list[position];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+        // 日
+        spinner_day = (Spinner)findViewById(R.id.input_minpan_day);
+        listAdapter_day = new ArrayAdapter<String>(this, R.layout.myspinner, day_list);
+        listAdapter_day.setDropDownViewResource(R.layout.myspinner);
+        spinner_day.setAdapter(listAdapter_day);
+        spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                s_day = day_list[position];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
 
         button_Submit2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 errorMs = (TextView)findViewById(R.id.textViewError);
-                input_year = (EditText) findViewById(R.id.input_minpan_year);
-                String s_year = input_year.getText().toString();
-                input_month = (EditText) findViewById(R.id.input_minpan_month);
-                String s_month = input_month.getText().toString();
-
-
-                input_day = (EditText) findViewById(R.id.input_minpan_day);
-                String s_day = input_day.getText().toString();
 
 
 
