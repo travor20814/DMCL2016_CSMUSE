@@ -65,14 +65,14 @@ public class getJson {
             json = sb.toString();
 
         } catch (Exception e) {
-            Log.e(TAG, "Error converting result " + e.toString());
+            //Log.e(TAG, "Error converting result " + e.toString());
         }
 
         // try parse the string to a JSON object
         try {
             jObj = new JSONObject(json);
         } catch (JSONException e) {
-            Log.e(TAG, "Error parsing data " + e.toString());
+           // Log.e(TAG, "Error parsing data " + e.toString());
         }
 
         // return JSON String

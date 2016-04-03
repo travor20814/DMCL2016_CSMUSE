@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.util.DisplayMetrics;
 
@@ -15,6 +16,7 @@ public class AnimationActivity extends ActionBarActivity {
     //開頭動畫
     private ImageView image = null;
     private int duration = 0;
+    private final String filename="account.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,11 @@ public class AnimationActivity extends ActionBarActivity {
     }
     public void checkIfAnimationDone(AnimationDrawable anim){
         //Log.v("time",duration+"");
+        initialFile();
+        String formFile = new Write_and_Read(filename,getFilesDir()).ReadFromFile();
+        Log.e("formfile",formFile);
         Handler handler = new Handler();
+        if(formFile==""){
         handler.postDelayed(new Runnable(){
             public void run(){
                 Intent intent = new Intent(AnimationActivity.this,LoginActivity.class);
@@ -53,6 +59,19 @@ public class AnimationActivity extends ActionBarActivity {
                 finish();
             }
         }, duration);
-    }
+        }
+        else{
+            handler.postDelayed(new Runnable(){
+                public void run(){
+                    Intent intent = new Intent(AnimationActivity.this,HomePageActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }, duration);
+        }
+        }
 
+    public void initialFile(){
+        new Write_and_Read(filename,getFilesDir()).WritetoFile("");//if file exit writ,and not creat and write
+    }
 }

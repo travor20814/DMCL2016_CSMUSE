@@ -18,7 +18,7 @@ import android.widget.EditText;
 
 public class LoginActivity extends Activity {
     private ProgressDialog pDialog;
-
+    private final String filename="account.txt";
     private boolean check=false;
     private String userAccount = ""; //儲存使用者的帳號用於傳遞activity之間
 
@@ -45,6 +45,7 @@ public class LoginActivity extends Activity {
                     extras.putString("mail","");
                     intentHomePage.putExtras(extras);
                     LoginActivity.this.startActivity(intentHomePage);
+                    finish();
 
                 }
                 if (v == newAccount){
@@ -68,8 +69,8 @@ public class LoginActivity extends Activity {
             }
         });
 
-        password.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            public void onFocusChange(View v,boolean hasFocus){
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
                 password.setHint("");
                 account.setHint("帳號");
             }

@@ -270,14 +270,14 @@ public class fufay extends AppCompatActivity {
     }
     public void doPositiveClick() {//positive 在畫面右邊
         // Do stuff here.
-        Log.i("FragmentAlertDialog", "Positive click!");
+        //Log.i("FragmentAlertDialog", "Positive click!");
     }
 
     public void doNegativeClick() {
         // Do stuff here.
         orderid = getRandomString(10);
         unionPaySDK.payOrderRequest(fufay.this, orderid, amount, memo, payCallBackUrl, paymentCallback);
-        Log.i("FragmentAlertDialog", "Negative click!");
+        //Log.i("FragmentAlertDialog", "Negative click!");
     }
     public void home_doPositiveClick() {
         // Do stuff here.
@@ -396,7 +396,7 @@ public class fufay extends AppCompatActivity {
 
             try {
                 JSONObject jsobj= new getJson(URL).getJSONFromUrl();
-                Log.e("jsobj",jsobj.toString());
+                //Log.e("jsobj",jsobj.toString());
                 dataJsonArr = jsobj.getJSONArray("Result");
                 for (int i = 0; i < dataJsonArr.length(); i++) {
 
@@ -407,9 +407,9 @@ public class fufay extends AppCompatActivity {
                     mapFromJson.put("Price", c.getString("Price"));
                     mapFromJson.put("Category1", c.getString("Category1"));
                     mapFromJson.put("Category2", c.getString("Category2"));
-                    Log.e("ID", mapFromJson.get("Id"));
+                   // Log.e("ID", mapFromJson.get("Id"));
                     listForm_mapFromJson.add(mapFromJson);
-                   Log.e("list", listForm_mapFromJson.get(i).get("Id"));
+                  // Log.e("list", listForm_mapFromJson.get(i).get("Id"));
                 }
 
 

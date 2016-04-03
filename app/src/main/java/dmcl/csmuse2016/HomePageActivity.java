@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
+import java.io.File;
 import java.lang.reflect.Member;
 
 public class HomePageActivity extends Activity {
@@ -21,7 +22,7 @@ public class HomePageActivity extends Activity {
     private ImageButton imagebutton04;
     private ImageButton imagebutton05;
     private ImageButton imagebutton06;
-
+    private final String filename="account.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,14 @@ public class HomePageActivity extends Activity {
         // Do stuff here.
         finish();
     }
+    public void logout_doNegativeClick() {
+        // Do stuff here.
+        Intent toLoginActivity = new Intent(HomePageActivity.this,LoginActivity.class);
+        HomePageActivity.this.startActivity(toLoginActivity);
+        new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");//清空
+        finish();
+
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -94,7 +103,7 @@ public class HomePageActivity extends Activity {
     {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
-            HomePageActivity_back_dialogFragment editNameDialog =  HomePageActivity_back_dialogFragment.newInstance("確定要離開嗎？", "?????", "取消", "確定");
+            HomePageActivity_back_dialogFragment editNameDialog =  HomePageActivity_back_dialogFragment.newInstance("確定要離開嗎？", "?????", "取消", "確定","登出");
             editNameDialog.show(getFragmentManager(), "EditNameDialog");
         }
         return false;
