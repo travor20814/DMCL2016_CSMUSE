@@ -18,7 +18,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="申請帳號/密碼"
-        android:id="@+id/newAccount"
+        android:id="@+id/back"
         android:background="@drawable/login_btn"
         android:layout_toRightOf="@+id/guestlogin"
         android:layout_alignParentBottom="true"

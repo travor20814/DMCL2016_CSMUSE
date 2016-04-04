@@ -23,6 +23,7 @@ public class HomePageActivity extends Activity {
     private ImageButton imagebutton05;
     private ImageButton imagebutton06;
     private final String filename="account.txt";
+    private boolean loginornot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,8 @@ public class HomePageActivity extends Activity {
             userMail = getExtra.getString("mail");
         }
         /////////////////////////////////////////////////////
-
+        loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
+        //////////////////////////
         setContentView(R.layout.homepage);
         imagebutton01 = (ImageButton)findViewById(R.id.button_topleft);
         imagebutton02 = (ImageButton)findViewById(R.id.button_topright);
@@ -64,9 +66,18 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton05){//會員專區
+                    loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
+                    if(loginornot){
+                     String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
+                     String[] fromfileArray = fromfile.split("###");
                     Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
-                    intentMember.putExtra("mail","test@gmail.com"); //send mail to next activity
+                    intentMember.putExtra("mail",fromfileArray[2]); //send mail to next activity
                     HomePageActivity.this.startActivity(intentMember);
+                    }
+                    else{
+                        whenGuestClickMember_dialogFragment editNameDialog = whenGuestClickMember_dialogFragment.newInstance("錯誤","請先登錄喔～","取消","去登陸");
+                        editNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
                 }
                 if (v == imagebutton06){//八卦命盤
                     Intent intent = new Intent(HomePageActivity.this,EightWordMinpanActivity.class);
@@ -80,6 +91,7 @@ public class HomePageActivity extends Activity {
         imagebutton04.setOnClickListener(handler);
         imagebutton05.setOnClickListener(handler);
         imagebutton06.setOnClickListener(handler);
+
     }
     public void back_doNegativeClick() {
         // Do stuff here.
@@ -92,6 +104,17 @@ public class HomePageActivity extends Activity {
         new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");//清空
         finish();
 
+    }
+    public void notlogin_doPositiveClick() {
+        // Do stuff here.
+
+    }
+
+    public void notlogin_doNegativeClick() {
+        // Do stuff here.
+        Intent tologin = new Intent();
+        tologin.setClass(HomePageActivity.this, LoginActivity.class);
+        startActivity(tologin);
     }
     @Override
     protected void onResume() {

@@ -70,6 +70,8 @@ public class fufay extends AppCompatActivity {
     private String memo ="This is a memo";
     public static ArrayList<HashMap<String,String>> listForm_mapFromJson = new ArrayList<HashMap<String,String>>();
     private static HashMap<String,String> mapFromJson = new HashMap<String,String>();
+    private final String filename="account.txt";
+    private boolean loginornot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +112,8 @@ public class fufay extends AppCompatActivity {
         unionPaySDK = UnionPaySDK.getInstance();
         //must Initialize first
         unionPaySDK.Initialize(ctx, scode, key, true);
+
+        loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
     }
 
 
@@ -183,7 +187,10 @@ public class fufay extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        if(loginornot)
         getMenuInflater().inflate(R.menu.mainmenu, menu);
+        else
+            getMenuInflater().inflate(R.menu.guestmenu, menu);
         return true;
     }
 
@@ -233,9 +240,10 @@ public class fufay extends AppCompatActivity {
     }
     public void showEditDialog(View view)
     {
+        if(loginornot){
         String Price="";
         Button fragment_btn = (Button) view.findViewById(R.id.fufay_btn);
-        Log.e("btn.text",fragment_btn.getText().toString());
+        //Log.e("btn.text",fragment_btn.getText().toString());
         int count=0;
         switch(fragment_btn.getText().toString()) {
 
@@ -263,6 +271,11 @@ public class fufay extends AppCompatActivity {
         amount = Integer.parseInt(Price);
         fufay_buy_dialogFragment editNameDialog =  fufay_buy_dialogFragment.newInstance("確定要購買嗎？", "商品：\t"+Price, "取消", "確定");
         editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
+        else{
+            fufay_notlogin_dialogFragment editNameDialog = fufay_notlogin_dialogFragment.newInstance("無法購買","需要登陸才能購買喔～","取消","去登陸");
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
     }
     public void home_showEditDialog(){
         fufay_home_dialogFragment editNameDialog =  fufay_home_dialogFragment.newInstance("確定要離開嗎？", "左右滑可以看到更多範例喔！", "取消", "確定");
@@ -288,16 +301,48 @@ public class fufay extends AppCompatActivity {
         // Do stuff here.
         finish();
     }
+    public void notlogin_doPositiveClick() {
+        // Do stuff here.
+
+    }
+
+    public void notlogin_doNegativeClick() {
+        // Do stuff here.
+        Intent tologin = new Intent();
+        tologin.setClass(fufay.this, LoginActivity.class);
+        startActivity(tologin);
+        finish();
+    }
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             String msg = "";
+            Intent tologin =new Intent();
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
-                    home_showEditDialog();
+                    finish();
                     break;
                 case R.id.action_settings: //setting鍵
-                    msg += "Click setting";
+                    String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
+                    String[] fromfileArray = fromfile.split("###");
+                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
+                    intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                    fufay.this.startActivity(intentMember);
+                    finish();
+                    break;
+                case R.id.action_designer://製作群
+                    msg+="designer clicked";
+                    break;
+                case R.id.action_logout://登出
+                    new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");
+                    tologin.setClass(fufay.this,LoginActivity.class);
+                    startActivity(tologin);
+                    finish();
+                    break;
+                case R.id.action_login://訪客登入
+                    tologin.setClass(fufay.this,LoginActivity.class);
+                    startActivity(tologin);
+                    finish();
                     break;
             }
 

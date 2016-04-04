@@ -54,7 +54,8 @@ public class MinpanActivity extends AppCompatActivity {
     private ArrayAdapter<String> listAdapter;
     private Spinner spinner;
     public static TextView errorMs;
-
+    private final String filename="account.txt";
+    private boolean loginornot;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,13 +83,16 @@ public class MinpanActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
 
         ButtonSummit();
-
+        loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        if(loginornot)
+            getMenuInflater().inflate(R.menu.mainmenu, menu);
+        else
+            getMenuInflater().inflate(R.menu.guestmenu, menu);
         return true;
     }
 
@@ -111,24 +115,32 @@ public class MinpanActivity extends AppCompatActivity {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             String msg = "";
+            Intent tologin =new Intent();
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
                     finish();
                     break;
                 case R.id.action_settings: //setting鍵
-                    Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
-                    intent.putExtra("mail","test@gmail.com"); //暫時測試用的
-                    MinpanActivity.this.startActivity(intent);
+                    String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
+                    String[] fromfileArray = fromfile.split("###");
+                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
+                    intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                    MinpanActivity.this.startActivity(intentMember);
                     finish();
                     break;
                 case R.id.action_designer://製作群
                     msg+="designer clicked";
                     break;
                 case R.id.action_logout://登出
-                    msg+="logout clicked";
+                    new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");
+                    tologin.setClass(MinpanActivity.this,LoginActivity.class);
+                    startActivity(tologin);
+                    finish();
                     break;
                 case R.id.action_login://訪客登入
-                    msg+="guest login";
+                    tologin.setClass(MinpanActivity.this,LoginActivity.class);
+                    startActivity(tologin);
+                    finish();
                     break;
             }
 

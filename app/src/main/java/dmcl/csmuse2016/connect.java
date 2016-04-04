@@ -80,7 +80,7 @@ public class connect extends Application {
         return getFromServer;
     }
     //登入時的php check
-    public boolean LoginCheck(){
+    public String LoginCheck(){
         try {
             String connectToDB=urlString+sqlCommand;
             Log.v("connect1",connectToDB);
@@ -93,9 +93,8 @@ public class connect extends Application {
                 sb.append(n);
             }
             Log.v("connect",sb.toString());
-            String[] check=sb.toString().split("###");
-            if(check.length>2) //all check updated 2016/03/30
-                return true;
+            return sb.toString();//all check updated 2016/04/03
+
 
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
@@ -103,7 +102,7 @@ public class connect extends Application {
         }catch(IOException e){
             e.printStackTrace();
         }
-        return false;
+       return "";
     }
 
 }

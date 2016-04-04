@@ -1,6 +1,5 @@
 package dmcl.csmuse2016;
 
-import android.accounts.Account;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -9,7 +8,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +18,7 @@ public class LoginActivity extends Activity {
     private ProgressDialog pDialog;
     private final String filename="account.txt";
     private boolean check=false;
+    private String formConnect;
     private String userAccount = ""; //儲存使用者的帳號用於傳遞activity之間
 
 
@@ -34,7 +33,7 @@ public class LoginActivity extends Activity {
         final Button sign_in_button = (Button)findViewById(R.id.sign_in_button);
         //暫時沒用到登入按鈕的偵測 因為我寫在layout onclick上 (要處理的事情較多)
         final Button guest_button = (Button)findViewById(R.id.guestlogin);
-        final Button newAccount = (Button)findViewById(R.id.newAccount);
+        final Button newAccount = (Button)findViewById(R.id.back);
 
         View.OnClickListener handler = new View.OnClickListener(){
             public void onClick(View v){
@@ -118,8 +117,15 @@ public class LoginActivity extends Activity {
 
             //sending to php
             String command="select * from Account where Account ='"+Account+"' and Password = '"+Password+"'";
-            check = new connect(command).LoginCheck();
-            Log.v("check", "check=" + String.valueOf(check));
+            formConnect = new connect(command).LoginCheck();
+            String[] fromConnectToArray=formConnect.toString().split("###");
+            if(fromConnectToArray.length>2){
+            check =true;
+                //Log.e("formconnect",formConnect);
+            new Write_and_Read(filename,getFilesDir()).WritetoFile_clear(formConnect);
+
+            }
+
             return null;
         }
         @Override
@@ -129,7 +135,9 @@ public class LoginActivity extends Activity {
                 pDialog.dismiss(); //waiting dismiss
             if(check)
             { //set page to homepage//
-               Intent intentHomePage = new Intent(getApplicationContext(),
+
+
+                Intent intentHomePage = new Intent(getApplicationContext(),
                         HomePageActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("mail", userAccount);

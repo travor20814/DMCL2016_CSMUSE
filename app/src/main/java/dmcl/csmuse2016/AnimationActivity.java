@@ -48,10 +48,10 @@ public class AnimationActivity extends ActionBarActivity {
     public void checkIfAnimationDone(AnimationDrawable anim){
         //Log.v("time",duration+"");
         initialFile();
-        String formFile = new Write_and_Read(filename,getFilesDir()).ReadFromFile();
-        Log.e("formfile",formFile);
         Handler handler = new Handler();
-        if(formFile==""){
+        boolean a=new Write_and_Read(filename,getFilesDir()).ifLogin();
+        //Log.e("aa",Boolean.toString(a));
+        if(!new Write_and_Read(filename,getFilesDir()).ifLogin()){
         handler.postDelayed(new Runnable(){
             public void run(){
                 Intent intent = new Intent(AnimationActivity.this,LoginActivity.class);

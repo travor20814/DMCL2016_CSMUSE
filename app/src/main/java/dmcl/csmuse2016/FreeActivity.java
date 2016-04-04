@@ -39,7 +39,8 @@ public class FreeActivity extends AppCompatActivity {
     private EditText editText_Question;//輸入問題的地方
     String question="";
     String which_sex="女";//性別，預設為女
-
+    private final String filename="account.txt";
+    private boolean loginornot;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +69,17 @@ public class FreeActivity extends AppCompatActivity {
         ButtonSummit();
         //加入fragment的函式
         addFragment();
+        loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        if(loginornot)
+            getMenuInflater().inflate(R.menu.mainmenu, menu);
+        else
+            getMenuInflater().inflate(R.menu.guestmenu, menu);
         return true;
     }
 
@@ -96,24 +102,32 @@ public class FreeActivity extends AppCompatActivity {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             String msg = "";
+            Intent tologin =new Intent();
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
                     finish();
                     break;
                 case R.id.action_settings: //setting鍵
-                    Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
-                    intent.putExtra("mail","test@gmail.com"); //暫時測試用的
-                    FreeActivity.this.startActivity(intent);
+                    String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
+                    String[] fromfileArray = fromfile.split("###");
+                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
+                    intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                    FreeActivity.this.startActivity(intentMember);
                     finish();
                     break;
                 case R.id.action_designer://製作群
                     msg+="designer clicked";
                     break;
                 case R.id.action_logout://登出
-                    msg+="logout clicked";
+                    new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");
+                    tologin.setClass(FreeActivity.this,LoginActivity.class);
+                    startActivity(tologin);
+                    finish();
                     break;
                 case R.id.action_login://訪客登入
-                    msg+="guest login";
+                    tologin.setClass(FreeActivity.this,LoginActivity.class);
+                    startActivity(tologin);
+                    finish();
                     break;
             }
 

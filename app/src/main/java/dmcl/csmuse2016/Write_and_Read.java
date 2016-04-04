@@ -76,4 +76,11 @@ public class Write_and_Read {
         }
         return data.toString();
     }
+    public Boolean ifLogin(){
+        if(ReadFromFile()==""){
+            return false;
+        }
+        else
+            return true;
+    }
 }

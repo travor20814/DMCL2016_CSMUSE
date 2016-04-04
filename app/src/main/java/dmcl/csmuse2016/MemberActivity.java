@@ -59,6 +59,7 @@ public class MemberActivity extends AppCompatActivity {
     private Button editBirthdays;
     private Button editBirthTime;
     private ImageButton connectToFufay;
+    private final String filename="account.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +132,7 @@ public class MemberActivity extends AppCompatActivity {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             String msg = "";
+            Intent tologin =new Intent();
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
                     finish();
@@ -139,7 +141,10 @@ public class MemberActivity extends AppCompatActivity {
                     msg+="designer clicked";
                     break;
                 case R.id.action_logout://登出
-                    msg+="logout clicked";
+                    new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");
+                    tologin.setClass(MemberActivity.this,LoginActivity.class);
+                    startActivity(tologin);
+                    finish();
                     break;
             }
 
