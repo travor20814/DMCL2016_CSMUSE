@@ -105,6 +105,57 @@ public class MinpanActivity extends AppCompatActivity {
 
         ButtonSummit();
         loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
+
+        //2016/4/4 update by 均 get from file
+        if (loginornot) {
+            String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+            String[] tem = fromfile.split("@@@@@");
+            String[] fromfileArray = tem[0].split("###");
+
+            int fileYear = Integer.parseInt(fromfileArray[6]);
+            int fileMonth = Integer.parseInt(fromfileArray[7]);
+            int fileDay = Integer.parseInt(fromfileArray[8]);
+            int fileHour = Integer.parseInt(fromfileArray[9]);
+            int yearPosition = fileYear - 1901;
+            int monthPosition = fileMonth - 1;
+            int dayPosition = fileDay - 1;
+            //設定年的初始值
+            spinner_year = (Spinner)findViewById(R.id.input_minpan_year);
+            listAdapter_year = new ArrayAdapter<String>(this, R.layout.myspinner, year_list);
+            listAdapter_year.setDropDownViewResource(R.layout.myspinner);
+            spinner_year.setAdapter(listAdapter_year);
+            spinner_year.setSelection(yearPosition);
+            s_year = year_list[yearPosition]; //傳入value
+            //設定月的初始值
+            spinner_month = (Spinner)findViewById(R.id.input_minpan_month);
+            listAdapter_month = new ArrayAdapter<String>(this, R.layout.myspinner, month_list);
+            listAdapter_month.setDropDownViewResource(R.layout.myspinner);
+            spinner_month.setAdapter(listAdapter_month);
+            spinner_month.setSelection(monthPosition);
+            s_month = month_list[monthPosition]; //傳入value
+            //設定日的初始值
+            spinner_day = (Spinner)findViewById(R.id.input_minpan_day);
+            listAdapter_day = new ArrayAdapter<String>(this, R.layout.myspinner, day_list);
+            listAdapter_day.setDropDownViewResource(R.layout.myspinner);
+            spinner_day.setAdapter(listAdapter_day);
+            spinner_day.setSelection(dayPosition);
+            s_day = day_list[dayPosition]; //傳入value
+            //設定性別初始值
+            male = (RadioButton)findViewById(R.id.radio_Male2);
+            female = (RadioButton)findViewById(R.id.radio_Female2);
+            if (fromfileArray[4].equals("1")) {
+                male.setChecked(true);
+            } else {
+                female.setChecked(true);
+            }
+            //設定時間的初始值
+            spinner = (Spinner)findViewById(R.id.minpan_spinner);
+            listAdapter = new ArrayAdapter<String>(this, R.layout.myspinner, hour_list);
+            listAdapter.setDropDownViewResource(R.layout.myspinner);
+            spinner.setAdapter(listAdapter);
+            spinner.setSelection(fileHour);
+            hour = hour_list[fileHour];
+        }
     }
 
     @Override

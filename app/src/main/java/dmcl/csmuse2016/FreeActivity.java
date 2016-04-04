@@ -71,6 +71,22 @@ public class FreeActivity extends AppCompatActivity {
         addFragment();
         loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
 
+        //2016/4/4 update by 均 get from file
+        if (loginornot) {
+            String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+            String[] tem = fromfile.split("@@@@@");
+            String[] fromfileArray = tem[0].split("###");
+
+            RadioButton Man = (RadioButton) findViewById(R.id.radio_Male);
+            RadioButton Woman = (RadioButton) findViewById(R.id.radio_Female);
+
+            if (fromfileArray[4].equals("1")) { //帳號的性別為男
+                Man.setChecked(true); //select man
+            } else {
+                Woman.setChecked(true); //select woman
+            }
+        }
+
     }
 
     @Override
@@ -179,7 +195,7 @@ public class FreeActivity extends AppCompatActivity {
                 if (select_id == 2131492997) {
                     which_sex = "0"; //API上，女 = 0
                 } else {
-                    which_sex = "1"; //API上，男 = 0
+                    which_sex = "1"; //API上，男 = 1
                 }
                 // 產生對映的url，使用Catch_say88_API_info函式
                 String url = Catch_say88_API_info(question, which_sex);

@@ -75,7 +75,7 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intentMember);
                     }
                     else{
-                        whenGuestClickMember_dialogFragment editNameDialog = whenGuestClickMember_dialogFragment.newInstance("錯誤","請先登錄喔～","取消","去登陸");
+                        whenGuestClickMember_dialogFragment editNameDialog = whenGuestClickMember_dialogFragment.newInstance("錯誤","請先登錄喔～","取消","去登錄");
                         editNameDialog.show(getFragmentManager(), "EditNameDialog");
                     }
                 }
