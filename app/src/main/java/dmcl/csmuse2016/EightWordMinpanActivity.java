@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,27 +31,49 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 //八字命盤的activity
 public class EightWordMinpanActivity extends AppCompatActivity {
 
-    Bundle bundle = new Bundle();
-    private Button button_Submit3;
-    private RadioGroup Gruop_Sex3,Gruop_YearType2;
-    EditText input_year2,input_month2,input_day2;
-    String which_sex="女";//性別，預設為女
-    String which_yeartype="";//記錄哪一個(西元or民國or農曆)
-    String hour="";
+    EditText year , month , day ;
+    RadioGroup yearTpye , sexType;
+    Button Send;
+    String s_yearTpye,s_sexTpye;
+    Bundle bundle_charater = new Bundle();
+    RadioButton west , guo , non , male , female;
     private String[] hour_list = {"0:00~0:59(子時)","1:00~1:59(丑時)","2:00~2:59(丑時)","3:00~3:59(寅時)","4:00~4:59(寅時)","5:00~5:59(卯時)",
             "6:00~6:59(卯時)","7:00~7:59(辰時)","8:00~8:59(辰時)","9:00~9:59(巳時)","10:00~10:59(巳時)","11:00~11:59(午時)",
             "12:00~12:59(午時)","13:00~13:59(未時)","14:00~14:59(未時)","15:00~15:59(申時)","16:00~16:59(申時)","17:00~17:59(酉時)",
             "18:00~18:59(酉時)","19:00~19:59(戌時)","20:00~20:59(戌時)","21:00~21:59(亥時)","22:00~22:59(亥時)","23:00~23:59(子時)",};
-    private ArrayAdapter<String> listAdapter;
-    private Spinner spinner2;
+
+    private String[] year_list = {"1901","1902","1903","1904","1905","1906","1907","1908","1909",
+            "1910","1911","1912","1913","1914","1915","1916","1917","1918","1919",
+            "1920","1921","1922","1923","1924","1925","1926","1927","1928","1929",
+            "1930","1931","1932","1933","1934","1935","1936","1937","1938","1939",
+            "1940","1941","1942","1943","1944","1945","1946","1947","1948","1949",
+            "1950","1951","1952","1953","1954","1955","1956","1957","1958","1959",
+            "1960","1961","1962","1963","1964","1965","1966","1967","1968","1969",
+            "1970","1971","1972","1973","1974","1975","1976","1977","1978","1979",
+            "1980","1981","1982","1983","1984","1985","1986","1987","1988","1989",
+            "1990","1991","1992","1993","1994","1995","1996","1997","1998","1999",
+            "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
+            "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019",
+            "2020","2021","2022","2023","2024","2025","2026","2027","2028","2029"};
+
+    private  String[] month_list = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+
+    private  String[] day_list = {"1","2","3","4","5","6","7","8","9","10",
+            "11","12","13","14","15","16","17","18","19","20",
+            "21","22","23","24","25","26","27","28","29","30",
+            "31"};
+    private ArrayAdapter<String> listAdapter , listAdapter_year,listAdapter_month,listAdapter_day;
+    private Spinner spinner , spinner_year , spinner_month , spinner_day;
     private final String filename="account.txt";
     private boolean loginornot;
+    String hour="",s_year="",s_month="",s_day="";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +99,7 @@ public class EightWordMinpanActivity extends AppCompatActivity {
         // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
         //函式
-        ButtonSummit();
+        onClickButton();
         //加入fragment的函式
         //addFragment();
         loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
@@ -146,149 +169,118 @@ public class EightWordMinpanActivity extends AppCompatActivity {
         }
     };
 
-    void addFragment(){
-        //建立一個 MyFirstFragment 的實例(Instantiate)
-        Fragment newFragment = new FragmentForMinsu();
-        newFragment.setArguments(bundle);
-        //使用getFragmentManager()獲得FragmentTransaction物件，並呼叫 beginTransaction() 開始執行Transaction
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        //使用FragmentTransaction物件add()的方法將Fragment增加到Activity中
-        //add()有三個參數，第一個是Fragment的ViewGroup；第二個是Fragment 的實例(Instantiate)；第三個是Fragment 的Tag
-        ft.add(R.id.L3, newFragment, "first");
-        //一旦FragmentTransaction出現變化，必須要呼叫commit()使之生效
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
-    }
-    public void replaceFragment(){
-
-        Fragment newFragment = new FragmentForMinsu();
-        newFragment.setArguments(bundle);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.L3, newFragment, "first");
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
-
-    }
     //送出資料的button
-    void ButtonSummit(){
-        button_Submit3 = (Button)findViewById(R.id.button_Submit3);
-        spinner2 = (Spinner)findViewById(R.id.spinner2);
+    public void onClickButton(){
 
+        Send = (Button)findViewById(R.id.button_Submit3);
+        yearTpye = (RadioGroup)findViewById(R.id.Gruop_YearType_char);
+        sexType = (RadioGroup)findViewById(R.id.Gruop_Sex3);
+
+        // 時辰
+        spinner = (Spinner)findViewById(R.id.spinner_char);
         listAdapter = new ArrayAdapter<String>(this, R.layout.myspinner, hour_list);
         listAdapter.setDropDownViewResource(R.layout.myspinner);
-        spinner2.setAdapter(listAdapter);
-        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setAdapter(listAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 hour = Integer.toString(position);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
             }
         });
 
-/*
-        button_Submit3.setOnClickListener(new View.OnClickListener() {
+        // 年
+        spinner_year = (Spinner)findViewById(R.id.spinner_year_char);
+        listAdapter_year = new ArrayAdapter<String>(this, R.layout.myspinner, year_list);
+        listAdapter_year.setDropDownViewResource(R.layout.myspinner);
+        spinner_year.setAdapter(listAdapter_year);
+        spinner_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-
-                input_year2 = (EditText) findViewById(R.id.input_year_m2);
-                String s_year = input_year2.getText().toString();
-                input_month2 = (EditText) findViewById(R.id.input_month_m2);
-                String s_month = input_month2.getText().toString();
-                input_day2 = (EditText) findViewById(R.id.input_day_m2);
-                String s_day = input_day2.getText().toString();
-
-                //radioGroup
-                Gruop_Sex3 = (RadioGroup) findViewById(R.id.Gruop_Sex3);
-                int select_id = Gruop_Sex3.getCheckedRadioButtonId();
-                Gruop_YearType2 = (RadioGroup) findViewById(R.id.Gruop_YearType2);
-                int select_type = Gruop_YearType2.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
-                //editText_Question2.setText(String.valueOf(select_type));//測試用
-                // 問題輸入轉換為string
-                if (select_id == 2131493022) {
-                    which_sex = "0"; //API上，女 = 0
-                } else {
-                    which_sex = "1"; //API上，男 = 0
-                }
-
-                if (select_type == 2131493021) {
-                    which_yeartype = "0"; //API上，西元 = 0
-                } else if (select_id == 2131493022) {
-                    which_yeartype = "1"; //API上，國曆 = 1
-                } else {
-                    which_yeartype = "2"; //API上，農曆 = 2
-                }
-                if (!s_year.equals("") && !s_month.equals("") && !s_day.equals("")) {
-                    if (time_check(s_year, s_month, s_day)) {
-                        // 產生對映的url，使用Catch_say88_API_info函式
-                        String url = Catch_say88_API_info(which_yeartype, s_year, s_month, s_day, hour, which_sex);
-                        //產生異構Task，因為網路部分不能在main裡面進行，接著執行
-                        RequestTask request = new RequestTask();
-                        request.execute(url);
-                    } else {
-                        bundle.putString("Reslut_Star", "輸入時間有誤");
-                        bundle.putString("Result_Good_Bad", "輸入時間有誤");
-                        bundle.putString("Reslut_Issue", "輸入時間有誤");
-                        bundle.putString("Reslut_Desc", "輸入時間有誤");
-                        replaceFragment();
-                    }
-                } else {
-                    bundle.putString("Reslut_Star", "輸入時間有誤");
-                    bundle.putString("Result_Good_Bad", "輸入時間有誤");
-                    bundle.putString("Reslut_Issue", "輸入時間有誤");
-                    bundle.putString("Reslut_Desc", "輸入時間有誤");
-                    replaceFragment();
-                }
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                s_year = year_list[position];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
             }
         });
-    }
-
-    public boolean time_check(String s_year,String s_month,String s_day){
-        int i_year, i_month, i_day;
-        i_year = Integer.parseInt(s_year);
-        i_month = Integer.parseInt(s_month);
-        i_day = Integer.parseInt(s_day);
-
-        if (i_year >= 1900 && i_year < 2032 && i_month > 0 && i_month < 13 && i_day > 0) {
-            if (i_year % 4 == 0 && i_month == 2 && i_day == 29) {
-                return true;
-            } else if (i_month == 1 && i_day <= 31) {
-                return true;
-            } else if (i_month == 2 && i_day <= 28) {
-                return true;
-            } else if (i_month == 3 && i_day <= 31) {
-                return true;
-            } else if (i_month == 4 && i_day <= 30) {
-                return true;
-            } else if (i_month == 5 && i_day <= 31) {
-                return true;
-            } else if (i_month == 6 && i_day <= 30) {
-                return true;
-            } else if (i_month == 7 && i_day <= 31) {
-                return true;
-            } else if (i_month == 8 && i_day <= 31) {
-                return true;
-            } else if (i_month == 9 && i_day <= 30) {
-                return true;
-            } else if (i_month == 10 && i_day <= 31) {
-                return true;
-            } else if (i_month == 11 && i_day <= 30) {
-                return true;
-            } else if (i_month == 12 && i_day <= 31) {
-                return true;
-            } else {
-                return false;
+        // 月
+        spinner_month = (Spinner)findViewById(R.id.spinner_month_char);
+        listAdapter_month = new ArrayAdapter<String>(this, R.layout.myspinner, month_list);
+        listAdapter_month.setDropDownViewResource(R.layout.myspinner);
+        spinner_month.setAdapter(listAdapter_month);
+        spinner_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                s_month =month_list[position];
             }
-        }
-        return false;
-*/    }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+        // 日
+        spinner_day = (Spinner)findViewById(R.id.spinner_day_char);
+        listAdapter_day = new ArrayAdapter<String>(this, R.layout.myspinner, day_list);
+        listAdapter_day.setDropDownViewResource(R.layout.myspinner);
+        spinner_day.setAdapter(listAdapter_day);
+        spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                s_day = day_list[position];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        Send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 找性別ID，經過ID判斷是男是女
+                int select_year_type = yearTpye.getCheckedRadioButtonId();
+                int select_sex_tpye = sexType.getCheckedRadioButtonId();
+
+                west = (RadioButton)findViewById(R.id.radio_west_char);
+                guo = (RadioButton)findViewById(R.id.radio_guo_char);
+                non = (RadioButton)findViewById(R.id.radio_non_char);
+
+                male = (RadioButton)findViewById(R.id.radio_Male_char);
+                female = (RadioButton)findViewById(R.id.radio_Female_char);
+
+                if (select_year_type ==west.getId()) {
+                    s_yearTpye = "0";
+                } else if (select_year_type == guo.getId()) {
+                    s_yearTpye = "1";
+                } else {
+                    s_yearTpye = "2";
+                }
+
+                if (select_sex_tpye == female.getId()) {
+                    s_sexTpye = "0";
+                } else {
+                    s_sexTpye = "1";
+                }
+
+                String s_hour = hour;
+
+
+                String url = Catch_say88_API_info(s_yearTpye, s_year, s_month, s_day, s_hour, s_sexTpye);
+
+                RequestTask request = new RequestTask();
+                request.execute(url);
+            }
+        });
+
+    }
 
     public String Catch_say88_API_info(String birthType,String Year,String Month , String Day ,String Hour,String Sex){
         // token就是識別證
-        String url = "http://newtest.88say.com/Api/product/Unit507.aspx?";
+        String url = "http://newtest.88say.com/Api/product/Unit374.aspx?";
         url += "token=D5DF5A998BF46E8D37E3D600C022D8B0D76D68BABCF7CFC75304E8EF5168A48B";
         url += "&birthType=";
         url += birthType;
@@ -330,7 +322,10 @@ public class EightWordMinpanActivity extends AppCompatActivity {
         protected void onPostExecute(String text){  // doInBackground的結果會傳至這個涵式
 
             JsonTrasnfer_output(text);
-            replaceFragment();
+            Intent intent = new Intent();
+            intent.setClass(EightWordMinpanActivity.this, EightWordMinpanCatchActivity.class);
+            intent.putExtras(bundle_charater);
+            startActivity(intent);
         }
 
         @Override
@@ -339,31 +334,377 @@ public class EightWordMinpanActivity extends AppCompatActivity {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public void JsonTrasnfer_output(String jsonInput){
+    public void JsonTrasnfer_output(String jsonInput) {
         String TxnCode="";
         String TxnMsg="";
-        String Reslut_Star="";
-        String Reslut_Good="";
-        String Reslut_Bad="";
-        String Reslut_Issue="";
-        String Reslut_Desc="";
-        try {
+        String Result_Sex="";
+        String Result_Age="";
+        String Result_Birth="";
+        String Result_LunarBirth="";
+
+        String all="";
+
+        String Result_GanZhi_Gan1="";
+        String Result_GanZhi_GanInfo1="";
+        String Result_GanZhi_Zhi1="";
+        int count1;
+
+        String Result_GanZhi_Gan2="";
+        String Result_GanZhi_GanInfo2="";
+        String Result_GanZhi_Zhi2="";
+        int count2;
+
+        String Result_GanZhi_Gan3="";
+        String Result_GanZhi_GanInfo3="";
+        String Result_GanZhi_Zhi3="";
+        int count3;
+
+        String Result_GanZhi_Gan4="";
+        String Result_GanZhi_GanInfo4="";
+        String Result_GanZhi_Zhi4="";
+        int count4;
+
+        String[] Result_GanZhi_ZhiInfo1= new String[5];
+        String[] Result_GanZhi_ZhiInfo2= new String[5];
+        String[] Result_GanZhi_ZhiInfo3= new String[5];
+        String[] Result_GanZhi_ZhiInfo4= new String[5];
+
+        String Result_Decade_GanZhi_Gan1="";
+        String Result_Decade_GanZhi_GanInfo1="";
+        String Result_Decade_GanZhi_Zhi1="";
+        int count_de_1;
+
+        String Result_Decade_GanZhi_Gan2="";
+        String Result_Decade_GanZhi_GanInfo2="";
+        String Result_Decade_GanZhi_Zhi2="";
+        int count_de_2;
+
+        String Result_Decade_GanZhi_Gan3="";
+        String Result_Decade_GanZhi_GanInfo3="";
+        String Result_Decade_GanZhi_Zhi3="";
+        int count_de_3;
+
+        String Result_Decade_GanZhi_Gan4="";
+        String Result_Decade_GanZhi_GanInfo4="";
+        String Result_Decade_GanZhi_Zhi4="";
+        int count_de_4;
+
+        String Result_Decade_GanZhi_Gan5="";
+        String Result_Decade_GanZhi_GanInfo5="";
+        String Result_Decade_GanZhi_Zhi5="";
+        int count_de_5;
+
+        String Result_Decade_GanZhi_Gan6="";
+        String Result_Decade_GanZhi_GanInfo6="";
+        String Result_Decade_GanZhi_Zhi6="";
+        int count_de_6;
+
+        String Result_Decade_GanZhi_Gan7="";
+        String Result_Decade_GanZhi_GanInfo7="";
+        String Result_Decade_GanZhi_Zhi7="";
+        int count_de_7;
+
+        String Result_Decade_GanZhi_Gan8="";
+        String Result_Decade_GanZhi_GanInfo8="";
+        String Result_Decade_GanZhi_Zhi8="";
+        int count_de_8;
+
+        String Result_Decade_GanZhi_Gan9="";
+        String Result_Decade_GanZhi_GanInfo9="";
+        String Result_Decade_GanZhi_Zhi9="";
+        int count_de_9;
+
+        String[] Result_Decade_GanZhi_ZhiInfo1= new String[5];
+        String[] Result_Decade_GanZhi_ZhiInfo2= new String[5];
+        String[] Result_Decade_GanZhi_ZhiInfo3= new String[5];
+        String[] Result_Decade_GanZhi_ZhiInfo4= new String[5];
+        String[] Result_Decade_GanZhi_ZhiInfo5= new String[5];
+        String[] Result_Decade_GanZhi_ZhiInfo6= new String[5];
+        String[] Result_Decade_GanZhi_ZhiInfo7= new String[5];
+        String[] Result_Decade_GanZhi_ZhiInfo8= new String[5];
+        String[] Result_Decade_GanZhi_ZhiInfo9= new String[5];
+
+
+        String Result_SolarTerm_Name1 = "";
+        String Result_SolarTerm_Date1 = "";
+        String Result_SolarTerm_Diff1 = "";
+
+        String Result_SolarTerm_Name2 = "";
+        String Result_SolarTerm_Date2 = "";
+        String Result_SolarTerm_Diff2 = "";
+
+        try{
             TxnCode = new JSONObject(jsonInput).getString("TxnCode");
             TxnMsg = new JSONObject(jsonInput).getString("TxnMsg");
-            Reslut_Star =new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Star");
-            Reslut_Good =new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Good");
-            Reslut_Bad =new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Bad");
-            Reslut_Issue =new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Issue");
-            Reslut_Desc =new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Desc");
-            String Result_Good_Bad =  Reslut_Good + "\n" + Reslut_Bad;
-            bundle.putString("Reslut_Star",Reslut_Star);
-            bundle.putString("Result_Good_Bad",Result_Good_Bad);
-            bundle.putString("Reslut_Issue",Reslut_Issue);
-            bundle.putString("Reslut_Desc",Reslut_Desc);
-        } catch (JSONException e) {
+            Result_Sex =new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Sex");
+            Result_Age =new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Age");
+            Result_Birth =new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Birth");
+            Result_LunarBirth =new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("LunarBirth");
+            all = Result_Sex +" " + Result_Age + " " + Result_Birth + " "+Result_LunarBirth +"\n";
+            bundle_charater.putString("Result_Sex",Result_Sex);
+            bundle_charater.putString("Result_Age", Result_Age);
+            bundle_charater.putString("Result_Birth",Result_Birth);
+            bundle_charater.putString("Result_LunarBirth",Result_LunarBirth);
+
+            Result_GanZhi_Gan1 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(0).getString("Gan");
+            Result_GanZhi_GanInfo1 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(0).getString("GanInfo");
+            Result_GanZhi_Zhi1  = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(0).getString("Zhi");
+            count1 = new JSONArray(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(0).getString("ZhiInfo")).length();
+            all = all +  Result_GanZhi_Gan1 + " " +  Result_GanZhi_GanInfo1 + " " + Result_GanZhi_Zhi1 + " ";
+            bundle_charater.putString("Result_GanZhi_Gan1",Result_GanZhi_Gan1);
+            bundle_charater.putString("Result_GanZhi_GanInfo1",Result_GanZhi_GanInfo1);
+            bundle_charater.putString("Result_GanZhi_Zhi1", Result_GanZhi_Zhi1);
+            bundle_charater.putInt("count1", count1);
+
+            all += "\n";
+            Result_GanZhi_Gan2 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(1).getString("Gan");
+            Result_GanZhi_GanInfo2 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(1).getString("GanInfo");
+            Result_GanZhi_Zhi2  = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(1).getString("Zhi");
+            count2 = new JSONArray(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(1).getString("ZhiInfo")).length();
+            all = all +  Result_GanZhi_Gan2 + " " +  Result_GanZhi_GanInfo2 + " " + Result_GanZhi_Zhi2 + " ";
+            bundle_charater.putString("Result_GanZhi_Gan2",Result_GanZhi_Gan2);
+            bundle_charater.putString("Result_GanZhi_GanInfo2",Result_GanZhi_GanInfo2);
+            bundle_charater.putString("Result_GanZhi_Zhi2", Result_GanZhi_Zhi2);
+            bundle_charater.putInt("count2", count2);
+
+            all += "\n";
+            Result_GanZhi_Gan3 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(2).getString("Gan");
+            Result_GanZhi_GanInfo3 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(2).getString("GanInfo");
+            Result_GanZhi_Zhi3  = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(2).getString("Zhi");
+            count3 = new JSONArray(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(2).getString("ZhiInfo")).length();
+            all = all +  Result_GanZhi_Gan3 + " " +  Result_GanZhi_GanInfo3 + " " + Result_GanZhi_Zhi3 + " ";
+            bundle_charater.putString("Result_GanZhi_Gan3",Result_GanZhi_Gan3);
+            bundle_charater.putString("Result_GanZhi_GanInfo3",Result_GanZhi_GanInfo3);
+            bundle_charater.putString("Result_GanZhi_Zhi3", Result_GanZhi_Zhi3);
+            bundle_charater.putInt("count3", count3);
+
+            all += "\n";
+            Result_GanZhi_Gan4 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(3).getString("Gan");
+            Result_GanZhi_GanInfo4 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(3).getString("GanInfo");
+            Result_GanZhi_Zhi4  = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(3).getString("Zhi");
+            count4 = new JSONArray(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(3).getString("ZhiInfo")).length();
+            all = all +  Result_GanZhi_Gan4 + " " +  Result_GanZhi_GanInfo4 + " " + Result_GanZhi_Zhi4 + " ";
+            bundle_charater.putString("Result_GanZhi_Gan4",Result_GanZhi_Gan4);
+            bundle_charater.putString("Result_GanZhi_GanInfo4",Result_GanZhi_GanInfo4);
+            bundle_charater.putString("Result_GanZhi_Zhi4", Result_GanZhi_Zhi4);
+            bundle_charater.putInt("count4", count4);
+
+            all += "\n";
+            all += "\n";
+
+            for(int i=0;i<count1;i++){
+                Result_GanZhi_ZhiInfo1[i] = new JSONArray(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(0).getString("ZhiInfo")).getString(i);
+                all = all + Result_GanZhi_ZhiInfo1[i] + " ";
+                bundle_charater.putString("Result_GanZhi_Gan1_"+Integer.toString(i),Result_GanZhi_ZhiInfo1[i]);
+            }
+            all += "\n";
+            for(int i=0;i<count2;i++){
+                Result_GanZhi_ZhiInfo2[i] = new JSONArray(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(1).getString("ZhiInfo")).getString(i);
+                all = all + Result_GanZhi_ZhiInfo2[i] + " ";
+                bundle_charater.putString("Result_GanZhi_Gan2_"+Integer.toString(i),Result_GanZhi_ZhiInfo2[i]);
+            }
+            all += "\n";
+            for(int i=0;i<count3;i++){
+                Result_GanZhi_ZhiInfo3[i] = new JSONArray(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(2).getString("ZhiInfo")).getString(i);
+                all = all + Result_GanZhi_ZhiInfo3[i] + " ";
+                bundle_charater.putString("Result_GanZhi_Gan3_"+Integer.toString(i),Result_GanZhi_ZhiInfo3[i]);
+            }
+            all += "\n";
+            for(int i=0;i<count4;i++){
+                Result_GanZhi_ZhiInfo4[i] = new JSONArray(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("GanZhi")).getJSONObject(3).getString("ZhiInfo")).getString(i);
+                all = all + Result_GanZhi_ZhiInfo4[i] + " ";
+                bundle_charater.putString("Result_GanZhi_Gan4_"+Integer.toString(i),Result_GanZhi_ZhiInfo4[i]);
+            }
+            all += "\n";
+
+
+            Result_Decade_GanZhi_Gan1 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(0).getString("GanZhi")).getString("Gan");
+            Result_Decade_GanZhi_GanInfo1 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(0).getString("GanZhi")).getString("GanInfo");
+            Result_Decade_GanZhi_Zhi1 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(0).getString("GanZhi")).getString("Zhi");
+            count_de_1 = new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(0).getString("GanZhi")).getString("ZhiInfo")).length();
+            all = all +  Result_Decade_GanZhi_Gan1 + " " +  Result_Decade_GanZhi_GanInfo1 + " " + Result_Decade_GanZhi_Zhi1 + " "+ Integer.toString(count_de_1);
+            bundle_charater.putString("Result_Decade_GanZhi_Gan1",Result_Decade_GanZhi_Gan1);
+            bundle_charater.putString("Result_Decade_GanZhi_GanInfo1",Result_Decade_GanZhi_GanInfo1);
+            bundle_charater.putString("Result_Decade_GanZhi_Zhi1", Result_Decade_GanZhi_Zhi1);
+            bundle_charater.putInt("count_de_1", count_de_1);
+            all += "\n";
+
+            Result_Decade_GanZhi_Gan2 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(1).getString("GanZhi")).getString("Gan");
+            Result_Decade_GanZhi_GanInfo2 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(1).getString("GanZhi")).getString("GanInfo");
+            Result_Decade_GanZhi_Zhi2 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(1).getString("GanZhi")).getString("Zhi");
+            count_de_2 = new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(1).getString("GanZhi")).getString("ZhiInfo")).length();
+            all = all +  Result_Decade_GanZhi_Gan2 + " " +  Result_Decade_GanZhi_GanInfo2 + " " + Result_Decade_GanZhi_Zhi2 + " "+ Integer.toString(count_de_2);
+            bundle_charater.putString("Result_Decade_GanZhi_Gan2",Result_Decade_GanZhi_Gan2);
+            bundle_charater.putString("Result_Decade_GanZhi_GanInfo2",Result_Decade_GanZhi_GanInfo2);
+            bundle_charater.putString("Result_Decade_GanZhi_Zhi2", Result_Decade_GanZhi_Zhi2);
+            bundle_charater.putInt("count_de_2", count_de_2);
+            all += "\n";
+
+            Result_Decade_GanZhi_Gan3 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(2).getString("GanZhi")).getString("Gan");
+            Result_Decade_GanZhi_GanInfo3 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(2).getString("GanZhi")).getString("GanInfo");
+            Result_Decade_GanZhi_Zhi3 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(2).getString("GanZhi")).getString("Zhi");
+            count_de_3 = new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(2).getString("GanZhi")).getString("ZhiInfo")).length();
+            all = all +  Result_Decade_GanZhi_Gan3 + " " +  Result_Decade_GanZhi_GanInfo3 + " " + Result_Decade_GanZhi_Zhi3 + " "+ Integer.toString(count_de_3);
+            bundle_charater.putString("Result_Decade_GanZhi_Gan3",Result_Decade_GanZhi_Gan3);
+            bundle_charater.putString("Result_Decade_GanZhi_GanInfo3",Result_Decade_GanZhi_GanInfo3);
+            bundle_charater.putString("Result_Decade_GanZhi_Zhi3", Result_Decade_GanZhi_Zhi3);
+            bundle_charater.putInt("count_de_3", count_de_3);
+            all += "\n";
+
+            Result_Decade_GanZhi_Gan4 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(3).getString("GanZhi")).getString("Gan");
+            Result_Decade_GanZhi_GanInfo4 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(3).getString("GanZhi")).getString("GanInfo");
+            Result_Decade_GanZhi_Zhi4 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(3).getString("GanZhi")).getString("Zhi");
+            count_de_4 = new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(3).getString("GanZhi")).getString("ZhiInfo")).length();
+            all = all +  Result_Decade_GanZhi_Gan4 + " " +  Result_Decade_GanZhi_GanInfo4 + " " + Result_Decade_GanZhi_Zhi4 + " "+ Integer.toString(count_de_4);
+            bundle_charater.putString("Result_Decade_GanZhi_Gan4",Result_Decade_GanZhi_Gan4);
+            bundle_charater.putString("Result_Decade_GanZhi_GanInfo4",Result_Decade_GanZhi_GanInfo4);
+            bundle_charater.putString("Result_Decade_GanZhi_Zhi4", Result_Decade_GanZhi_Zhi4);
+            bundle_charater.putInt("count_de_4", count_de_4);
+            all += "\n";
+
+            Result_Decade_GanZhi_Gan5 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(4).getString("GanZhi")).getString("Gan");
+            Result_Decade_GanZhi_GanInfo5 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(4).getString("GanZhi")).getString("GanInfo");
+            Result_Decade_GanZhi_Zhi5 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(4).getString("GanZhi")).getString("Zhi");
+            count_de_5 = new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(4).getString("GanZhi")).getString("ZhiInfo")).length();
+            all = all +  Result_Decade_GanZhi_Gan5 + " " +  Result_Decade_GanZhi_GanInfo5 + " " + Result_Decade_GanZhi_Zhi5 + " "+ Integer.toString(count_de_5);
+            bundle_charater.putString("Result_Decade_GanZhi_Gan5",Result_Decade_GanZhi_Gan5);
+            bundle_charater.putString("Result_Decade_GanZhi_GanInfo5",Result_Decade_GanZhi_GanInfo5);
+            bundle_charater.putString("Result_Decade_GanZhi_Zhi5", Result_Decade_GanZhi_Zhi5);
+            bundle_charater.putInt("count_de_5", count_de_5);
+            all += "\n";
+
+            Result_Decade_GanZhi_Gan6 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(5).getString("GanZhi")).getString("Gan");
+            Result_Decade_GanZhi_GanInfo6 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(5).getString("GanZhi")).getString("GanInfo");
+            Result_Decade_GanZhi_Zhi6 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(5).getString("GanZhi")).getString("Zhi");
+            count_de_6 = new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(5).getString("GanZhi")).getString("ZhiInfo")).length();
+            all = all +  Result_Decade_GanZhi_Gan6 + " " +  Result_Decade_GanZhi_GanInfo6 + " " + Result_Decade_GanZhi_Zhi6 + " "+ Integer.toString(count_de_6);
+            bundle_charater.putString("Result_Decade_GanZhi_Gan6",Result_Decade_GanZhi_Gan6);
+            bundle_charater.putString("Result_Decade_GanZhi_GanInfo6",Result_Decade_GanZhi_GanInfo6);
+            bundle_charater.putString("Result_Decade_GanZhi_Zhi6", Result_Decade_GanZhi_Zhi6);
+            bundle_charater.putInt("count_de_6", count_de_6);
+            ;
+            all += "\n";
+
+            Result_Decade_GanZhi_Gan7 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(6).getString("GanZhi")).getString("Gan");
+            Result_Decade_GanZhi_GanInfo7 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(6).getString("GanZhi")).getString("GanInfo");
+            Result_Decade_GanZhi_Zhi7 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(6).getString("GanZhi")).getString("Zhi");
+            count_de_7 = new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(6).getString("GanZhi")).getString("ZhiInfo")).length();
+            all = all +  Result_Decade_GanZhi_Gan7 + " " +  Result_Decade_GanZhi_GanInfo7 + " " + Result_Decade_GanZhi_Zhi7 + " "+ Integer.toString(count_de_7);
+            bundle_charater.putString("Result_Decade_GanZhi_Gan7",Result_Decade_GanZhi_Gan7);
+            bundle_charater.putString("Result_Decade_GanZhi_GanInfo7",Result_Decade_GanZhi_GanInfo7);
+            bundle_charater.putString("Result_Decade_GanZhi_Zhi7", Result_Decade_GanZhi_Zhi7);
+            bundle_charater.putInt("count_de_7", count_de_7);
+            all += "\n";
+
+            Result_Decade_GanZhi_Gan8 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(7).getString("GanZhi")).getString("Gan");
+            Result_Decade_GanZhi_GanInfo8 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(7).getString("GanZhi")).getString("GanInfo");
+            Result_Decade_GanZhi_Zhi8 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(7).getString("GanZhi")).getString("Zhi");
+            count_de_8 = new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(7).getString("GanZhi")).getString("ZhiInfo")).length();
+            all = all +  Result_Decade_GanZhi_Gan8 + " " +  Result_Decade_GanZhi_GanInfo8 + " " + Result_Decade_GanZhi_Zhi8 + " "+ Integer.toString(count_de_8);
+            bundle_charater.putString("Result_Decade_GanZhi_Gan8",Result_Decade_GanZhi_Gan8);
+            bundle_charater.putString("Result_Decade_GanZhi_GanInfo8",Result_Decade_GanZhi_GanInfo8);
+            bundle_charater.putString("Result_Decade_GanZhi_Zhi8", Result_Decade_GanZhi_Zhi8);
+            bundle_charater.putInt("count_de_8", count_de_8);
+            all += "\n";
+
+            Result_Decade_GanZhi_Gan9= new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(8).getString("GanZhi")).getString("Gan");
+            Result_Decade_GanZhi_GanInfo9 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(8).getString("GanZhi")).getString("GanInfo");
+            Result_Decade_GanZhi_Zhi9 = new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(8).getString("GanZhi")).getString("Zhi");
+            count_de_9 = new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(8).getString("GanZhi")).getString("ZhiInfo")).length();
+            all = all +  Result_Decade_GanZhi_Gan9 + " " +  Result_Decade_GanZhi_GanInfo9 + " " + Result_Decade_GanZhi_Zhi9 + " "+ Integer.toString(count_de_9);
+            bundle_charater.putString("Result_Decade_GanZhi_Gan9",Result_Decade_GanZhi_Gan9);
+            bundle_charater.putString("Result_Decade_GanZhi_GanInfo9",Result_Decade_GanZhi_GanInfo9);
+            bundle_charater.putString("Result_Decade_GanZhi_Zhi9", Result_Decade_GanZhi_Zhi9);
+            bundle_charater.putInt("count_de_9", count_de_9);
+            all += "\n";
+            all += "\n";
+
+            for(int i=0;i<count_de_1;i++){
+                Result_Decade_GanZhi_ZhiInfo1[i] =new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(0).getString("GanZhi")).getString("ZhiInfo")).getString(i);
+                all = all + Result_Decade_GanZhi_ZhiInfo1[i] + " ";
+                bundle_charater.putString("Result_Decade_GanZhi_ZhiInfo1_"+Integer.toString(i),Result_Decade_GanZhi_ZhiInfo1[i]);
+            }
+            all += "\n";
+
+            for(int i=0;i<count_de_2;i++){
+                Result_Decade_GanZhi_ZhiInfo2[i] =new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(1).getString("GanZhi")).getString("ZhiInfo")).getString(i);
+                all = all + Result_Decade_GanZhi_ZhiInfo2[i] + " ";
+                bundle_charater.putString("Result_Decade_GanZhi_ZhiInfo2_"+Integer.toString(i),Result_Decade_GanZhi_ZhiInfo2[i]);
+            }
+            all += "\n";
+
+            for(int i=0;i<count_de_3;i++){
+                Result_Decade_GanZhi_ZhiInfo3[i] =new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(2).getString("GanZhi")).getString("ZhiInfo")).getString(i);
+                all = all + Result_Decade_GanZhi_ZhiInfo3[i] + " ";
+                bundle_charater.putString("Result_Decade_GanZhi_ZhiInfo3_"+Integer.toString(i),Result_Decade_GanZhi_ZhiInfo3[i]);
+            }
+            all += "\n";
+
+            for(int i=0;i<count_de_4;i++){
+                Result_Decade_GanZhi_ZhiInfo4[i] =new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(3).getString("GanZhi")).getString("ZhiInfo")).getString(i);
+                all = all + Result_Decade_GanZhi_ZhiInfo4[i] + " ";
+                bundle_charater.putString("Result_Decade_GanZhi_ZhiInfo4_"+Integer.toString(i),Result_Decade_GanZhi_ZhiInfo4[i]);
+            }
+            all += "\n";
+
+            for(int i=0;i<count_de_5;i++){
+                Result_Decade_GanZhi_ZhiInfo5[i] =new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(4).getString("GanZhi")).getString("ZhiInfo")).getString(i);
+                all = all + Result_Decade_GanZhi_ZhiInfo5[i] + " ";
+                bundle_charater.putString("Result_Decade_GanZhi_ZhiInfo5_"+Integer.toString(i),Result_Decade_GanZhi_ZhiInfo5[i]);
+            }
+            all += "\n";
+
+            for(int i=0;i<count_de_6;i++){
+                Result_Decade_GanZhi_ZhiInfo6[i] =new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(5).getString("GanZhi")).getString("ZhiInfo")).getString(i);
+                all = all + Result_Decade_GanZhi_ZhiInfo6[i] + " ";
+                bundle_charater.putString("Result_Decade_GanZhi_ZhiInfo6_"+Integer.toString(i),Result_Decade_GanZhi_ZhiInfo6[i]);
+            }
+            all += "\n";
+
+            for(int i=0;i<count_de_7;i++){
+                Result_Decade_GanZhi_ZhiInfo7[i] =new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(6).getString("GanZhi")).getString("ZhiInfo")).getString(i);
+                all = all + Result_Decade_GanZhi_ZhiInfo7[i] + " ";
+                bundle_charater.putString("Result_Decade_GanZhi_ZhiInfo7_"+Integer.toString(i),Result_Decade_GanZhi_ZhiInfo7[i]);
+            }
+            all += "\n";
+
+            for(int i=0;i<count_de_8;i++){
+                Result_Decade_GanZhi_ZhiInfo8[i] =new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(7).getString("GanZhi")).getString("ZhiInfo")).getString(i);
+                all = all + Result_Decade_GanZhi_ZhiInfo8[i] + " ";
+                bundle_charater.putString("Result_Decade_GanZhi_ZhiInfo8_"+Integer.toString(i),Result_Decade_GanZhi_ZhiInfo8[i]);
+            }
+            all += "\n";
+            for(int i=0;i<count_de_9;i++){
+                Result_Decade_GanZhi_ZhiInfo9[i] =new JSONArray(new JSONObject(new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("Decade")).getJSONObject(8).getString("GanZhi")).getString("ZhiInfo")).getString(i);
+                all = all + Result_Decade_GanZhi_ZhiInfo9[i] + " ";
+                bundle_charater.putString("Result_Decade_GanZhi_ZhiInfo9_"+Integer.toString(i),Result_Decade_GanZhi_ZhiInfo9[i]);
+            }
+            all += "\n";
+
+
+            Result_SolarTerm_Name1 =new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("SolarTerm")).getJSONObject(0).getString("Name");
+            Result_SolarTerm_Date1 =new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("SolarTerm")).getJSONObject(0).getString("Date");
+            Result_SolarTerm_Diff1 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("SolarTerm")).getJSONObject(0).getString("Diff");
+            all = all + Result_SolarTerm_Name1  + " " +Result_SolarTerm_Date1 +" "+Result_SolarTerm_Diff1;
+            bundle_charater.putString("Result_SolarTerm_Name1",Result_SolarTerm_Name1);
+            bundle_charater.putString("Result_SolarTerm_Date1",Result_SolarTerm_Date1);
+            bundle_charater.putString("Result_SolarTerm_Diff1",Result_SolarTerm_Diff1);
+
+            Result_SolarTerm_Name2 =new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("SolarTerm")).getJSONObject(1).getString("Name");
+            Result_SolarTerm_Date2 =new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("SolarTerm")).getJSONObject(1).getString("Date");
+            Result_SolarTerm_Diff2 = new JSONArray(new JSONObject(new JSONObject(jsonInput).getString("Result")).getString("SolarTerm")).getJSONObject(1).getString("Diff");
+            all = all + Result_SolarTerm_Name2  + " " +Result_SolarTerm_Date2 +" "+Result_SolarTerm_Diff2;
+            bundle_charater.putString("Result_SolarTerm_Name2",Result_SolarTerm_Name2);
+            bundle_charater.putString("Result_SolarTerm_Date2",Result_SolarTerm_Date2);
+            bundle_charater.putString("Result_SolarTerm_Diff2", Result_SolarTerm_Diff2);
+
+
+
+        }catch (JSONException e){
             e.printStackTrace();
         }
+
+
     }
 
 }
