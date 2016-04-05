@@ -23,6 +23,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,6 +44,7 @@ public class MemberActivity extends AppCompatActivity {
     private String hidePassword="";
 
     private String[] collectDatas;
+    private String formConnect;
     private String Surname ="";
     private String Name ="";
     private String Email="";
@@ -593,17 +596,36 @@ public class MemberActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
+
         }
         @Override
         protected Integer doInBackground(Integer... Cases) {
             // TODO Auto-generated method stub
+            String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+            String[] tem = fromfile.split("@@@@@");
+            String[] fromfileArray = tem[0].split("###");
+            String newAccountDatas = "";
+
             if (Cases[0] == 1){
                 String command = "UPDATE Account SET Surname='"+ Surname +"' WHERE Account='" +Email + "'";
                 String ans = new connect(command).getServerUpdate();
                 Log.v("getL", ans);
                 if(ans.equals("Warning")){
-                    Log.v("get","get an error from server");
+                    Log.v("get", "get an error from server");
                 }
+                //寫回file updated 2016/04/05 by 均
+                for (int i=0;i<fromfileArray.length;i++){
+                    if (i == 0){
+                        newAccountDatas += Surname + "###";
+                    }else{
+                        if (i == fromfileArray.length-1){
+                            newAccountDatas += fromfileArray[i] + "@@@@@";
+                        }else{
+                            newAccountDatas += fromfileArray[i] + "###";
+                        }
+                    }
+                }
+                new Write_and_Read(filename,getFilesDir()).WritetoFile_clear(newAccountDatas);
                 return 1;
             }
             else if (Cases[0] == 2){
@@ -613,6 +635,19 @@ public class MemberActivity extends AppCompatActivity {
                 if(ans.equals("Warning")){
                     Log.v("get","get an error from server");
                 }
+                //寫回file updated 2016/04/05 by 均
+                for (int i=0;i<fromfileArray.length;i++){
+                    if (i == 1){
+                        newAccountDatas += Name + "###";
+                    }else{
+                        if (i == fromfileArray.length-1){
+                            newAccountDatas += fromfileArray[i] + "@@@@@";
+                        }else{
+                            newAccountDatas += fromfileArray[i] + "###";
+                        }
+                    }
+                }
+                new Write_and_Read(filename,getFilesDir()).WritetoFile_clear(newAccountDatas);
                 return 2;
             }
             else if (Cases[0] == 3){
@@ -622,6 +657,19 @@ public class MemberActivity extends AppCompatActivity {
                 if(ans.equals("Warning")){
                     Log.v("get","get an error from server");
                 }
+                //寫回file updated 2016/04/05 by 均
+                for (int i=0;i<fromfileArray.length;i++){
+                    if (i == 3){
+                        newAccountDatas += Password + "###";
+                    }else{
+                        if (i == fromfileArray.length-1){
+                            newAccountDatas += fromfileArray[i] + "@@@@@";
+                        }else{
+                            newAccountDatas += fromfileArray[i] + "###";
+                        }
+                    }
+                }
+                new Write_and_Read(filename,getFilesDir()).WritetoFile_clear(newAccountDatas);
                 return 3;
             }
             else if (Cases[0] == 4){
@@ -631,6 +679,19 @@ public class MemberActivity extends AppCompatActivity {
                 if(ans.equals("Warning")){
                     Log.v("get","get an error from server");
                 }
+                //寫回file updated 2016/04/05 by 均
+                for (int i=0;i<fromfileArray.length;i++){
+                    if (i == 4){
+                        newAccountDatas += sex + "###";
+                    }else{
+                        if (i == fromfileArray.length-1){
+                            newAccountDatas += fromfileArray[i] + "@@@@@";
+                        }else{
+                            newAccountDatas += fromfileArray[i] + "###";
+                        }
+                    }
+                }
+                new Write_and_Read(filename,getFilesDir()).WritetoFile_clear(newAccountDatas);
                 return 4;
             }
             else if (Cases[0] == 5){
@@ -641,6 +702,23 @@ public class MemberActivity extends AppCompatActivity {
                 if(ans.equals("Warning")){
                     Log.v("get","get an error from server");
                 }
+                //寫回file updated 2016/04/05 by 均
+                for (int i=0;i<fromfileArray.length;i++){
+                    if (i == 6){
+                        newAccountDatas += yyyy + "###";
+                    }else if (i == 7){
+                        newAccountDatas += MM + "###";
+                    }else if (i == 8){
+                        newAccountDatas += dd + "###";
+                    }else{
+                        if (i == fromfileArray.length-1){
+                            newAccountDatas += fromfileArray[i] + "@@@@@";
+                        }else{
+                            newAccountDatas += fromfileArray[i] + "###";
+                        }
+                    }
+                }
+                new Write_and_Read(filename,getFilesDir()).WritetoFile_clear(newAccountDatas);
                 return 5;
             }
             else if (Cases[0] == 6){
@@ -650,6 +728,19 @@ public class MemberActivity extends AppCompatActivity {
                 if(ans.equals("Warning")){
                     Log.v("get","get an error from server");
                 }
+                //寫回file updated 2016/04/05 by 均
+                for (int i=0;i<fromfileArray.length;i++){
+                    if (i == 9){
+                        newAccountDatas += hh + "###";
+                    }else{
+                        if (i == fromfileArray.length-1){
+                            newAccountDatas += fromfileArray[i] + "@@@@@";
+                        }else{
+                            newAccountDatas += fromfileArray[i] + "###";
+                        }
+                    }
+                }
+                new Write_and_Read(filename,getFilesDir()).WritetoFile_clear(newAccountDatas);
                 return 6;
             }
             return null;
@@ -662,6 +753,8 @@ public class MemberActivity extends AppCompatActivity {
                 Surnames.setText(Surname);
 
                 collectDatas[0] = Surname; //回存,這樣可以反覆更改
+
+
             }else if (result == 2){
                 TextView Names = (TextView)findViewById(R.id.Name_content);
                 Names.setText(Name);
