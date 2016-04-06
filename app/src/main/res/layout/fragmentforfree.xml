@@ -17,7 +17,8 @@
             android:textColor="#000000"
             android:background="#d1a0e0e5"
             android:id="@+id/button_Title"
-            android:layout_weight="1"/>
+            android:layout_marginRight="1dp"
+            android:layout_weight="1" />
 
         <Button
             android:layout_width="wrap_content"
@@ -26,6 +27,8 @@
             android:background="#d1a0e0e5"
             android:text="卜卦結果"
             android:id="@+id/button_Result"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="1"/>
 
         <Button
@@ -35,6 +38,7 @@
             android:background="#d1a0e0e5"
             android:text="卜卦諫言"
             android:id="@+id/button_Comment"
+            android:layout_marginLeft="1dp"
             android:layout_weight="1"/>
     </LinearLayout>
 

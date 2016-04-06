@@ -68,11 +68,11 @@ public class HomePageActivity extends Activity {
                 if (v == imagebutton05){//會員專區
                     loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
                     if(loginornot){
-                     String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
-                     String[] fromfileArray = fromfile.split("###");
-                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
-                    intentMember.putExtra("mail",fromfileArray[2]); //send mail to next activity
-                    HomePageActivity.this.startActivity(intentMember);
+                        String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
+                        String[] fromfileArray = fromfile.split("###");
+                        Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
+                        intentMember.putExtra("mail",fromfileArray[2]); //send mail to next activity
+                        HomePageActivity.this.startActivity(intentMember);
                     }
                     else{
                         whenGuestClickMember_dialogFragment editNameDialog = whenGuestClickMember_dialogFragment.newInstance("錯誤","請先登錄喔～","取消","去登錄");
