@@ -3,8 +3,11 @@ package dmcl.csmuse2016;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -87,9 +90,37 @@ public class LoginActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
 
-    public void Login(View view) { //按下登入按鈕
+        return result;
+    }
+    public void Login(View view) {
+     if(isNetwork())//按下登入按鈕
         new loginbuttonclick().execute(); //給他一個執行緒(main thread)
+     else{
+         notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+         editNameDialog.show(getFragmentManager(), "EditNameDialog");
+     }
+
     }
     //執行緒code
     class loginbuttonclick extends AsyncTask<Void,Void,Void>{
