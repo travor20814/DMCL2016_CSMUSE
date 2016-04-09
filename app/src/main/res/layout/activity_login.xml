@@ -99,8 +99,8 @@
         android:layout_above="@+id/Account">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300px"
+            android:layout_height="300px"
             android:id="@+id/imageView"
             android:background="@mipmap/titletest01"
             android:layout_alignParentTop="false"

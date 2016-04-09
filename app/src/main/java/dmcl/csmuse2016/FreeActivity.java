@@ -52,7 +52,7 @@ public class FreeActivity extends AppCompatActivity {
         // App Logo
         toolbar.setLogo(R.mipmap.title02);
         // Title
-        toolbar.setTitle("免費卜卦");
+        toolbar.setTitle("每日卜卦");
         toolbar.setTitleTextColor(Color.BLACK);
         // Sub Title
         toolbar.setSubtitle("88Say幫您及時掌握未來");
@@ -162,7 +162,7 @@ public class FreeActivity extends AppCompatActivity {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         //使用FragmentTransaction物件add()的方法將Fragment增加到Activity中
         //add()有三個參數，第一個是Fragment的ViewGroup；第二個是Fragment 的實例(Instantiate)；第三個是Fragment 的Tag
-        ft.add(R.id.L1, newFragment, "first");
+        ft.add(R.id.L1, newFragment, "second");
         //一旦FragmentTransaction出現變化，必須要呼叫commit()使之生效
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
@@ -173,7 +173,7 @@ public class FreeActivity extends AppCompatActivity {
         Fragment newFragment = new FragmentForFree();
         newFragment.setArguments(bundle);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.L1, newFragment, "first");
+        ft.replace(R.id.L1, newFragment, "second");
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
 

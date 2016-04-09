@@ -93,7 +93,7 @@ public class fufay extends AppCompatActivity {
         // App Logo
         toolbar.setLogo(R.mipmap.title02);
         // Title
-        toolbar.setTitle("紫微精論");
+        toolbar.setTitle("付費專區");
         toolbar.setTitleTextColor(Color.BLACK);
         // Sub Title
         toolbar.setSubtitle("88Say幫您及時掌握未來");

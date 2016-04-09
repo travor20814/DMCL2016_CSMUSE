@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_color">
+    android:background="#83282929">
 
 
     <LinearLayout
@@ -15,24 +15,26 @@
             android:layout_height="fill_parent"
             android:text="卜卦代表"
             android:textColor="#000000"
-            android:background="#d1a0e0e5"
+            android:background="@drawable/fragment_btn"
             android:id="@+id/button_Title"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginRight="1dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#000000"
-            android:background="#d1a0e0e5"
+            android:background="@drawable/fragment_btn2"
             android:text="卜卦結果"
             android:id="@+id/button_Result"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginRight="1dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:textColor="#000000"
-            android:background="#d1a0e0e5"
+            android:background="@drawable/fragment_btn3"
             android:text="卜卦諫言"
             android:id="@+id/button_Comment"
             android:layout_weight="1"/>
@@ -50,7 +52,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:gravity="center"
             android:textColor="#000000"
-            android:background="#d1a0e7ed"
+            android:background="#9257cfd9"
             android:text="請於上方輸入問題"
             android:id="@+id/content" />
     </LinearLayout>

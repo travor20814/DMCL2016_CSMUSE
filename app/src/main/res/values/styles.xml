@@ -13,7 +13,7 @@
         <item name="colorPrimary">@color/colorBarWhite</item>
         <item name="colorPrimaryDark">@color/accent_material_light</item>
         <item name="colorAccent">@color/dim_foreground_material_dark</item>
-        <item name="android:windowBackground">@mipmap/background_color01</item>
+        <item name="android:windowBackground">@drawable/background_color</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

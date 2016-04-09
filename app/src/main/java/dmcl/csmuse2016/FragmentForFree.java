@@ -40,21 +40,21 @@ public class FragmentForFree extends Fragment {
             @Override
             public void onClick(View v) {
                 content.setText(return_Title);//把回傳的Title顯示出來
-                //content.setBackgroundColor(Color.parseColor("#fcf7c9"));
+                content.setBackgroundColor(Color.parseColor("#9257cfd9"));
             }
         });
         button_Result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 content.setText(return_Result);//把回傳的Result顯示出來
-                //content.setBackgroundColor(Color.parseColor("#fcf39d"));
+                content.setBackgroundColor(Color.parseColor("#8257cfd9"));
             }
         });
         button_Comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 content.setText(return_Comment);//把回傳的Comment顯示出來
-                //content.setBackgroundColor(Color.parseColor("#fff370"));
+                content.setBackgroundColor(Color.parseColor("#7257cfd9"));
             }
         });
 

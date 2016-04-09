@@ -7,7 +7,8 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     tools:context=".FreeActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/background_color">
 
     <!--這是測試用的textview 實際內容應該放各種主題 *layout_below-->
 
@@ -22,7 +23,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#d1a0e7ed"
+        android:background="@color/innerStyleColor"
         android:layout_weight="0.03">
 
         <LinearLayout
@@ -38,7 +39,7 @@
 
                 android:textSize="30dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="免費卜卦，為您解答 !"
+                android:text="每日卜卦，為您解答 !"
                 android:id="@+id/textView_Question" />
 
             <Space
@@ -111,7 +112,7 @@
                 android:layout_height="fill_parent"
                 android:text="免費查詢"
                 android:textColor="#000000"
-                android:background="#d1a0e0e5"
+                android:background="@drawable/login_btn"
                 android:id="@+id/button_Submit" />
         </LinearLayout>
     </LinearLayout>

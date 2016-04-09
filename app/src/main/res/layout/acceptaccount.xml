@@ -41,7 +41,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我同意接受本條款及其更新之內容，並願遵守所有條款"
+        android:text="我同意接受本條款及其更新之內容，並遵守所有條款"
         android:id="@+id/licenceCheckBox"
         android:onClick="checkBoxchecked"
         android:layout_alignParentBottom="true"
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:text="下一步"
         android:id="@+id/licenceAcceptButton"
-        android:background="@drawable/fufay_btn"
+        android:background="@drawable/login_btn"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:enabled="false" />

@@ -29,7 +29,7 @@
             android:id="@+id/fufay_btn"
             android:layout_weight="1"
             android:layout_margin="0dp"
-            android:background="@drawable/fufay_btn"
+            android:background="@drawable/login_btn"
             android:onClick="showEditDialog"
             />
 

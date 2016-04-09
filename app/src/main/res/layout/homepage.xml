@@ -31,7 +31,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:id="@+id/button_topleft"
-                    android:src="@mipmap/pugua_correct02"
+                    android:src="@mipmap/pugua_correct03"
                     android:background="@drawable/imagebuttonshape"
                     android:scaleType="fitXY"
                     android:layout_margin="3dp" />
@@ -76,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:id="@+id/button_middle_bottom"
-                    android:src="@mipmap/gua_correct01"
+                    android:src="@mipmap/gua_correct02"
                     android:background="@drawable/imagebuttonshape"
                     android:scaleType="fitXY"
                     android:layout_gravity="center"

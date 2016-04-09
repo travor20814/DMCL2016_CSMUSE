@@ -7,7 +7,8 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     tools:context=".MinsuActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/background_color">
 
     <!--這是測試用的textview 實際內容應該放各種主題 *layout_below-->
 
@@ -22,7 +23,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f14b85"
+        android:background="@color/innerStyleColor"
         android:layout_weight="0.03">
 
         <LinearLayout
@@ -174,8 +175,8 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f3ff4492"
-            android:id="@+id/spinner_minsu_hour" />
+            android:id="@+id/spinner_minsu_hour"
+            android:background="#bd000000" />
 
 
         <Space
@@ -193,7 +194,7 @@
                 android:layout_height="fill_parent"
                 android:text="命理分析--立即算"
                 android:textColor="#000000"
-                android:background="#eb3575"
+                android:background="@drawable/login_btn"
                 android:id="@+id/button_Submit2" />
         </LinearLayout>
 

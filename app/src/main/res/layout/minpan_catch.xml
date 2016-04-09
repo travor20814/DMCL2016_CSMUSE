@@ -597,6 +597,7 @@
             android:id="@+id/ButtonReturn"
             android:gravity="center"
             android:layout_weight="5"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login_btn" />
     </LinearLayout>
 </LinearLayout>
