@@ -3,8 +3,11 @@ package dmcl.csmuse2016;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -194,12 +197,18 @@ public class MinsuActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.action_settings: //setting鍵
-                    String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
-                    String[] fromfileArray = fromfile.split("###");
-                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
-                    intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
-                    MinsuActivity.this.startActivity(intentMember);
-                    finish();
+                    if(isNetwork()) {
+                        String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+                        String[] fromfileArray = fromfile.split("###");
+                        Intent intentMember = new Intent(getApplicationContext(), MemberActivity.class);
+                        intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                        MinsuActivity.this.startActivity(intentMember);
+                        finish();
+                    }
+                    else {
+                        notNetwork_dialogFragment EditNameDialog = new notNetwork_dialogFragment();
+                        EditNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
                     break;
                 case R.id.action_designer://製作群
                     msg+="designer clicked";
@@ -317,55 +326,61 @@ public class MinsuActivity extends AppCompatActivity {
         button_Submit2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               if(isNetwork()) {
+                   west = (RadioButton) findViewById(R.id.radio_minsu_west);
+                   guo = (RadioButton) findViewById(R.id.radio_minsu_guo);
+                   non = (RadioButton) findViewById(R.id.radio_minsu_non);
 
-                west = (RadioButton)findViewById(R.id.radio_minsu_west);
-                guo = (RadioButton)findViewById(R.id.radio_minsu_guo);
-                non = (RadioButton)findViewById(R.id.radio_minsu_non);
+                   male = (RadioButton) findViewById(R.id.radio_minsu_Male2);
+                   female = (RadioButton) findViewById(R.id.radio_minsu_Female2);
 
-                male = (RadioButton)findViewById(R.id.radio_minsu_Male2);
-                female = (RadioButton)findViewById(R.id.radio_minsu_Female2);
+                   //radioGroup
+                   Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_Sex2);
+                   int select_id = Gruop_Sex2.getCheckedRadioButtonId();
+                   Gruop_YearType = (RadioGroup) findViewById(R.id.Gruop_YearType);
+                   int select_type = Gruop_YearType.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
+                   //editText_Question2.setText(String.valueOf(select_type));//測試用
+                   // 問題輸入轉換為string
+                   if (select_id == female.getId()) {
+                       which_sex = "0"; //API上，女 = 0
+                   } else {
+                       which_sex = "1"; //API上，男 = 1
+                   }
 
-                //radioGroup
-                Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_Sex2);
-                int select_id = Gruop_Sex2.getCheckedRadioButtonId();
-                Gruop_YearType = (RadioGroup) findViewById(R.id.Gruop_YearType);
-                int select_type = Gruop_YearType.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
-                //editText_Question2.setText(String.valueOf(select_type));//測試用
-                // 問題輸入轉換為string
-                if (select_id == female.getId()) {
-                    which_sex = "0"; //API上，女 = 0
-                } else {
-                    which_sex = "1"; //API上，男 = 1
-                }
-
-                if (select_type ==west.getId()) {
-                    which_yeartype = "0"; //API上，西元 = 0
-                } else if (select_id == guo.getId()) {
-                    which_yeartype = "1"; //API上，國曆 = 1
-                } else {
-                    which_yeartype = "2"; //API上，農曆 = 2
-                }
-                if (!s_year.equals("") && !s_month.equals("") && !s_day.equals("")) {
-                    if (time_check(s_year, s_month, s_day)) {
-                        // 產生對映的url，使用Catch_say88_API_info函式
-                        String url = Catch_say88_API_info(which_yeartype, s_year, s_month, s_day, hour, which_sex);
-                        //產生異構Task，因為網路部分不能在main裡面進行，接著執行
-                        RequestTask request = new RequestTask();
-                        request.execute(url);
-                    } else {
-                        bundle.putString("Reslut_Star", "輸入時間有誤");
-                        bundle.putString("Result_Good_Bad", "輸入時間有誤");
-                        bundle.putString("Reslut_Issue", "輸入時間有誤");
-                        bundle.putString("Reslut_Desc", "輸入時間有誤");
-                        replaceFragment();
-                    }
-                } else {
-                    bundle.putString("Reslut_Star", "輸入時間有誤");
-                    bundle.putString("Result_Good_Bad", "輸入時間有誤");
-                    bundle.putString("Reslut_Issue", "輸入時間有誤");
-                    bundle.putString("Reslut_Desc", "輸入時間有誤");
-                    replaceFragment();
-                }
+                   if (select_type == west.getId()) {
+                       which_yeartype = "0"; //API上，西元 = 0
+                   } else if (select_id == guo.getId()) {
+                       which_yeartype = "1"; //API上，國曆 = 1
+                   } else {
+                       which_yeartype = "2"; //API上，農曆 = 2
+                   }
+                   if (!s_year.equals("") && !s_month.equals("") && !s_day.equals("")) {
+                       if (time_check(s_year, s_month, s_day)) {
+                           // 產生對映的url，使用Catch_say88_API_info函式
+                           String url = Catch_say88_API_info(which_yeartype, s_year, s_month, s_day, hour, which_sex);
+                           //產生異構Task，因為網路部分不能在main裡面進行，接著執行
+                           RequestTask request = new RequestTask();
+                           request.execute(url);
+                       } else {
+                           bundle.putString("Reslut_Star", "輸入時間有誤");
+                           bundle.putString("Result_Good_Bad", "輸入時間有誤");
+                           bundle.putString("Reslut_Issue", "輸入時間有誤");
+                           bundle.putString("Reslut_Desc", "輸入時間有誤");
+                           replaceFragment();
+                       }
+                   } else {
+                       bundle.putString("Reslut_Star", "輸入時間有誤");
+                       bundle.putString("Result_Good_Bad", "輸入時間有誤");
+                       bundle.putString("Reslut_Issue", "輸入時間有誤");
+                       bundle.putString("Reslut_Desc", "輸入時間有誤");
+                       replaceFragment();
+                   }
+               }
+                else
+               {
+                   notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+                   editNameDialog.show(getFragmentManager(), "EditNameDialog");
+               }
             }
         });
     }
@@ -409,7 +424,29 @@ public class MinsuActivity extends AppCompatActivity {
         }
         return false;
     }
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
 
+        return result;
+    }
     public String Catch_say88_API_info(String birthType,String Year,String Month , String Day ,String Hour,String Sex){
         // token就是識別證
         String url = "http://newtest.88say.com/Api/product/Unit507.aspx?";

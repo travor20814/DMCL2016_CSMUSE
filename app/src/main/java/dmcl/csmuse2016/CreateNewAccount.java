@@ -177,6 +177,7 @@ public class CreateNewAccount extends Activity {
         }
     }
     //抓edittext上使用者輸入的字
+
     public void applyNewAccount(View v){
 
         if(isNetwork()) {

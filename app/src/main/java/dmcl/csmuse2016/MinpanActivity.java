@@ -3,8 +3,11 @@ package dmcl.csmuse2016;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
@@ -193,12 +196,18 @@ public class MinpanActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.action_settings: //setting鍵
-                    String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
-                    String[] fromfileArray = fromfile.split("###");
-                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
-                    intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
-                    MinpanActivity.this.startActivity(intentMember);
-                    finish();
+                    if(isNetwork()) {
+                        String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+                        String[] fromfileArray = fromfile.split("###");
+                        Intent intentMember = new Intent(getApplicationContext(), MemberActivity.class);
+                        intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                        MinpanActivity.this.startActivity(intentMember);
+                        finish();
+                    }
+                    else {
+                        notNetwork_dialogFragment EditNameDialog = new notNetwork_dialogFragment();
+                        EditNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
                     break;
                 case R.id.action_designer://製作群
                     msg+="designer clicked";
@@ -293,53 +302,58 @@ public class MinpanActivity extends AppCompatActivity {
         button_Submit2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                errorMs = (TextView)findViewById(R.id.textViewError);
+                if(isNetwork()) {
+                    errorMs = (TextView) findViewById(R.id.textViewError);
 
 
+                    //radioGroup
+                    Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_minpan_Sex2);
+                    int select_id = Gruop_Sex2.getCheckedRadioButtonId();
+                    Gruop_YearType = (RadioGroup) findViewById(R.id.Gruo_minpanp_YearType);
+                    int select_type = Gruop_YearType.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
+                    //editText_Question2.setText(String.valueOf(select_type));//測試用
 
-                //radioGroup
-                Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_minpan_Sex2);
-                int select_id = Gruop_Sex2.getCheckedRadioButtonId();
-                Gruop_YearType = (RadioGroup) findViewById(R.id.Gruo_minpanp_YearType);
-                int select_type = Gruop_YearType.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
-                //editText_Question2.setText(String.valueOf(select_type));//測試用
+                    west = (RadioButton) findViewById(R.id.radio_west);
+                    guo = (RadioButton) findViewById(R.id.radio_guo);
+                    non = (RadioButton) findViewById(R.id.radio_non);
 
-                west = (RadioButton)findViewById(R.id.radio_west);
-                guo = (RadioButton)findViewById(R.id.radio_guo);
-                non = (RadioButton)findViewById(R.id.radio_non);
+                    male = (RadioButton) findViewById(R.id.radio_Male2);
+                    female = (RadioButton) findViewById(R.id.radio_Female2);
 
-                male = (RadioButton)findViewById(R.id.radio_Male2);
-                female = (RadioButton)findViewById(R.id.radio_Female2);
+                    // 問題輸入轉換為string
+                    if (select_id == female.getId()) {
+                        which_sex = "0"; //API上，女 = 0
+                    } else {
+                        which_sex = "1"; //API上，男 = 0
+                    }
 
-                // 問題輸入轉換為string
-                if (select_id == female.getId()) {
-                    which_sex = "0"; //API上，女 = 0
-                } else {
-                    which_sex = "1"; //API上，男 = 0
-                }
+                    if (select_type == west.getId()) {
+                        which_yeartype = "0"; //API上，西元 = 0
+                    } else if (select_id == guo.getId()) {
+                        which_yeartype = "1"; //API上，國曆 = 1
+                    } else {
+                        which_yeartype = "2"; //API上，農曆 = 2
+                    }
+                    if (!s_year.equals("") && !s_month.equals("") && !s_day.equals("")) {
+                        if (time_check(s_year, s_month, s_day)) {
+                            // 產生對映的url，使用Catch_say88_API_info函式
+                            errorMs.setText("資料讀取中，請稍候.....");
+                            String url = Catch_say88_API_info(which_yeartype, s_year, s_month, s_day, hour, which_sex);
+                            //產生異構Task，因為網路部分不能在main裡面進行，接著執行
+                            RequestTask request = new RequestTask();
+                            request.execute(url);
+                        } else {
 
-                if (select_type == west.getId()) {
-                    which_yeartype = "0"; //API上，西元 = 0
-                } else if (select_id == guo.getId()) {
-                    which_yeartype = "1"; //API上，國曆 = 1
-                } else {
-                    which_yeartype = "2"; //API上，農曆 = 2
-                }
-                if (!s_year.equals("") && !s_month.equals("") && !s_day.equals("")) {
-                    if (time_check(s_year, s_month, s_day)) {
-                        // 產生對映的url，使用Catch_say88_API_info函式
-                        errorMs.setText("資料讀取中，請稍候.....");
-                        String url = Catch_say88_API_info(which_yeartype, s_year, s_month, s_day, hour, which_sex);
-                        //產生異構Task，因為網路部分不能在main裡面進行，接著執行
-                        RequestTask request = new RequestTask();
-                        request.execute(url);
+                            errorMs.setText("輸入時間有誤");
+                        }
                     } else {
 
                         errorMs.setText("輸入時間有誤");
                     }
-                } else {
-
-                    errorMs.setText("輸入時間有誤");
+                }
+                else{
+                    notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+                    editNameDialog.show(getFragmentManager(), "EditNameDialog");
                 }
             }
         });
@@ -403,7 +417,29 @@ public class MinpanActivity extends AppCompatActivity {
         url += Sex;
         return url;
     }
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
 
+        return result;
+    }
     public class RequestTask extends AsyncTask<String, String, String> {
 
         @Override

@@ -1,8 +1,11 @@
 package dmcl.csmuse2016;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -62,20 +65,31 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton04){//付費專區
-                    Intent intent = new Intent(HomePageActivity.this,fufay.class);
-                    HomePageActivity.this.startActivity(intent);
+                    if(isNetwork()) {
+                        Intent intent = new Intent(HomePageActivity.this, fufay.class);
+                        HomePageActivity.this.startActivity(intent);
+                    }
+                    else {
+                        notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+                        editNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
                 }
                 if (v == imagebutton05){//會員專區
-                    loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
-                    if(loginornot){
-                        String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
-                        String[] fromfileArray = fromfile.split("###");
-                        Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
-                        intentMember.putExtra("mail",fromfileArray[2]); //send mail to next activity
-                        HomePageActivity.this.startActivity(intentMember);
+                    if(isNetwork()) {
+                        loginornot = new Write_and_Read(filename, getFilesDir()).ifLogin();
+                        if (loginornot) {
+                            String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+                            String[] fromfileArray = fromfile.split("###");
+                            Intent intentMember = new Intent(getApplicationContext(), MemberActivity.class);
+                            intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                            HomePageActivity.this.startActivity(intentMember);
+                        } else {
+                            whenGuestClickMember_dialogFragment editNameDialog = whenGuestClickMember_dialogFragment.newInstance("錯誤", "請先登錄喔～", "取消", "去登錄");
+                            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+                        }
                     }
-                    else{
-                        whenGuestClickMember_dialogFragment editNameDialog = whenGuestClickMember_dialogFragment.newInstance("錯誤","請先登錄喔～","取消","去登錄");
+                    else {
+                        notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
                         editNameDialog.show(getFragmentManager(), "EditNameDialog");
                     }
                 }
@@ -130,5 +144,28 @@ public class HomePageActivity extends Activity {
             editNameDialog.show(getFragmentManager(), "EditNameDialog");
         }
         return false;
+    }
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
+
+        return result;
     }
 }
