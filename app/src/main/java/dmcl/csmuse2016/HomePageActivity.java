@@ -94,7 +94,7 @@ public class HomePageActivity extends Activity {
                     }
                 }
                 if (v == imagebutton06){//八卦命盤
-                    Intent intent = new Intent(HomePageActivity.this,EightWordMinpanActivity.class);
+                    Intent intent = new Intent(HomePageActivity.this,EightWordMinpanCatchActivity.class);
                     HomePageActivity.this.startActivity(intent);
                 }
             }

@@ -36,11 +36,13 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
 
 
     private final String filename="account.txt";
-    private boolean loginornot;
+//    private boolean loginornot;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eightwordcatch);
+
+        addFragment();
 
         //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_eightwordminpan);
         //  setSupportActionBar(toolbar);
@@ -62,13 +64,25 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
         // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         //   toolbar.setOnMenuItemClickListener(onMenuItemClick);
         //函式
-        getInfo();
-        ReturnButton();
+//        getInfo();
+//        ReturnButton();
         //加入fragment的函式
         //addFragment();
         //  loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
     }
-
+    void addFragment(){
+        //建立一個 MyFirstFragment 的實例(Instantiate)
+        Fragment newFragment = new EightWordMinpanActivity();
+        //使用getFragmentManager()獲得FragmentTransaction物件，並呼叫 beginTransaction() 開始執行Transaction
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        //使用FragmentTransaction物件add()的方法將Fragment增加到Activity中
+        //add()有三個參數，第一個是Fragment的ViewGroup；第二個是Fragment 的實例(Instantiate)；第三個是Fragment 的Tag
+        ft.add(R.id.left_drawer, newFragment, "first");
+        //一旦FragmentTransaction出現變化，必須要呼叫commit()使之生效
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+    }
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(loginornot)
@@ -460,4 +474,5 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
         });
 
     }
+*/
 }
