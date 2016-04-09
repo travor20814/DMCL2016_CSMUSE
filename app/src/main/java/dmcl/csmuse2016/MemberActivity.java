@@ -1,8 +1,11 @@
 package dmcl.csmuse2016;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -99,15 +102,45 @@ public class MemberActivity extends AppCompatActivity {
 
         View.OnClickListener imagelisten = new View.OnClickListener() {
             public void onClick(View v) {
-                if (v == connectToFufay){ //卜卦畫面
-                    Intent intent = new Intent(MemberActivity.this,fufay.class);
-                    MemberActivity.this.startActivity(intent);
-                    finish();
+                if (v == connectToFufay) { //卜卦畫面
+                    if (isNetwork()) {
+                        Intent intent = new Intent(MemberActivity.this, fufay.class);
+                        MemberActivity.this.startActivity(intent);
+                        finish();
+
+                    }
+                    else {
+                        notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+                        editNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
                 }
             }
         };
         connectToFufay.setOnClickListener(imagelisten);
 
+    }
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
+
+        return result;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -159,45 +192,81 @@ public class MemberActivity extends AppCompatActivity {
     };
     //編輯姓
     public void editSurnameOnClick(View v){
-        editSurname = (Button)findViewById(R.id.edit_surname);
-        String name = "您的姓:";
-        int id = 1;
-        showPopup(v , name, id);
+        if(isNetwork()) {
+            editSurname = (Button) findViewById(R.id.edit_surname);
+            String name = "您的姓:";
+            int id = 1;
+            showPopup(v, name, id);
+        }
+        else{
+            notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
     }
     //編輯名
     public void editNameOnClick(View v){
-        editName = (Button)findViewById(R.id.edit_name);
-        String name = "您的大名:";
-        int id = 2;
-        showPopup(v, name, id);
+        if(isNetwork()) {
+            editName = (Button) findViewById(R.id.edit_name);
+            String name = "您的大名:";
+            int id = 2;
+            showPopup(v, name, id);
+        }
+        else{
+            notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
     }
     //編輯密碼
     public void editPasswordOnClick(View v){
-        editPassword = (Button)findViewById(R.id.edit_password);
-        String name = "原密碼:";
-        int id = 3;
-        showPopup(v, name,id);
+        if(isNetwork()) {
+            editPassword = (Button) findViewById(R.id.edit_password);
+            String name = "原密碼:";
+            int id = 3;
+            showPopup(v, name, id);
+        }
+        else{
+            notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
     }
     //編輯性別
     public void editSexOnClick(View v){
-        editSex = (Button)findViewById(R.id.edit_sex);
-        String name = "您的性別:";
-        int id = 4;
-        showPopup(v, name,id);
+        if(isNetwork()) {
+            editSex = (Button) findViewById(R.id.edit_sex);
+            String name = "您的性別:";
+            int id = 4;
+            showPopup(v, name, id);
+        }
+        else {
+            notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
     }
     //編輯生日
     public void editBirthDaysOnClick(View v){
-        editBirthdays = (Button)findViewById(R.id.edit_birthday);
-        String name = "生日:";
-        int id = 5;
-        showPopup(v, name,id);
+        if(isNetwork()) {
+            editBirthdays = (Button) findViewById(R.id.edit_birthday);
+            String name = "生日:";
+            int id = 5;
+            showPopup(v, name, id);
+        }
+        else{
+            notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
     }
     //編輯時辰
     public void editBirthTimesOnClick(View v){
-        editBirthTime = (Button)findViewById(R.id.edit_birthtime);
-        String name = "時辰:";
-        int id = 6;
-        showPopup(v, name,id);
+        if(isNetwork()) {
+            editBirthTime = (Button) findViewById(R.id.edit_birthtime);
+            String name = "時辰:";
+            int id = 6;
+            showPopup(v, name, id);
+        }
+        else{
+            notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
     }
 
     //編輯按鈕按下時
@@ -543,6 +612,7 @@ public class MemberActivity extends AppCompatActivity {
             // TODO Auto-generated method stub
             String command = "select * from Account where Account='" +Email + "'";
             String ans = new connect(command).getServerConnect();
+            Log.i("ans",ans);
             collectDatas = ans.toString().split("###");
             Log.v("getL", ans);
             if(ans.equals("Warning")){

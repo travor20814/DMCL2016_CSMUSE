@@ -42,31 +42,31 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eightwordcatch);
 
-      //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_eightwordminpan);
-      //  setSupportActionBar(toolbar);
+        //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_eightwordminpan);
+        //  setSupportActionBar(toolbar);
 
         // App Logo
-     //   toolbar.setLogo(R.mipmap.title02);
+        //   toolbar.setLogo(R.mipmap.title02);
         // Title
-     //   toolbar.setTitle("八字命盤");
-     //   toolbar.setTitleTextColor(Color.BLACK);
+        //   toolbar.setTitle("八字命盤");
+        //   toolbar.setTitleTextColor(Color.BLACK);
         // Sub Title
-     //   toolbar.setSubtitle("88Say幫您及時掌握未來");
-     //   toolbar.setSubtitleTextColor(Color.BLACK);
+        //   toolbar.setSubtitle("88Say幫您及時掌握未來");
+        //   toolbar.setSubtitleTextColor(Color.BLACK);
 
-     //   setSupportActionBar(toolbar);
+        //   setSupportActionBar(toolbar);
 
         // Navigation Icon 要設定在 setSupoortActionBar 才有作用
         // 否則會出現 back bottom
         //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
         // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
-     //   toolbar.setOnMenuItemClickListener(onMenuItemClick);
+        //   toolbar.setOnMenuItemClickListener(onMenuItemClick);
         //函式
         getInfo();
         ReturnButton();
         //加入fragment的函式
         //addFragment();
-      //  loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
+        //  loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
     }
 
     @Override

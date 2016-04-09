@@ -17,8 +17,8 @@
             android:textColor="#000000"
             android:background="@drawable/fragment_btn"
             android:id="@+id/button_A"
-            android:layout_weight="1"
-            android:layout_marginRight="1dp" />
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -27,8 +27,10 @@
             android:background="@drawable/fragment_btn2"
             android:text="優缺點"
             android:id="@+id/button_B"
-            android:layout_weight="1"
-            android:layout_marginRight="1dp" />
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"/>
+
 
         <Button
             android:layout_width="wrap_content"
@@ -37,8 +39,9 @@
             android:background="@drawable/fragment_btn3"
             android:text="課題"
             android:id="@+id/button_C"
-            android:layout_weight="1"
-            android:layout_marginRight="1dp" />
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -47,6 +50,7 @@
             android:background="@drawable/fragment_btn2"
             android:text="風采"
             android:id="@+id/button_D"
+            android:layout_marginLeft="1dp"
             android:layout_weight="1"/>
     </LinearLayout>
 

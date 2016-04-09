@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import org.apache.http.util.EntityUtils;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -174,81 +177,106 @@ public class CreateNewAccount extends Activity {
         }
     }
     //抓edittext上使用者輸入的字
+
     public void applyNewAccount(View v){
 
-        EditText EditTextname = (EditText)findViewById(R.id.newNameText);
-        Editable nameName;
-        nameName = EditTextname.getText();
-        String username =nameName.toString(); //姓
+        if(isNetwork()) {
+            EditText EditTextname = (EditText) findViewById(R.id.newNameText);
+            Editable nameName;
+            nameName = EditTextname.getText();
+            String username = nameName.toString(); //姓
 
-        EditText EditTextSubName = (EditText)findViewById(R.id.newsubNameText);
-        Editable subnameName;
-        subnameName = EditTextSubName.getText();
-        String userSubname = subnameName.toString(); //名
+            EditText EditTextSubName = (EditText) findViewById(R.id.newsubNameText);
+            Editable subnameName;
+            subnameName = EditTextSubName.getText();
+            String userSubname = subnameName.toString(); //名
 
-        EditText EditTextaccount = (EditText)findViewById(R.id.newAccountText);
-        Editable AccountName;
-        AccountName = EditTextaccount.getText();
-        String Account =AccountName.toString(); //email(帳號)
+            EditText EditTextaccount = (EditText) findViewById(R.id.newAccountText);
+            Editable AccountName;
+            AccountName = EditTextaccount.getText();
+            String Account = AccountName.toString(); //email(帳號)
 
-        EditText EditTextpassword = (EditText)findViewById(R.id.newpasswordText);
-        Editable passwordName;
-        passwordName = EditTextpassword.getText();
-        String password =passwordName.toString();//密碼
+            EditText EditTextpassword = (EditText) findViewById(R.id.newpasswordText);
+            Editable passwordName;
+            passwordName = EditTextpassword.getText();
+            String password = passwordName.toString();//密碼
 
 
-        flag1 = 0; //用一個flag來確認帳號是否重複
-        if (username.trim().length()==0 || userSubname.trim().length()==0){
-            new AlertDialog.Builder(CreateNewAccount.this)
-                    .setTitle("申請失敗")
-                    .setMessage("請輸入姓名")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
-                        }
-                    }).show();
-        }
-        else if (Account.trim().length()==0){
-            new AlertDialog.Builder(CreateNewAccount.this)
-                    .setTitle("申請失敗")
-                    .setMessage("請輸入帳號")
-                    .setPositiveButton("OK",new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+            flag1 = 0; //用一個flag來確認帳號是否重複
+            if (username.trim().length() == 0 || userSubname.trim().length() == 0) {
+                new AlertDialog.Builder(CreateNewAccount.this)
+                        .setTitle("申請失敗")
+                        .setMessage("請輸入姓名")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
+                            }
+                        }).show();
+            } else if (Account.trim().length() == 0) {
+                new AlertDialog.Builder(CreateNewAccount.this)
+                        .setTitle("申請失敗")
+                        .setMessage("請輸入帳號")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    }).show();
-        }
-        else if (password.trim().length()==0){
-            new AlertDialog.Builder(CreateNewAccount.this)
-                    .setTitle("申請失敗")
-                    .setMessage("請輸入密碼")
-                    .setPositiveButton("OK",new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
+            } else if (password.trim().length() == 0) {
+                new AlertDialog.Builder(CreateNewAccount.this)
+                        .setTitle("申請失敗")
+                        .setMessage("請輸入密碼")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    }).show();
-        }
-        else if(flagForConfirmData == 0){
-            new AlertDialog.Builder(CreateNewAccount.this)
-                    .setTitle("申請失敗")
-                    .setMessage("請確認資料輸入完整")
-                    .setPositiveButton("OK",new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
+            } else if (flagForConfirmData == 0) {
+                new AlertDialog.Builder(CreateNewAccount.this)
+                        .setTitle("申請失敗")
+                        .setMessage("請確認資料輸入完整")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    }).show();
+                            }
+                        }).show();
+            } else {
+                Log.v("click_apply", "1");
+
+                new checkAccount().execute(); //a new thread
+
+            }
         }
         else{
-            Log.v("click_apply", "1");
-
-            new checkAccount().execute(); //a new thread
-
+            notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+        }
+    }
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
         }
 
+        return result;
     }
     class checkAccount extends  AsyncTask<Void,Void,Void>{
         @Override

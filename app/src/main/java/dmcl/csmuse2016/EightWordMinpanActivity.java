@@ -3,8 +3,11 @@ package dmcl.csmuse2016;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -139,12 +142,18 @@ public class EightWordMinpanActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.action_settings: //setting鍵
-                    String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
-                    String[] fromfileArray = fromfile.split("###");
-                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
-                    intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
-                    EightWordMinpanActivity.this.startActivity(intentMember);
-                    finish();
+                    if(isNetwork()) {
+                        String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+                        String[] fromfileArray = fromfile.split("###");
+                        Intent intentMember = new Intent(getApplicationContext(), MemberActivity.class);
+                        intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                        EightWordMinpanActivity.this.startActivity(intentMember);
+                        finish();
+                    }
+                    else {
+                        notNetwork_dialogFragment EditNameDialog = new notNetwork_dialogFragment();
+                        EditNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
                     break;
                 case R.id.action_designer://製作群
                     msg+="designer clicked";
@@ -168,7 +177,29 @@ public class EightWordMinpanActivity extends AppCompatActivity {
             return true;
         }
     };
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
 
+        return result;
+    }
     //送出資料的button
     public void onClickButton(){
 
@@ -242,37 +273,42 @@ public class EightWordMinpanActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 找性別ID，經過ID判斷是男是女
-                int select_year_type = yearTpye.getCheckedRadioButtonId();
-                int select_sex_tpye = sexType.getCheckedRadioButtonId();
+                if (isNetwork()) {
+                    int select_year_type = yearTpye.getCheckedRadioButtonId();
+                    int select_sex_tpye = sexType.getCheckedRadioButtonId();
 
-                west = (RadioButton)findViewById(R.id.radio_west_char);
-                guo = (RadioButton)findViewById(R.id.radio_guo_char);
-                non = (RadioButton)findViewById(R.id.radio_non_char);
+                    west = (RadioButton) findViewById(R.id.radio_west_char);
+                    guo = (RadioButton) findViewById(R.id.radio_guo_char);
+                    non = (RadioButton) findViewById(R.id.radio_non_char);
 
-                male = (RadioButton)findViewById(R.id.radio_Male_char);
-                female = (RadioButton)findViewById(R.id.radio_Female_char);
+                    male = (RadioButton) findViewById(R.id.radio_Male_char);
+                    female = (RadioButton) findViewById(R.id.radio_Female_char);
 
-                if (select_year_type ==west.getId()) {
-                    s_yearTpye = "0";
-                } else if (select_year_type == guo.getId()) {
-                    s_yearTpye = "1";
+                    if (select_year_type == west.getId()) {
+                        s_yearTpye = "0";
+                    } else if (select_year_type == guo.getId()) {
+                        s_yearTpye = "1";
+                    } else {
+                        s_yearTpye = "2";
+                    }
+
+                    if (select_sex_tpye == female.getId()) {
+                        s_sexTpye = "0";
+                    } else {
+                        s_sexTpye = "1";
+                    }
+
+                    String s_hour = hour;
+
+
+                    String url = Catch_say88_API_info(s_yearTpye, s_year, s_month, s_day, s_hour, s_sexTpye);
+
+                    RequestTask request = new RequestTask();
+                    request.execute(url);
                 } else {
-                    s_yearTpye = "2";
+                    notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+                    editNameDialog.show(getFragmentManager(), "EditNameDialog");
                 }
-
-                if (select_sex_tpye == female.getId()) {
-                    s_sexTpye = "0";
-                } else {
-                    s_sexTpye = "1";
-                }
-
-                String s_hour = hour;
-
-
-                String url = Catch_say88_API_info(s_yearTpye, s_year, s_month, s_day, s_hour, s_sexTpye);
-
-                RequestTask request = new RequestTask();
-                request.execute(url);
             }
         });
 

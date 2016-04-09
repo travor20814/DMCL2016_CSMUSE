@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.session.MediaSession;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +29,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.squareup.leakcanary.LeakCanary;
 import com.unionpaysdk.main.ICheckOrderCallback;
 import com.unionpaysdk.main.IPaymentCallback;
 import com.unionpaysdk.main.UnionPaySDK;
@@ -69,7 +72,7 @@ public class fufay extends AppCompatActivity {
     private double amount = 1.0;
     private String memo ="This is a memo";
     public static ArrayList<HashMap<String,String>> listForm_mapFromJson = new ArrayList<HashMap<String,String>>();
-    private static HashMap<String,String> mapFromJson = new HashMap<String,String>();
+    private  HashMap<String,String> mapFromJson = new HashMap<String,String>();
     private final String filename="account.txt";
     private boolean loginornot;
     @Override
@@ -77,7 +80,7 @@ public class fufay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fufay);
         new AsyncTaskParseJson().execute();
-
+        //LeakCanary.install(getApplication());
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -238,42 +241,84 @@ public class fufay extends AppCompatActivity {
 
 
     }
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
     public void showEditDialog(View view)
     {
-        if(loginornot){
-        String Price="";
-        Button fragment_btn = (Button) view.findViewById(R.id.fufay_btn);
-        //Log.e("btn.text",fragment_btn.getText().toString());
-        int count=0;
-        switch(fragment_btn.getText().toString()) {
+        if(isNetwork()) {
+            if (loginornot) {
+                String Price = "";
+                Button fragment_btn = (Button) view.findViewById(R.id.fufay_btn);
+                //Log.e("btn.text", fragment_btn.getText().toString());
+                int count = 0;
 
-            case "購買：2016運勢詳批":
-                if(listForm_mapFromJson!=null){
-                    Price =listForm_mapFromJson.get(0).get("Price");}
-                break;
-            case "購買：財富命盤":
-                if(listForm_mapFromJson!=null){
-                    Price =listForm_mapFromJson.get(1).get("Price");}
-                break;
-            case "購買：超猛愛情靈卦":
-                if(listForm_mapFromJson!=null){
-                    Price =listForm_mapFromJson.get(2).get("Price");}
-                break;
-            case "購買：情人之間":
-                if(listForm_mapFromJson!=null){
-                    Price =listForm_mapFromJson.get(3).get("Price");}
-                break;
-            case "購買：職場運勢":
-                if(listForm_mapFromJson!=null){
-                    Price =listForm_mapFromJson.get(4).get("Price");}
-                break;
-        }
-        amount = Integer.parseInt(Price);
-        fufay_buy_dialogFragment editNameDialog =  fufay_buy_dialogFragment.newInstance("確定要購買嗎？", "商品：\t"+Price, "取消", "確定");
-        editNameDialog.show(getFragmentManager(), "EditNameDialog");
+                switch (fragment_btn.getText().toString()) {
+
+                    case "購買：2016運勢詳批":
+                        if (listForm_mapFromJson != null) {
+                            Price = listForm_mapFromJson.get(0).get("Price");
+                            //Log.i("case1", String.valueOf(Price));
+                        }
+                        break;
+                    case "購買：財富命盤":
+                        if (listForm_mapFromJson != null) {
+                            Price = listForm_mapFromJson.get(1).get("Price");
+                            //Log.i("case2", String.valueOf(Price));
+                        }
+                        break;
+                    case "購買：超猛愛情靈卦":
+                        if (listForm_mapFromJson != null) {
+                            Price = listForm_mapFromJson.get(2).get("Price");
+                            //Log.i("case3", String.valueOf(Price));
+                        }
+                        break;
+                    case "購買：情人之間":
+                        if (listForm_mapFromJson != null) {
+                            Price = listForm_mapFromJson.get(3).get("Price");
+                            //Log.i("case4", String.valueOf(Price));
+                        }
+                        break;
+                    case "購買：職場運勢":
+                        if (listForm_mapFromJson != null) {
+                            Price = listForm_mapFromJson.get(4).get("Price");
+                            //Log.i("case5", String.valueOf(Price));
+                        }
+                        break;
+                    default:
+                        //Log.i("no case",Price);
+                        break;
+                }
+                amount = Integer.parseInt(Price);
+                fufay_buy_dialogFragment editNameDialog = fufay_buy_dialogFragment.newInstance("確定要購買嗎？", "商品：\t" + Price, "取消", "確定");
+                editNameDialog.show(getFragmentManager(), "EditNameDialog");
+            } else {
+                fufay_notlogin_dialogFragment editNameDialog = fufay_notlogin_dialogFragment.newInstance("無法購買", "需要登陸才能購買喔～", "取消", "去登陸");
+                editNameDialog.show(getFragmentManager(), "EditNameDialog");
+            }
         }
         else{
-            fufay_notlogin_dialogFragment editNameDialog = fufay_notlogin_dialogFragment.newInstance("無法購買","需要登陸才能購買喔～","取消","去登陸");
+            notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
             editNameDialog.show(getFragmentManager(), "EditNameDialog");
         }
     }
@@ -320,15 +365,23 @@ public class fufay extends AppCompatActivity {
             Intent tologin =new Intent();
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
-                    finish();
+                    fufay_home_dialogFragment editNameDialog =  fufay_home_dialogFragment.newInstance("確定要離開嗎？", "左右滑可以看到更多範例喔！", "取消", "確定");
+                    editNameDialog.show(getFragmentManager(), "EditNameDialog");
+
                     break;
                 case R.id.action_settings: //setting鍵
-                    String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
-                    String[] fromfileArray = fromfile.split("###");
-                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
-                    intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
-                    fufay.this.startActivity(intentMember);
-                    finish();
+                    if(isNetwork()) {
+                        String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+                        String[] fromfileArray = fromfile.split("###");
+                        Intent intentMember = new Intent(getApplicationContext(), MemberActivity.class);
+                        intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                        fufay.this.startActivity(intentMember);
+                        finish();
+                    }
+                    else{
+                        notNetwork_dialogFragment EditNameDialog = new notNetwork_dialogFragment();
+                        EditNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
                     break;
                 case R.id.action_designer://製作群
                     msg+="designer clicked";
@@ -367,8 +420,8 @@ public class fufay extends AppCompatActivity {
         private final String url_love="http://newtest.88say.com/product/524/sample_524.htm";
         private final String url_lover="http://newtest.88say.com/product/267/sample_267.htm";
         private final String url_work="http://newtest.88say.com/product/402/sample_402.htm";
-        public static ArrayList<HashMap<String,String>> listForm_mapFromJson = new ArrayList<HashMap<String,String>>();
-        private static HashMap<String,String> mapFromJson = new HashMap<String,String>();
+       //public static ArrayList<HashMap<String,String>> listForm_mapFromJson = new ArrayList<HashMap<String,String>>();
+        //private static HashMap<String,String> mapFromJson = new HashMap<String,String>();
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -444,7 +497,7 @@ public class fufay extends AppCompatActivity {
                 //Log.e("jsobj",jsobj.toString());
                 dataJsonArr = jsobj.getJSONArray("Result");
                 for (int i = 0; i < dataJsonArr.length(); i++) {
-
+                    mapFromJson = new HashMap<String,String>();
                     JSONObject c = dataJsonArr.getJSONObject(i);
                     mapFromJson.put("Id", c.getString("Id"));
                     mapFromJson.put("Name", c.getString("Name"));
@@ -452,9 +505,9 @@ public class fufay extends AppCompatActivity {
                     mapFromJson.put("Price", c.getString("Price"));
                     mapFromJson.put("Category1", c.getString("Category1"));
                     mapFromJson.put("Category2", c.getString("Category2"));
-                   // Log.e("ID", mapFromJson.get("Id"));
+                    //Log.e("Price", mapFromJson.get("Price"));
                     listForm_mapFromJson.add(mapFromJson);
-                  // Log.e("list", listForm_mapFromJson.get(i).get("Id"));
+                   //Log.e("list"+i, listForm_mapFromJson.get(i).get("Price"));
                 }
 
 
@@ -467,6 +520,8 @@ public class fufay extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String strFromDoInBg) {
+            //Log.e("fragment", listForm_mapFromJson.get(0).get("Name"));
+            //Log.e("fragment", listForm_mapFromJson.get(1).get("Name"));
         }
     }
     @Override
@@ -476,6 +531,7 @@ public class fufay extends AppCompatActivity {
         {
             fufay_home_dialogFragment editNameDialog =  fufay_home_dialogFragment.newInstance("確定要離開嗎？", "左右滑可以看到更多範例喔！", "取消", "確定");
             editNameDialog.show(getFragmentManager(), "EditNameDialog");
+
         }
         return false;
     }

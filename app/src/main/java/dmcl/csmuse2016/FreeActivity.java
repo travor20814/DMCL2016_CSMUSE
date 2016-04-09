@@ -2,8 +2,11 @@ package dmcl.csmuse2016;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -124,12 +127,18 @@ public class FreeActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.action_settings: //setting鍵
-                    String fromfile =  new Write_and_Read(filename,getFilesDir()).ReadFromFile();
-                    String[] fromfileArray = fromfile.split("###");
-                    Intent intentMember = new Intent(getApplicationContext(),MemberActivity.class);
-                    intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
-                    FreeActivity.this.startActivity(intentMember);
-                    finish();
+                    if(isNetwork()) {
+                        String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+                        String[] fromfileArray = fromfile.split("###");
+                        Intent intentMember = new Intent(getApplicationContext(), MemberActivity.class);
+                        intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                        FreeActivity.this.startActivity(intentMember);
+                        finish();
+                    }
+                    else {
+                        notNetwork_dialogFragment EditNameDialog = new notNetwork_dialogFragment();
+                        EditNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
                     break;
                 case R.id.action_designer://製作群
                     msg+="designer clicked";
@@ -186,22 +195,28 @@ public class FreeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                editText_Question = (EditText) findViewById(R.id.editText_Question);
-                question = editText_Question.getText().toString();//記錄問題
-                Gruop_Sex = (RadioGroup) findViewById(R.id.Gruop_Sex);
-                int select_id = Gruop_Sex.getCheckedRadioButtonId();
-                // 問題輸入轉換為string
+                if(isNetwork()) {
+                    editText_Question = (EditText) findViewById(R.id.editText_Question);
+                    question = editText_Question.getText().toString();//記錄問題
+                    Gruop_Sex = (RadioGroup) findViewById(R.id.Gruop_Sex);
+                    int select_id = Gruop_Sex.getCheckedRadioButtonId();
+                    // 問題輸入轉換為string
 
-                if (select_id == 2131492997) {
-                    which_sex = "0"; //API上，女 = 0
-                } else {
-                    which_sex = "1"; //API上，男 = 1
+                    if (select_id == 2131492997) {
+                        which_sex = "0"; //API上，女 = 0
+                    } else {
+                        which_sex = "1"; //API上，男 = 1
+                    }
+                    // 產生對映的url，使用Catch_say88_API_info函式
+                    String url = Catch_say88_API_info(question, which_sex);
+                    //產生異構Task，因為網路部分不能在main裡面進行，接著執行
+                    RequestTask request = new RequestTask();
+                    request.execute(url);
                 }
-                // 產生對映的url，使用Catch_say88_API_info函式
-                String url = Catch_say88_API_info(question, which_sex);
-                //產生異構Task，因為網路部分不能在main裡面進行，接著執行
-                RequestTask request = new RequestTask();
-                request.execute(url);
+                else{
+                    notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+                    editNameDialog.show(getFragmentManager(), "EditNameDialog");
+                }
             }
         });
     }
@@ -218,7 +233,29 @@ public class FreeActivity extends AppCompatActivity {
         return url;
 
     }
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
 
+        return result;
+    }
     public class RequestTask extends AsyncTask<String, String, String> {
 
         @Override

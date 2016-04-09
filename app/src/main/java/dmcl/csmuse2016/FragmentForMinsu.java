@@ -19,6 +19,7 @@ public class FragmentForMinsu extends Fragment {
     private Button button_A,button_B,button_C,button_D;//A命宮主星 B優缺 C課題 D風采
     private TextView content2;
     String return_A,return_B,return_C,return_D;//這4個用來記錄回傳的資料
+    String slogan = "最專業的生活命理顧問\n88Say幫您及時掌握生活與未來";//slogan
     @Override
     //資料送出後，顯示的資料應該要在這裡
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,7 +36,8 @@ public class FragmentForMinsu extends Fragment {
         button_C = (Button)v.findViewById(R.id.button_C);
         button_D = (Button)v.findViewById(R.id.button_D);
         content2 = (TextView)v.findViewById(R.id.content2);
-        content2.setText(return_A);
+        if (return_A==null){content2.setText(slogan);}
+        else {content2.setText(return_A);}
         button_A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
