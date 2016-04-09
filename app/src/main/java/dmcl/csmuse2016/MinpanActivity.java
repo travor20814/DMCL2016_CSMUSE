@@ -343,11 +343,13 @@ public class MinpanActivity extends AppCompatActivity {
                             RequestTask request = new RequestTask();
                             request.execute(url);
                         } else {
-
+                            whenDateError_dialogFragment editNameDialog = new whenDateError_dialogFragment();
+                            editNameDialog.show(getFragmentManager(), "EditNameDialog");
                             errorMs.setText("輸入時間有誤");
                         }
                     } else {
-
+                        whenDateError_dialogFragment editNameDialog = new whenDateError_dialogFragment();
+                        editNameDialog.show(getFragmentManager(), "EditNameDialog");
                         errorMs.setText("輸入時間有誤");
                     }
                 }

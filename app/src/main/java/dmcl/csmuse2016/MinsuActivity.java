@@ -362,6 +362,8 @@ public class MinsuActivity extends AppCompatActivity {
                            RequestTask request = new RequestTask();
                            request.execute(url);
                        } else {
+                           whenDateError_dialogFragment editNameDialog = new whenDateError_dialogFragment();
+                           editNameDialog.show(getFragmentManager(), "EditNameDialog");
                            bundle.putString("Reslut_Star", "輸入時間有誤");
                            bundle.putString("Result_Good_Bad", "輸入時間有誤");
                            bundle.putString("Reslut_Issue", "輸入時間有誤");
@@ -369,6 +371,8 @@ public class MinsuActivity extends AppCompatActivity {
                            replaceFragment();
                        }
                    } else {
+                       whenDateError_dialogFragment editNameDialog = new whenDateError_dialogFragment();
+                       editNameDialog.show(getFragmentManager(), "EditNameDialog");
                        bundle.putString("Reslut_Star", "輸入時間有誤");
                        bundle.putString("Result_Good_Bad", "輸入時間有誤");
                        bundle.putString("Reslut_Issue", "輸入時間有誤");
