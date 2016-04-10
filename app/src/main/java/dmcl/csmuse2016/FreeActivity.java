@@ -240,12 +240,13 @@ public class FreeActivity extends AppCompatActivity {
                 String todayD = String.valueOf(today.get(Calendar.DATE));
                 int time = Integer.valueOf(todayY+todayM+todayD);
                 int usedtime;
-                if(new Write_and_Read(usedfile,getFilesDir()).ReadFromFile()!="")
-                     usedtime =Integer.valueOf( new Write_and_Read(usedfile,getFilesDir()).ReadFromFile());
-                else
+
+                if(new Write_and_Read(usedfile,getFilesDir()).ReadFromFile()!=""){
+                    usedtime =Integer.valueOf( new Write_and_Read(usedfile,getFilesDir()).ReadFromFile());
+                } else{
                     usedtime = 1;
-                if(time != usedtime)
-                    //Log.e("QQ","QQ");
+                }
+
                 if (time != usedtime ) {
                     if (isNetwork()) {
                         editText_Question = (EditText) findViewById(R.id.editText_Question);
@@ -271,6 +272,8 @@ public class FreeActivity extends AppCompatActivity {
                 else {
                     if (isNetwork()) {
                         button_Submit.setText("今天測過了喔");
+                        button_Submit.setTextColor(0xffff0000);
+                        button_Submit.setTextSize(22);
                         editText_Question = (EditText) findViewById(R.id.editText_Question);
                         String usedans = new Write_and_Read(ansfile, getFilesDir()).ReadFromFile();
                         String usedquestion = new Write_and_Read(questionfile,getFilesDir()).ReadFromFile();
@@ -391,7 +394,7 @@ public class FreeActivity extends AppCompatActivity {
                 String todayD = String.valueOf(today.get(Calendar.DATE));
                 new Write_and_Read(usedfile,getFilesDir()).WritetoFile_clear(todayY+todayM+todayD);
                 new Write_and_Read(questionfile,getFilesDir()).WritetoFile_clear(question);
-                new Write_and_Read(ansfile,getFilesDir()).WritetoFile_clear(TxnCode+"@"+TxnMsg+"@"+Title+"@"+All_result+"@"+Comment);
+                new Write_and_Read(ansfile,getFilesDir()).WritetoFile_clear(TxnCode + "@" + TxnMsg + "@" + Title + "@" + All_result + "@" + Comment);
                 //Log.e("ans",new Write_and_Read(ansfile,getFilesDir()).ReadFromFile());
             }
             replaceFragment();
