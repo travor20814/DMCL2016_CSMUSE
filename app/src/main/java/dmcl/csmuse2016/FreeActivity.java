@@ -35,6 +35,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+
 //命盤的activity
 public class FreeActivity extends AppCompatActivity {
 
@@ -49,6 +51,9 @@ public class FreeActivity extends AppCompatActivity {
     private boolean loginornot;
     private ArrayAdapter<String> listAdapter_questions;
     private Spinner questionSpin;
+    private final String usedfile = "used.txt";
+    private final String ansfile = "answer.txt";
+    private final String questionfile ="question.txt";
     private String[] hotQuestions = {
       "熱門主題精選","愛情","工作","財運","今日運勢"
     };
@@ -81,7 +86,8 @@ public class FreeActivity extends AppCompatActivity {
         //加入fragment的函式
         addFragment();
         loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
-
+        new Write_and_Read(usedfile,getFilesDir()).WritetoFile("");
+        new Write_and_Read(ansfile,getFilesDir()).WritetoFile("");
         //2016/4/4 update by 均 get from file
         if (loginornot) {
             String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
@@ -226,26 +232,58 @@ public class FreeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (isNetwork()) {
-                    editText_Question = (EditText) findViewById(R.id.editText_Question);
-                    question = editText_Question.getText().toString();//記錄問題
-                    Gruop_Sex = (RadioGroup) findViewById(R.id.Gruop_Sex);
-                    int select_id = Gruop_Sex.getCheckedRadioButtonId();
-                    // 問題輸入轉換為string
-
-                    if (select_id == 2131492997) {
-                        which_sex = "0"; //API上，女 = 0
+                Calendar today = Calendar.getInstance();
+                String todayY =String.valueOf(today.get(Calendar.YEAR));
+                Log.e("Y",todayY);
+                String todayM = String.valueOf(today.get(Calendar.MONTH) + 1);//0 is 1month 11 is Decamber(?)
+                String todayD = String.valueOf(today.get(Calendar.DATE));
+                int time = Integer.valueOf(todayY+todayM+todayD);
+                int usedtime =Integer.valueOf( new Write_and_Read(usedfile,getFilesDir()).ReadFromFile());
+                if(time != usedtime)
+                    Log.e("QQ","QQ");
+                if (time != usedtime ) {
+                    if (isNetwork()) {
+                        editText_Question = (EditText) findViewById(R.id.editText_Question);
+                        question = editText_Question.getText().toString();//記錄問題
+                        Gruop_Sex = (RadioGroup) findViewById(R.id.Gruop_Sex);
+                        int select_id = Gruop_Sex.getCheckedRadioButtonId();
+                        // 問題輸入轉換為string
+                        if (select_id == 2131492997) {
+                            which_sex = "0"; //API上，女 = 0
+                        } else {
+                            which_sex = "1"; //API上，男 = 1
+                        }
+                        // 產生對映的url，使用Catch_say88_API_info函式
+                        String url = Catch_say88_API_info(question, which_sex);
+                        //產生異構Task，因為網路部分不能在main裡面進行，接著執行
+                        RequestTask request = new RequestTask();
+                        request.execute(url);
                     } else {
-                        which_sex = "1"; //API上，男 = 1
+                        notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+                        editNameDialog.show(getFragmentManager(), "EditNameDialog");
                     }
-                    // 產生對映的url，使用Catch_say88_API_info函式
-                    String url = Catch_say88_API_info(question, which_sex);
-                    //產生異構Task，因為網路部分不能在main裡面進行，接著執行
-                    RequestTask request = new RequestTask();
-                    request.execute(url);
-                } else {
-                    notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
-                    editNameDialog.show(getFragmentManager(), "EditNameDialog");
+                }
+                else {
+                    if (isNetwork()) {
+                        button_Submit.setText("今天測過了喔");
+                        editText_Question = (EditText) findViewById(R.id.editText_Question);
+                        String usedans = new Write_and_Read(ansfile, getFilesDir()).ReadFromFile();
+                        String usedquestion = new Write_and_Read(questionfile,getFilesDir()).ReadFromFile();
+                        editText_Question.setText(usedquestion);
+                        String ans[] = usedans.split("@");
+                        bundle =new Bundle();
+                        bundle.putString("TxnCode", ans[0]);
+                        bundle.putString("TxnMsg",  ans[1]);
+                        bundle.putString("Title", ans[2]);
+                        //Log.e("Title",Title);"本日網友問題首選"
+                        bundle.putString("All_result", ans[3]);
+                        bundle.putString("Comment",  ans[4]);
+                        replaceFragment();
+                    }
+                     else {
+                        notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
+                        editNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
                 }
             }
         });
@@ -318,7 +356,8 @@ public class FreeActivity extends AppCompatActivity {
             String Result_marriage="";
             String Result_wish="";
             String Comment="";
-            Log.e("text",text);
+            String All_result="";
+            Log.e("text", text);
             // 把JSON架構變成String
             try {
                 TxnCode = new JSONObject(text).getString("TxnCode");
@@ -328,14 +367,27 @@ public class FreeActivity extends AppCompatActivity {
                 Result_marriage=new JSONObject(new JSONObject(text).getString("Result")).getJSONArray("Result").getString(1);
                 Result_wish=new JSONObject(new JSONObject(text).getString("Result")).getJSONArray("Result").getString(2);
                 Comment = new JSONObject(new JSONObject(text).getString("Result")).getString("Comment");
-                String All_result = Result_love +"\n" +  Result_marriage + "\n" +  Result_wish;
+                 All_result = Result_love +"\n" +  Result_marriage + "\n" +  Result_wish;
                 bundle.putString("TxnCode", TxnCode);
                 bundle.putString("TxnMsg",  TxnMsg);
                 bundle.putString("Title", Title);
+                //Log.e("Title",Title);"本日網友問題首選"
                 bundle.putString("All_result", All_result);
                 bundle.putString("Comment",  Comment);
+
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+            if(Title !="本日網友問題首選"){
+                Calendar today = Calendar.getInstance();
+                String todayY =String.valueOf(today.get(Calendar.YEAR));
+                //Log.e("Y",todayY);
+                String todayM = String.valueOf(today.get(Calendar.MONTH) + 1);//0 is 1month 11 is Decamber(?)
+                String todayD = String.valueOf(today.get(Calendar.DATE));
+                new Write_and_Read(usedfile,getFilesDir()).WritetoFile_clear(todayY+todayM+todayD);
+                new Write_and_Read(questionfile,getFilesDir()).WritetoFile_clear(question);
+                new Write_and_Read(ansfile,getFilesDir()).WritetoFile_clear(TxnCode+"@"+TxnMsg+"@"+Title+"@"+All_result+"@"+Comment);
+                Log.e("ans",new Write_and_Read(ansfile,getFilesDir()).ReadFromFile());
             }
             replaceFragment();
         }

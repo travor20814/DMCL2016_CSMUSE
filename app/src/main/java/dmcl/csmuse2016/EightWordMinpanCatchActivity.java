@@ -10,13 +10,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,6 +44,7 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eightwordcatch);
+
 
         addFragment();
 
@@ -72,7 +76,7 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
     }
     void addFragment(){
         //建立一個 MyFirstFragment 的實例(Instantiate)
-        Fragment newFragment = new EightWordMinpanActivity();
+        Fragment newFragment = new holdFrgment();
         //使用getFragmentManager()獲得FragmentTransaction物件，並呼叫 beginTransaction() 開始執行Transaction
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         //使用FragmentTransaction物件add()的方法將Fragment增加到Activity中
@@ -475,4 +479,17 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
 
     }
 */
+public static class holdFrgment extends Fragment {
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.eightwordminpan, container, false);
+
+        return v;
+    }
+
+
+}
 }
