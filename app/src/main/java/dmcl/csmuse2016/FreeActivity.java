@@ -88,6 +88,7 @@ public class FreeActivity extends AppCompatActivity {
         loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
         new Write_and_Read(usedfile,getFilesDir()).WritetoFile("");
         new Write_and_Read(ansfile,getFilesDir()).WritetoFile("");
+        new Write_and_Read(questionfile,getFilesDir()).WritetoFile("");
         //2016/4/4 update by 均 get from file
         if (loginornot) {
             String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
@@ -234,13 +235,17 @@ public class FreeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Calendar today = Calendar.getInstance();
                 String todayY =String.valueOf(today.get(Calendar.YEAR));
-                Log.e("Y",todayY);
+                //Log.e("Y",todayY);
                 String todayM = String.valueOf(today.get(Calendar.MONTH) + 1);//0 is 1month 11 is Decamber(?)
                 String todayD = String.valueOf(today.get(Calendar.DATE));
                 int time = Integer.valueOf(todayY+todayM+todayD);
-                int usedtime =Integer.valueOf( new Write_and_Read(usedfile,getFilesDir()).ReadFromFile());
+                int usedtime;
+                if(new Write_and_Read(usedfile,getFilesDir()).ReadFromFile()!="")
+                     usedtime =Integer.valueOf( new Write_and_Read(usedfile,getFilesDir()).ReadFromFile());
+                else
+                    usedtime = 1;
                 if(time != usedtime)
-                    Log.e("QQ","QQ");
+                    //Log.e("QQ","QQ");
                 if (time != usedtime ) {
                     if (isNetwork()) {
                         editText_Question = (EditText) findViewById(R.id.editText_Question);
@@ -357,7 +362,7 @@ public class FreeActivity extends AppCompatActivity {
             String Result_wish="";
             String Comment="";
             String All_result="";
-            Log.e("text", text);
+            //Log.e("text", text);
             // 把JSON架構變成String
             try {
                 TxnCode = new JSONObject(text).getString("TxnCode");
@@ -387,7 +392,7 @@ public class FreeActivity extends AppCompatActivity {
                 new Write_and_Read(usedfile,getFilesDir()).WritetoFile_clear(todayY+todayM+todayD);
                 new Write_and_Read(questionfile,getFilesDir()).WritetoFile_clear(question);
                 new Write_and_Read(ansfile,getFilesDir()).WritetoFile_clear(TxnCode+"@"+TxnMsg+"@"+Title+"@"+All_result+"@"+Comment);
-                Log.e("ans",new Write_and_Read(ansfile,getFilesDir()).ReadFromFile());
+                //Log.e("ans",new Write_and_Read(ansfile,getFilesDir()).ReadFromFile());
             }
             replaceFragment();
         }
