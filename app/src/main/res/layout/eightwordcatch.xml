@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- The main content view -->
-<LinearLayout
-    android:id="@+id/content_frame"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_color">
 
     <TextView
         android:layout_width="match_parent"
@@ -66,7 +59,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/character_Birth" />
+                android:id="@+id/character_Birth"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -74,7 +68,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/character_LunarBirth" />
+                android:id="@+id/character_LunarBirth"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,7 +111,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/character_Sex" />
+                android:id="@+id/character_Sex"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -124,7 +120,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/character_Age" />
+                android:id="@+id/character_Age"
+                android:textColor="#000000" />
         </LinearLayout>
     </LinearLayout>
 
@@ -163,7 +160,8 @@
                 android:text="GanInfo"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/GanInfo4" />
+                android:id="@+id/GanInfo4"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -171,7 +169,8 @@
                 android:text="GanZhi"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/GanZhi4" />
+                android:id="@+id/GanZhi4"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -179,7 +178,10 @@
                 android:text="ZhiInfo"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/ZhiInfo4" />
+                android:id="@+id/ZhiInfo4"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:layout_marginTop="-4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -205,7 +207,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/GanInfo3" />
+                android:id="@+id/GanInfo3"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -213,7 +216,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/GanZhi3" />
+                android:id="@+id/GanZhi3"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -221,7 +225,10 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/ZhiInfo3" />
+                android:id="@+id/ZhiInfo3"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:layout_marginTop="-4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -247,7 +254,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/GanInfo2" />
+                android:id="@+id/GanInfo2"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -255,7 +263,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/GanZhi2" />
+                android:id="@+id/GanZhi2"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -263,7 +272,10 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/ZhiInfo2" />
+                android:id="@+id/ZhiInfo2"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:layout_marginTop="-4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -289,7 +301,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/GanInfo1" />
+                android:id="@+id/GanInfo1"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -297,7 +310,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/GanZhi1" />
+                android:id="@+id/GanZhi1"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -305,7 +319,10 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/ZhiInfo1" />
+                android:id="@+id/ZhiInfo1"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:layout_marginTop="-4dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -343,7 +360,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanInfo4" />
+                android:id="@+id/D_GanInfo4"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -351,7 +369,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanZhi4" />
+                android:id="@+id/D_GanZhi4"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -359,7 +378,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo4" />
+                android:id="@+id/D_ZhiInfo4"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -385,7 +405,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanInfo3" />
+                android:id="@+id/D_GanInfo3"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -393,7 +414,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanZhi3" />
+                android:id="@+id/D_GanZhi3"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -401,7 +423,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo3" />
+                android:id="@+id/D_ZhiInfo3"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -427,7 +450,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanInfo2" />
+                android:id="@+id/D_GanInfo2"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -435,7 +459,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanZhi2" />
+                android:id="@+id/D_GanZhi2"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -443,7 +468,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo2" />
+                android:id="@+id/D_ZhiInfo2"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -469,7 +495,8 @@
                 android:gravity="center"
                 android:text="New Text"
                 android:layout_weight="1"
-                android:id="@+id/D_GanInfo1" />
+                android:id="@+id/D_GanInfo1"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -477,7 +504,8 @@
                 android:gravity="center"
                 android:text="New Text"
                 android:layout_weight="1"
-                android:id="@+id/D_GanZhi1" />
+                android:id="@+id/D_GanZhi1"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -485,7 +513,8 @@
                 android:gravity="center"
                 android:text="New Text"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo1" />
+                android:id="@+id/D_ZhiInfo1"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <TextView
@@ -530,7 +559,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanInfo9" />
+                android:id="@+id/D_GanInfo9"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -538,7 +568,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanZhi9" />
+                android:id="@+id/D_GanZhi9"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -546,7 +577,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo9" />
+                android:id="@+id/D_ZhiInfo9"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -572,7 +604,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanInfo8" />
+                android:id="@+id/D_GanInfo8"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -580,7 +613,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanZhi8" />
+                android:id="@+id/D_GanZhi8"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -588,7 +622,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo8" />
+                android:id="@+id/D_ZhiInfo8"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -614,7 +649,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanInfo7" />
+                android:id="@+id/D_GanInfo7"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -622,7 +658,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanZhi7" />
+                android:id="@+id/D_GanZhi7"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -630,7 +667,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo7" />
+                android:id="@+id/D_ZhiInfo7"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -656,7 +694,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanInfo6" />
+                android:id="@+id/D_GanInfo6"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -664,7 +703,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanZhi6" />
+                android:id="@+id/D_GanZhi6"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -672,7 +712,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo6" />
+                android:id="@+id/D_ZhiInfo6"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -698,7 +739,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanInfo5" />
+                android:id="@+id/D_GanInfo5"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -706,7 +748,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/D_GanZhi5" />
+                android:id="@+id/D_GanZhi5"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -714,7 +757,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo5" />
+                android:id="@+id/D_ZhiInfo5"
+                android:textColor="#000000" />
         </LinearLayout>
 
 
@@ -756,7 +800,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="0.7"
-                android:id="@+id/SolarDate1" />
+                android:id="@+id/SolarDate1"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -774,7 +819,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:id="@+id/SolarDiff1"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -799,7 +845,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:id="@+id/SolarDate2"
-                android:layout_weight="0.7" />
+                android:layout_weight="0.7"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -817,7 +864,8 @@
                 android:text="New Text"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/SolarDiff2" />
+                android:id="@+id/SolarDiff2"
+                android:textColor="#000000" />
         </LinearLayout>
     </LinearLayout>
 
@@ -826,17 +874,6 @@
         android:layout_height="wrap_content"
         android:text="再查一次"
         android:id="@+id/button2"
-        android:layout_weight="0.01" />
+        android:layout_weight="0.01"
+        android:background="@drawable/login_btn" />
 </LinearLayout>
-
-    <!-- The navigation drawer -->
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/left_drawer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice">
-    </LinearLayout>
-
-</android.support.v4.widget.DrawerLayout>
