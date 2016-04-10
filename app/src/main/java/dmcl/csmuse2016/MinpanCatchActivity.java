@@ -1,7 +1,10 @@
 package dmcl.csmuse2016;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +19,10 @@ import android.widget.Toast;
  * Created by Boyu on 2016/3/27.
  */
 public class MinpanCatchActivity  extends AppCompatActivity {
+
+    public static TextView errorMs;
+    private final String filename="account.txt";
+    private boolean loginornot;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +50,16 @@ public class MinpanCatchActivity  extends AppCompatActivity {
 
         getInfo();
         ReturnButton();
+        loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        if(loginornot)
+            getMenuInflater().inflate(R.menu.mainmenu, menu);
+        else
+            getMenuInflater().inflate(R.menu.guestmenu, menu);
         return true;
     }
 
@@ -71,15 +82,37 @@ public class MinpanCatchActivity  extends AppCompatActivity {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             String msg = "";
+            Intent tologin =new Intent();
             switch (menuItem.getItemId()) {
                 case R.id.action_home: //home鍵被按時
-                    Intent intent = new Intent(MinpanCatchActivity.this,HomePageActivity.class);
-                    MinpanCatchActivity.this.startActivity(intent);
                     finish();
-
                     break;
                 case R.id.action_settings: //setting鍵
-                    msg += "Click setting";
+                    if (isNetwork()) {
+                        String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+                        String[] fromfileArray = fromfile.split("###");
+                        Intent intentMember = new Intent(getApplicationContext(), MemberActivity.class);
+                        intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
+                        MinpanCatchActivity.this.startActivity(intentMember);
+                        finish();
+                    } else {
+                        notNetwork_dialogFragment EditNameDialog = new notNetwork_dialogFragment();
+                        EditNameDialog.show(getFragmentManager(), "EditNameDialog");
+                    }
+                    break;
+                case R.id.action_designer://製作群
+                    msg += "designer clicked";
+                    break;
+                case R.id.action_logout://登出
+                    new Write_and_Read(filename, getFilesDir()).WritetoFile_clear("");
+                    tologin.setClass(MinpanCatchActivity.this, LoginActivity.class);
+                    startActivity(tologin);
+                    finish();
+                    break;
+                case R.id.action_login://訪客登入
+                    tologin.setClass(MinpanCatchActivity.this, LoginActivity.class);
+                    startActivity(tologin);
+                    finish();
                     break;
             }
 
@@ -500,5 +533,28 @@ public class MinpanCatchActivity  extends AppCompatActivity {
             }
         });
 
+    }
+    private boolean isNetwork()
+    {
+        boolean result = false;
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info=connManager.getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
+        {
+            result = false;
+        }
+        else
+        {
+            if (!info.isAvailable())
+            {
+                result =false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
+
+        return result;
     }
 }

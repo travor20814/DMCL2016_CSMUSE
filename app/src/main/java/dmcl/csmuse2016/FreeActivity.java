@@ -16,10 +16,13 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +47,11 @@ public class FreeActivity extends AppCompatActivity {
     String which_sex="女";//性別，預設為女
     private final String filename="account.txt";
     private boolean loginornot;
+    private ArrayAdapter<String> listAdapter_questions;
+    private Spinner questionSpin;
+    private String[] hotQuestions = {
+      "熱門主題精選","愛情","工作","財運","今日運勢"
+    };
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +97,29 @@ public class FreeActivity extends AppCompatActivity {
                 Woman.setChecked(true); //select woman
             }
         }
+
+        questionSpin = (Spinner)findViewById(R.id.hotQuestionSpinner);
+        listAdapter_questions = new ArrayAdapter<String>(this , R.layout.question_spinner , hotQuestions);
+        listAdapter_questions.setDropDownViewResource(R.layout.question_spinner);
+        questionSpin.setAdapter(listAdapter_questions);
+        questionSpin.setSelection(0);
+        editText_Question = (EditText) findViewById(R.id.editText_Question);
+        questionSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                if (position == 0){
+                    editText_Question.setText("");
+                    editText_Question.setHint("自行輸入您想卜的主題");
+                }else{
+                    editText_Question.setText(hotQuestions[position]);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
     }
 
@@ -195,7 +226,7 @@ public class FreeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if(isNetwork()) {
+                if (isNetwork()) {
                     editText_Question = (EditText) findViewById(R.id.editText_Question);
                     question = editText_Question.getText().toString();//記錄問題
                     Gruop_Sex = (RadioGroup) findViewById(R.id.Gruop_Sex);
@@ -212,8 +243,7 @@ public class FreeActivity extends AppCompatActivity {
                     //產生異構Task，因為網路部分不能在main裡面進行，接著執行
                     RequestTask request = new RequestTask();
                     request.execute(url);
-                }
-                else{
+                } else {
                     notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
                     editNameDialog.show(getFragmentManager(), "EditNameDialog");
                 }
