@@ -41,28 +41,32 @@ public class FragmentForMinsu extends Fragment {
         button_A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content2.setText(return_A);//把回傳的A命宮主星顯示出來
+                if (return_A==null){content2.setText(slogan);}
+                else {content2.setText(return_A);}//把回傳的A命宮主星顯示出來
                 content2.setBackgroundColor(Color.parseColor("#9257cfd9"));
             }
         });
         button_B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content2.setText(return_B);//把回傳的B優缺顯示出來
+                if (return_B==null){content2.setText(slogan);}
+                else {content2.setText(return_B);}//把回傳的B優缺顯示出來
                 content2.setBackgroundColor(Color.parseColor("#8257cfd9"));
             }
         });
         button_C.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content2.setText(return_C);//把回傳的C課題顯示出來
+                if (return_C==null){content2.setText(slogan);}
+                else {content2.setText(return_C);}//把回傳的C課題顯示出來
                 content2.setBackgroundColor(Color.parseColor("#7257cfd9"));
             }
         });
         button_D.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content2.setText(return_D);//把回傳的A命宮主星顯示出來
+                if (return_D==null){content2.setText(slogan);}
+                else {content2.setText(return_D);}//把回傳的A命宮主星顯示出來
                 content2.setBackgroundColor(Color.parseColor("#8257cfd9"));
             }
         });

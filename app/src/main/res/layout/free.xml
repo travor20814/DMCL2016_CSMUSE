@@ -39,7 +39,7 @@
 
                 android:textSize="30dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="每日卜卦，為您解答 !"
+                android:text="免費卜卦，為您解答 !"
                 android:id="@+id/textView_Question" />
 
             <Space

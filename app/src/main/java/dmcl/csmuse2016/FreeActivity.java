@@ -55,7 +55,7 @@ public class FreeActivity extends AppCompatActivity {
         // App Logo
         toolbar.setLogo(R.mipmap.title02);
         // Title
-        toolbar.setTitle("每日卜卦");
+        toolbar.setTitle("免費卜卦");
         toolbar.setTitleTextColor(Color.BLACK);
         // Sub Title
         toolbar.setSubtitle("88Say幫您及時掌握未來");

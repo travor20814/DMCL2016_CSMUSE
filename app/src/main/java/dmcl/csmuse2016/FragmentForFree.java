@@ -36,26 +36,31 @@ public class FragmentForFree extends Fragment {
         button_Result = (Button)v.findViewById(R.id.button_Result);
         button_Comment = (Button)v.findViewById(R.id.button_Comment);
         content = (TextView)v.findViewById(R.id.content);
+
         if (return_Title==null){content.setText(slogan);}
         else {content.setText(return_Title);}
+
         button_Title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content.setText(return_Title);//把回傳的Title顯示出來
+                if (return_Title==null){content.setText(slogan);}
+                else {content.setText(return_Title);}
                 content.setBackgroundColor(Color.parseColor("#9257cfd9"));
             }
         });
         button_Result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content.setText(return_Result);//把回傳的Result顯示出來
+                if (return_Result==null){content.setText(slogan);}
+                else {content.setText(return_Result);}
                 content.setBackgroundColor(Color.parseColor("#8257cfd9"));
             }
         });
         button_Comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content.setText(return_Comment);//把回傳的Comment顯示出來
+                if (return_Comment==null){content.setText(slogan);}
+                else {content.setText(return_Comment);}
                 content.setBackgroundColor(Color.parseColor("#7257cfd9"));
             }
         });
