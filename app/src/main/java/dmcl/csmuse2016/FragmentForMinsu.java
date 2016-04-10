@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class FragmentForMinsu extends Fragment {
@@ -18,6 +19,7 @@ public class FragmentForMinsu extends Fragment {
 
     private Button button_A,button_B,button_C,button_D;//A命宮主星 B優缺 C課題 D風采
     private TextView content2;
+    private ScrollView contentScroller;
     String return_A,return_B,return_C,return_D;//這4個用來記錄回傳的資料
     String slogan = "最專業的生活命理顧問\n88Say幫您及時掌握生活與未來";//slogan
     @Override
@@ -36,6 +38,7 @@ public class FragmentForMinsu extends Fragment {
         button_C = (Button)v.findViewById(R.id.button_C);
         button_D = (Button)v.findViewById(R.id.button_D);
         content2 = (TextView)v.findViewById(R.id.content2);
+        contentScroller = (ScrollView)v.findViewById(R.id.minsuScroll);
         if (return_A==null){content2.setText(slogan);}
         else {content2.setText(return_A);}
         button_A.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +46,8 @@ public class FragmentForMinsu extends Fragment {
             public void onClick(View v) {
                 if (return_A==null){content2.setText(slogan);}
                 else {content2.setText(return_A);}//把回傳的A命宮主星顯示出來
-                content2.setBackgroundColor(Color.parseColor("#9257cfd9"));
+                contentScroller.setBackgroundColor(Color.parseColor("#9257cfd9"));
+                contentScroller.setPadding(0, 160, 0, 0);
             }
         });
         button_B.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +55,8 @@ public class FragmentForMinsu extends Fragment {
             public void onClick(View v) {
                 if (return_B==null){content2.setText(slogan);}
                 else {content2.setText(return_B);}//把回傳的B優缺顯示出來
-                content2.setBackgroundColor(Color.parseColor("#8257cfd9"));
+                contentScroller.setBackgroundColor(Color.parseColor("#8257cfd9"));
+                contentScroller.setPadding(0,160,0,0);
             }
         });
         button_C.setOnClickListener(new View.OnClickListener() {
@@ -59,15 +64,23 @@ public class FragmentForMinsu extends Fragment {
             public void onClick(View v) {
                 if (return_C==null){content2.setText(slogan);}
                 else {content2.setText(return_C);}//把回傳的C課題顯示出來
-                content2.setBackgroundColor(Color.parseColor("#7257cfd9"));
+                contentScroller.setBackgroundColor(Color.parseColor("#7257cfd9"));
+                contentScroller.setPadding(0,160,0,0);
             }
         });
         button_D.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (return_D==null){content2.setText(slogan);}
-                else {content2.setText(return_D);}//把回傳的A命宮主星顯示出來
-                content2.setBackgroundColor(Color.parseColor("#8257cfd9"));
+                if (return_D==null){
+                    content2.setText(slogan);
+                    contentScroller.setPadding(0, 160, 0, 0);
+                }
+                else {
+                    content2.setText(return_D);
+                    contentScroller.setPadding(0,0,0,0);
+                }//把回傳的A命宮主星顯示出來
+                contentScroller.setBackgroundColor(Color.parseColor("#8257cfd9"));
+
             }
         });
 

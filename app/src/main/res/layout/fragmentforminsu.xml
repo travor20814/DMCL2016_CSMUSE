@@ -60,14 +60,23 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:gravity="center"
-            android:textColor="#000000"
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/minsuScroll"
             android:background="#9257cfd9"
-            android:text="請於上方輸入問題"
-            android:id="@+id/content2" />
+            android:layout_gravity="center_vertical"
+            android:paddingTop="160px">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:text="請於上方輸入問題"
+                android:id="@+id/content2" />
+        </ScrollView>
+
     </LinearLayout>
 </LinearLayout>
