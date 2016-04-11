@@ -1,6 +1,7 @@
 package dmcl.csmuse2016;
 
 import android.app.Activity;
+
 import java.util.ArrayList;
 import org.apache.http.util.EntityUtils;
 import android.app.AlertDialog;
@@ -411,36 +412,19 @@ public class CreateNewAccount extends Activity {
             String userHour = String.valueOf(hh);//時辰
             String userNewsCheck = String.valueOf(mailCheck);//電子報
 
-            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("Surname", username));
-            nameValuePairs.add(new BasicNameValuePair("Name", userSubname));
-            nameValuePairs.add(new BasicNameValuePair("Account", Account));
-            nameValuePairs.add(new BasicNameValuePair("Password",password));
-            nameValuePairs.add(new BasicNameValuePair("sex", userSex));
-            nameValuePairs.add(new BasicNameValuePair("year", userYear));
-            nameValuePairs.add(new BasicNameValuePair("month", userMonth));
-            nameValuePairs.add(new BasicNameValuePair("day", userDay));
-            nameValuePairs.add(new BasicNameValuePair("hour", userHour));
-            nameValuePairs.add(new BasicNameValuePair("news", userNewsCheck));
 
-
-            try
-            {
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://dmcl.twbbs.org/csmuse/insert_new_account.php");
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpclient.execute(httppost);
-                HttpEntity entity = response.getEntity();
-                is = entity.getContent();
-                Log.v("pass 1", "connection success ");
-
-            }
-            catch(Exception e)
-            {
-                Log.e("Fail 1", e.toString());
-                Toast.makeText(getApplicationContext(), "Invalid IP Address",
-                        Toast.LENGTH_LONG).show();
-            }
+            String command = "INSERT INTO Account (Surname,Name,Account,Password,sex,year,month,day,hour,news)VALUES\n('" +
+                    username+"','"+
+                    userSubname+"','"+
+                    Account+"','"+
+                    password+"','"+
+                    userSex+"','"+
+                    userYear+"','"+
+                    userMonth+"','"+
+                    userDay+"','"+
+                    userHour+"','"+
+                    userNewsCheck+"')";
+            String ans = new connect(command).getServerUpdate();
 
             return null;
         }

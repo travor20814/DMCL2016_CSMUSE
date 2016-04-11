@@ -15,7 +15,6 @@ import java.net.URLEncoder;
 public class connect extends Application {
     //用於連接php的class
     private String urlString = "http://dmcl.twbbs.org/csmuse/userAccount.php?sql=";
-    private String urlgrab = "http://dmcl.twbbs.org/csmuse/grabAccount.php?sql=";
     private String getFromServer;
     private InputStream in;
     private String response;
