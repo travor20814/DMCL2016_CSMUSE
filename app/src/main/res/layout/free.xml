@@ -72,7 +72,8 @@
                 android:backgroundTint="#000000"
                 android:gravity="center"
                 android:id="@+id/editText_Question"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text=""/>
 
             <Space
                 android:layout_width="match_parent"

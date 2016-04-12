@@ -12,7 +12,7 @@ public class whenDateError_dialogFragment extends DialogFragment{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final String title = "錯誤";
-        final String message = "請輸入正確日期";
+        final String message = "請確認輸入正確";
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

@@ -2,6 +2,8 @@ package dmcl.csmuse2016;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,8 +27,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
-
+import android.app.TaskStackBuilder;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -234,20 +238,20 @@ public class FreeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar today = Calendar.getInstance();
-                String todayY =String.valueOf(today.get(Calendar.YEAR));
+                String todayY = String.valueOf(today.get(Calendar.YEAR));
                 //Log.e("Y",todayY);
                 String todayM = String.valueOf(today.get(Calendar.MONTH) + 1);//0 is 1month 11 is Decamber(?)
                 String todayD = String.valueOf(today.get(Calendar.DATE));
-                int time = Integer.valueOf(todayY+todayM+todayD);
+                int time = Integer.valueOf(todayY + todayM + todayD);
                 int usedtime;
 
-                if(new Write_and_Read(usedfile,getFilesDir()).ReadFromFile()!=""){
-                    usedtime =Integer.valueOf( new Write_and_Read(usedfile,getFilesDir()).ReadFromFile());
-                } else{
+                if (new Write_and_Read(usedfile, getFilesDir()).ReadFromFile() != "") {
+                    usedtime = Integer.valueOf(new Write_and_Read(usedfile, getFilesDir()).ReadFromFile());
+                } else {
                     usedtime = 1;
                 }
 
-                if (time != usedtime ) {
+                if (time != usedtime) {
                     if (isNetwork()) {
                         editText_Question = (EditText) findViewById(R.id.editText_Question);
                         question = editText_Question.getText().toString();//記錄問題
@@ -268,27 +272,26 @@ public class FreeActivity extends AppCompatActivity {
                         notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
                         editNameDialog.show(getFragmentManager(), "EditNameDialog");
                     }
-                }
-                else {
+                } else {
                     if (isNetwork()) {
                         button_Submit.setText("今天測過了喔");
                         button_Submit.setTextColor(0xffff0000);
                         button_Submit.setTextSize(22);
                         editText_Question = (EditText) findViewById(R.id.editText_Question);
                         String usedans = new Write_and_Read(ansfile, getFilesDir()).ReadFromFile();
-                        String usedquestion = new Write_and_Read(questionfile,getFilesDir()).ReadFromFile();
+                        String usedquestion = new Write_and_Read(questionfile, getFilesDir()).ReadFromFile();
                         editText_Question.setText(usedquestion);
+                       // Log.e("usedans",usedans);
                         String ans[] = usedans.split("@");
-                        bundle =new Bundle();
+                        bundle = new Bundle();
                         bundle.putString("TxnCode", ans[0]);
-                        bundle.putString("TxnMsg",  ans[1]);
+                        bundle.putString("TxnMsg", ans[1]);
                         bundle.putString("Title", ans[2]);
                         //Log.e("Title",Title);"本日網友問題首選"
                         bundle.putString("All_result", ans[3]);
-                        bundle.putString("Comment",  ans[4]);
+                        bundle.putString("Comment", ans[4]);
                         replaceFragment();
-                    }
-                     else {
+                    } else {
                         notNetwork_dialogFragment editNameDialog = new notNetwork_dialogFragment();
                         editNameDialog.show(getFragmentManager(), "EditNameDialog");
                     }
@@ -296,6 +299,7 @@ public class FreeActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public String Catch_say88_API_info(String ques,String sex){
         // token就是識別證，question和sex為使用者輸入
@@ -386,7 +390,7 @@ public class FreeActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if(Title !="本日網友問題首選"){
+            if(Title !="本日網友問題首選"&&Integer.valueOf(TxnCode)!=0){
                 Calendar today = Calendar.getInstance();
                 String todayY =String.valueOf(today.get(Calendar.YEAR));
                 //Log.e("Y",todayY);

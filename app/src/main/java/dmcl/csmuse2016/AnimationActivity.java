@@ -1,15 +1,25 @@
 package dmcl.csmuse2016;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.util.DisplayMetrics;
+
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class AnimationActivity extends ActionBarActivity {
@@ -17,8 +27,11 @@ public class AnimationActivity extends ActionBarActivity {
     private ImageView image = null;
     private int duration = 0;
     private final String filename="account.txt";
+    private final String usedfile = "used.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Timer timer = new Timer(true);
+        timer.schedule(new MyTimerTask(), 1000,60*1000*60*12);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation);
 
@@ -72,6 +85,56 @@ public class AnimationActivity extends ActionBarActivity {
         }
 
     public void initialFile(){
-        new Write_and_Read(filename,getFilesDir()).WritetoFile("");//if file exit writ,and not creat and write
+        new Write_and_Read(filename,getFilesDir()).WritetoFile("");
+        new Write_and_Read(usedfile,getFilesDir()).WritetoFile("");//if file exit writ,and not creat and write
     }
+    public class MyTimerTask extends TimerTask
+    {
+        public void run()
+        {
+            Calendar today = Calendar.getInstance();
+            String todayY = String.valueOf(today.get(Calendar.YEAR));
+            //Log.e("Y",todayY);
+            String todayM = String.valueOf(today.get(Calendar.MONTH) + 1);//0 is 1month 11 is Decamber(?)
+            String todayD = String.valueOf(today.get(Calendar.DATE));
+            int time = Integer.valueOf(todayY + todayM + todayD);
+            int usedtime;
+
+            if (new Write_and_Read(usedfile, getFilesDir()).ReadFromFile() != "") {
+                usedtime = Integer.valueOf(new Write_and_Read(usedfile, getFilesDir()).ReadFromFile());
+            } else {
+                usedtime = 1;
+            }
+            if(time!=usedtime){
+                final int mId =1;
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(getApplicationContext())
+                                .setSmallIcon(R.mipmap.iconapp)
+                                .setContentTitle("測測你今天的氣運")
+                                .setContentText("快來使用每日卜卦");
+// Creates an explicit intent for an Activity in your app
+                Intent resultIntent = new Intent(AnimationActivity.this, FreeActivity.class);
+
+// The stack builder object will contain an artificial back stack for the
+// started Activity.
+// This ensures that navigating backward from the Activity leads out of
+// your application to the Home screen.
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+// Adds the back stack for the Intent (but not the Intent itself)
+                stackBuilder.addParentStack(FreeActivity.class);
+// Adds the Intent that starts the Activity to the top of the stack
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// mId allows you to update the notification later on.
+                mNotificationManager.notify(mId, mBuilder.build());
+            }
+        }
+    };
 }
