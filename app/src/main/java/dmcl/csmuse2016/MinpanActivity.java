@@ -1,6 +1,8 @@
 package dmcl.csmuse2016;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -12,12 +14,16 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ActionBarContainer;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,8 +44,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.zip.Inflater;
+
 //命盤的activity
-public class MinpanActivity extends AppCompatActivity {
+public class MinpanActivity extends Fragment {
+
 
     Bundle bundle1 = new Bundle();
     private Button button_Submit2;
@@ -80,38 +89,14 @@ public class MinpanActivity extends AppCompatActivity {
     public static TextView errorMs;
     private final String filename="account.txt";
     private boolean loginornot;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.minpan);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_minpan);
-        setSupportActionBar(toolbar);
-
-        // App Logo
-        toolbar.setLogo(R.mipmap.title02);
-        // Title
-        toolbar.setTitle("紫微命盤");
-        toolbar.setTitleTextColor(Color.BLACK);
-        // Sub Title
-        toolbar.setSubtitle("88Say幫您及時掌握未來");
-        toolbar.setSubtitleTextColor(Color.BLACK);
-
-        setSupportActionBar(toolbar);
-
-        // Navigation Icon 要設定在 setSupoortActionBar 才有作用
-        // 否則會出現 back bottom
-        //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
-        // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
-        toolbar.setOnMenuItemClickListener(onMenuItemClick);
-
-        ButtonSummit();
-        loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.minpan, container, false);
+        ButtonSummit(v);
+        loginornot = new Write_and_Read(filename,getContext().getFilesDir()).ifLogin();
 
         //2016/4/4 update by 均 get from file
         if (loginornot) {
-            String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
+            String fromfile = new Write_and_Read(filename,getContext().getFilesDir() ).ReadFromFile();
             String[] tem = fromfile.split("@@@@@");
             String[] fromfileArray = tem[0].split("###");
 
@@ -123,123 +108,53 @@ public class MinpanActivity extends AppCompatActivity {
             int monthPosition = fileMonth - 1;
             int dayPosition = fileDay - 1;
             //設定年的初始值
-            spinner_year = (Spinner)findViewById(R.id.input_minpan_year);
-            listAdapter_year = new ArrayAdapter<String>(this, R.layout.myspinner, year_list);
+            spinner_year = (Spinner)v.findViewById(R.id.input_minpan_year);
+            listAdapter_year = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, year_list);
             listAdapter_year.setDropDownViewResource(R.layout.myspinner);
             spinner_year.setAdapter(listAdapter_year);
             spinner_year.setSelection(yearPosition);
             s_year = year_list[yearPosition]; //傳入value
             //設定月的初始值
-            spinner_month = (Spinner)findViewById(R.id.input_minpan_month);
-            listAdapter_month = new ArrayAdapter<String>(this, R.layout.myspinner, month_list);
+            spinner_month = (Spinner)v.findViewById(R.id.input_minpan_month);
+            listAdapter_month = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, month_list);
             listAdapter_month.setDropDownViewResource(R.layout.myspinner);
             spinner_month.setAdapter(listAdapter_month);
             spinner_month.setSelection(monthPosition);
             s_month = month_list[monthPosition]; //傳入value
             //設定日的初始值
-            spinner_day = (Spinner)findViewById(R.id.input_minpan_day);
-            listAdapter_day = new ArrayAdapter<String>(this, R.layout.myspinner, day_list);
+            spinner_day = (Spinner)v.findViewById(R.id.input_minpan_day);
+            listAdapter_day = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, day_list);
             listAdapter_day.setDropDownViewResource(R.layout.myspinner);
             spinner_day.setAdapter(listAdapter_day);
             spinner_day.setSelection(dayPosition);
             s_day = day_list[dayPosition]; //傳入value
             //設定性別初始值
-            male = (RadioButton)findViewById(R.id.radio_Male2);
-            female = (RadioButton)findViewById(R.id.radio_Female2);
+            male = (RadioButton)v.findViewById(R.id.radio_Male2);
+            female = (RadioButton)v.findViewById(R.id.radio_Female2);
             if (fromfileArray[4].equals("1")) {
                 male.setChecked(true);
             } else {
                 female.setChecked(true);
             }
             //設定時間的初始值
-            spinner = (Spinner)findViewById(R.id.minpan_spinner);
-            listAdapter = new ArrayAdapter<String>(this, R.layout.myspinner, hour_list);
+            spinner = (Spinner)v.findViewById(R.id.minpan_spinner);
+            listAdapter = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, hour_list);
             listAdapter.setDropDownViewResource(R.layout.myspinner);
             spinner.setAdapter(listAdapter);
             spinner.setSelection(fileHour);
             hour = hour_list[fileHour];
         }
+        return v;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        if(loginornot)
-            getMenuInflater().inflate(R.menu.mainmenu, menu);
-        else
-            getMenuInflater().inflate(R.menu.guestmenu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    //toolbar按鈕被按時
-    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            String msg = "";
-            Intent tologin =new Intent();
-            switch (menuItem.getItemId()) {
-                case R.id.action_home: //home鍵被按時
-                    finish();
-                    break;
-                case R.id.action_settings: //setting鍵
-                    if(isNetwork()) {
-                        String fromfile = new Write_and_Read(filename, getFilesDir()).ReadFromFile();
-                        String[] fromfileArray = fromfile.split("###");
-                        Intent intentMember = new Intent(getApplicationContext(), MemberActivity.class);
-                        intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
-                        MinpanActivity.this.startActivity(intentMember);
-                        finish();
-                    }
-                    else {
-                        notNetwork_dialogFragment EditNameDialog = new notNetwork_dialogFragment();
-                        EditNameDialog.show(getFragmentManager(), "EditNameDialog");
-                    }
-                    break;
-                case R.id.action_designer://製作群
-                    msg+="designer clicked";
-                    break;
-                case R.id.action_logout://登出
-                    new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");
-                    tologin.setClass(MinpanActivity.this,LoginActivity.class);
-                    startActivity(tologin);
-                    finish();
-                    break;
-                case R.id.action_login://訪客登入
-                    tologin.setClass(MinpanActivity.this,LoginActivity.class);
-                    startActivity(tologin);
-                    finish();
-                    break;
-            }
-
-            if(!msg.equals("")) {
-                Toast.makeText(MinpanActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        }
-    };
 
 
 
-
-    void ButtonSummit(){
-        button_Submit2 = (Button)findViewById(R.id.button_minpan_Submit2);
+    void ButtonSummit(View v){
+        button_Submit2 = (Button)v.findViewById(R.id.button_minpan_Submit2);
         // 時辰
-        spinner = (Spinner)findViewById(R.id.minpan_spinner);
-        listAdapter = new ArrayAdapter<String>(this, R.layout.myspinner, hour_list);
+        spinner = (Spinner)v.findViewById(R.id.minpan_spinner);
+        listAdapter = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, hour_list);
         listAdapter.setDropDownViewResource(R.layout.myspinner);
         spinner.setAdapter(listAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -253,8 +168,8 @@ public class MinpanActivity extends AppCompatActivity {
             }
         });
         // 年
-        spinner_year = (Spinner)findViewById(R.id.input_minpan_year);
-        listAdapter_year = new ArrayAdapter<String>(this, R.layout.myspinner, year_list);
+        spinner_year = (Spinner)v.findViewById(R.id.input_minpan_year);
+        listAdapter_year = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, year_list);
         listAdapter_year.setDropDownViewResource(R.layout.myspinner);
         spinner_year.setAdapter(listAdapter_year);
         spinner_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -268,8 +183,8 @@ public class MinpanActivity extends AppCompatActivity {
             }
         });
         // 月
-        spinner_month = (Spinner)findViewById(R.id.input_minpan_month);
-        listAdapter_month = new ArrayAdapter<String>(this, R.layout.myspinner, month_list);
+        spinner_month = (Spinner)v.findViewById(R.id.input_minpan_month);
+        listAdapter_month = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, month_list);
         listAdapter_month.setDropDownViewResource(R.layout.myspinner);
         spinner_month.setAdapter(listAdapter_month);
         spinner_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -283,8 +198,8 @@ public class MinpanActivity extends AppCompatActivity {
             }
         });
         // 日
-        spinner_day = (Spinner)findViewById(R.id.input_minpan_day);
-        listAdapter_day = new ArrayAdapter<String>(this, R.layout.myspinner, day_list);
+        spinner_day = (Spinner)v.findViewById(R.id.input_minpan_day);
+        listAdapter_day = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, day_list);
         listAdapter_day.setDropDownViewResource(R.layout.myspinner);
         spinner_day.setAdapter(listAdapter_day);
         spinner_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -303,22 +218,22 @@ public class MinpanActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isNetwork()) {
-                    errorMs = (TextView) findViewById(R.id.textViewError);
+                    errorMs = (TextView) v.findViewById(R.id.textViewError);
 
 
                     //radioGroup
-                    Gruop_Sex2 = (RadioGroup) findViewById(R.id.Gruop_minpan_Sex2);
+                    Gruop_Sex2 = (RadioGroup) v.findViewById(R.id.Gruop_minpan_Sex2);
                     int select_id = Gruop_Sex2.getCheckedRadioButtonId();
-                    Gruop_YearType = (RadioGroup) findViewById(R.id.Gruo_minpanp_YearType);
+                    Gruop_YearType = (RadioGroup) v.findViewById(R.id.Gruo_minpanp_YearType);
                     int select_type = Gruop_YearType.getCheckedRadioButtonId();//記錄選了哪一個(西元or民國or農曆)
                     //editText_Question2.setText(String.valueOf(select_type));//測試用
 
-                    west = (RadioButton) findViewById(R.id.radio_west);
-                    guo = (RadioButton) findViewById(R.id.radio_guo);
-                    non = (RadioButton) findViewById(R.id.radio_non);
+                    west = (RadioButton) v.findViewById(R.id.radio_west);
+                    guo = (RadioButton) v.findViewById(R.id.radio_guo);
+                    non = (RadioButton)v. findViewById(R.id.radio_non);
 
-                    male = (RadioButton) findViewById(R.id.radio_Male2);
-                    female = (RadioButton) findViewById(R.id.radio_Female2);
+                    male = (RadioButton) v.findViewById(R.id.radio_Male2);
+                    female = (RadioButton) v.findViewById(R.id.radio_Female2);
 
                     // 問題輸入轉換為string
                     if (select_id == female.getId()) {
@@ -422,7 +337,7 @@ public class MinpanActivity extends AppCompatActivity {
     private boolean isNetwork()
     {
         boolean result = false;
-        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info=connManager.getActiveNetworkInfo();
         if (info == null || !info.isConnected())
         {
@@ -786,10 +701,10 @@ public class MinpanActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent();
+       /* Intent intent = new Intent();
         intent.setClass(MinpanActivity.this, MinpanCatchActivity.class);
         intent.putExtras(bundle1);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
 }

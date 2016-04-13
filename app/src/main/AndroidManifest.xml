@@ -48,12 +48,12 @@
             android:name=".HomePageActivity"
             android:launchMode="singleTask">
         </activity>
-        <activity
+        <!--<activity
             android:screenOrientation="portrait"
             android:name=".MinpanActivity"
             android:label="命盤"
             android:theme="@style/AppTheme.Base">
-        </activity>
+        </activity>-->
         <activity
             android:screenOrientation="portrait"
             android:name=".MinpanCatchActivity"

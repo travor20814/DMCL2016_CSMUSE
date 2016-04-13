@@ -61,7 +61,7 @@ public class HomePageActivity extends Activity {
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton03){//命盤畫面
-                    Intent intent = new Intent(HomePageActivity.this,MinpanActivity.class);
+                    Intent intent = new Intent(HomePageActivity.this,MinpanCatchActivity.class);
                     HomePageActivity.this.startActivity(intent);
                 }
                 if (v == imagebutton04){//付費專區
@@ -140,8 +140,14 @@ public class HomePageActivity extends Activity {
     {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
-            HomePageActivity_back_dialogFragment editNameDialog =  HomePageActivity_back_dialogFragment.newInstance("您即將離開", "確定要離開嗎？", "取消", "確定","登出");
-            editNameDialog.show(getFragmentManager(), "EditNameDialog");
+            if(loginornot) {
+                HomePageActivity_back_dialogFragment editNameDialog = HomePageActivity_back_dialogFragment.newInstance("您即將離開", "確定要離開嗎？", "取消", "確定", "登出");
+                editNameDialog.show(getFragmentManager(), "EditNameDialog");
+            }
+            else{
+                HomePageActivity_back_dialogFragment editNameDialog = HomePageActivity_back_dialogFragment.newInstance("您即將離開", "確定要離開嗎？", "取消", "確定", "登入");
+                editNameDialog.show(getFragmentManager(), "EditNameDialog");
+            }
         }
         return false;
     }
