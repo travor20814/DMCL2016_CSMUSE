@@ -877,7 +877,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="再查一次"
+        android:text="開始測"
         android:id="@+id/button2"
         android:layout_weight="0.01"
         android:background="@drawable/login_btn" />
