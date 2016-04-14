@@ -61,7 +61,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/character_Birth"
@@ -70,7 +70,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/character_LunarBirth"
@@ -113,7 +113,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/character_Sex"
@@ -122,7 +122,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/character_Age"
@@ -162,7 +162,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="GanInfo"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/GanInfo4"
@@ -171,22 +171,27 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="GanZhi"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/GanZhi4"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="ZhiInfo"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:id="@+id/ZhiInfo4"
-                android:textColor="#000000"
-                android:textSize="12sp"
-                android:layout_marginTop="-4dp" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/ZhiInfo4"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:layout_marginTop="-4dp" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -209,7 +214,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/GanInfo3"
@@ -218,22 +223,27 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/GanZhi3"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:id="@+id/ZhiInfo3"
-                android:textColor="#000000"
-                android:textSize="12sp"
-                android:layout_marginTop="-4dp" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/ZhiInfo3"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:layout_marginTop="-4dp" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -256,7 +266,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/GanInfo2"
@@ -265,22 +275,28 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/GanZhi2"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:id="@+id/ZhiInfo2"
-                android:textColor="#000000"
-                android:textSize="12sp"
-                android:layout_marginTop="-4dp" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/ZhiInfo2"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:layout_marginTop="-4dp" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -303,7 +319,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/GanInfo1"
@@ -312,22 +328,28 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/GanZhi1"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:id="@+id/ZhiInfo1"
-                android:textColor="#000000"
-                android:textSize="12sp"
-                android:layout_marginTop="-4dp" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+
+                    android:id="@+id/ZhiInfo1"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:layout_marginTop="-4dp" />
+            </ScrollView>
         </LinearLayout>
     </LinearLayout>
 
@@ -362,7 +384,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanInfo4"
@@ -371,20 +393,26 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanZhi4"
                 android:textColor="#000000" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo4"
-                android:textColor="#000000" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/D_ZhiInfo4"
+                    android:textColor="#000000" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -407,7 +435,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanInfo3"
@@ -416,20 +444,26 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanZhi3"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo3"
-                android:textColor="#000000" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:layout_weight="0.6"
+                    android:id="@+id/D_ZhiInfo3"
+                    android:textColor="#000000" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -452,7 +486,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanInfo2"
@@ -461,20 +495,25 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanZhi2"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo2"
-                android:textColor="#000000" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/D_ZhiInfo2"
+                    android:textColor="#000000" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -498,7 +537,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="New Text"
+                android:text=""
                 android:layout_weight="1"
                 android:id="@+id/D_GanInfo1"
                 android:textColor="#000000" />
@@ -507,19 +546,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="New Text"
+                android:text=""
                 android:layout_weight="1"
                 android:id="@+id/D_GanZhi1"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="New Text"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo1"
-                android:textColor="#000000" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text=""
+                    android:id="@+id/D_ZhiInfo1"
+                    android:textColor="#000000" />
+            </ScrollView>
         </LinearLayout>
 
         <TextView
@@ -561,7 +605,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanInfo9"
@@ -570,20 +614,25 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanZhi9"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo9"
-                android:textColor="#000000" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/D_ZhiInfo9"
+                    android:textColor="#000000" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -606,7 +655,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanInfo8"
@@ -615,20 +664,25 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanZhi8"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo8"
-                android:textColor="#000000" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/D_ZhiInfo8"
+                    android:textColor="#000000" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -651,7 +705,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanInfo7"
@@ -660,20 +714,25 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanZhi7"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo7"
-                android:textColor="#000000" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/D_ZhiInfo7"
+                    android:textColor="#000000" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -696,7 +755,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanInfo6"
@@ -705,20 +764,25 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanZhi6"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo6"
-                android:textColor="#000000" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/D_ZhiInfo6"
+                    android:textColor="#000000" />
+            </ScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -741,7 +805,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanInfo5"
@@ -750,20 +814,25 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/D_GanZhi5"
                 android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="New Text"
-                android:gravity="center"
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.6"
-                android:id="@+id/D_ZhiInfo5"
-                android:textColor="#000000" />
+                android:paddingTop="5px">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/D_ZhiInfo5"
+                    android:textColor="#000000" />
+            </ScrollView>
         </LinearLayout>
 
 
@@ -802,7 +871,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="0.7"
                 android:id="@+id/SolarDate1"
@@ -821,7 +890,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:id="@+id/SolarDiff1"
                 android:layout_weight="1"
@@ -847,7 +916,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:id="@+id/SolarDate2"
                 android:layout_weight="0.7"
@@ -866,7 +935,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
+                android:text=""
                 android:gravity="center"
                 android:layout_weight="1"
                 android:id="@+id/SolarDiff2"

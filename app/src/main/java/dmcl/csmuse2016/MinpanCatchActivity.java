@@ -168,13 +168,7 @@ public class MinpanCatchActivity  extends AppCompatActivity {
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout) ;
         drawerLayout.closeDrawer(GravityCompat.START);
         //Bundle info_bundle = this.getIntent().getExtras();
-        if(info_bundle.getString("Reslut_Sex").equals("null")){
-            TextView FateManner = (TextView) findViewById(R.id.Fate_Manner);
-            FateManner.setText("系統");
-            TextView FateSex = (TextView) findViewById(R.id.Fate_Sex);
-            FateSex.setText("錯誤");
-        }
-        else {
+
             String Reslut_Sex = info_bundle.getString("Reslut_Sex");
             String Reslut_Age = info_bundle.getString("Reslut_Age");
             String Reslut_Birth = info_bundle.getString("Reslut_Birth");
@@ -555,7 +549,7 @@ public class MinpanCatchActivity  extends AppCompatActivity {
             }
             TextView star_12 = (TextView) findViewById(R.id.typestar12);
             star_12.setText(star12);
-        }
+
     }
 
     public void ReturnButton(){

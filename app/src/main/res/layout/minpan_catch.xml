@@ -307,7 +307,7 @@
                     android:id="@+id/Sex_Age"
                     android:paddingLeft="20dp"
                     android:paddingTop="15dp"
-                    android:textSize = "25dp"
+                    android:textSize = "25sp"
                     android:text = "紫微\n斗數"
                     android:layout_weight="1" />
                 <ScrollView
@@ -321,7 +321,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/Birth"
                     android:paddingLeft="10dp"
-                    android:textSize = "18dp"
+                    android:textSize = "18sp"
                     android:text = "天機特選\n人生運勢\n愛情友情\n課業工作"
                     android:layout_weight="1"
                     />
