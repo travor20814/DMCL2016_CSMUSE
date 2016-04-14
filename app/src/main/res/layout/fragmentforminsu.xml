@@ -18,7 +18,8 @@
             android:background="@drawable/fragment_btn"
             android:id="@+id/button_A"
             android:layout_marginRight="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
 
         <Button
             android:layout_width="wrap_content"
@@ -58,25 +59,28 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#9257cfd9"
+        android:id="@+id/linear">
 
-        <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/minsuScroll"
-            android:background="#9257cfd9"
-            android:layout_gravity="center_vertical"
-            android:paddingTop="160px">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="411dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:text="請於上方輸入問題"
+            android:id="@+id/content2"
+            android:layout_weight="0.9"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:text="請於上方輸入問題"
-                android:id="@+id/content2" />
-        </ScrollView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="開始測"
+            android:id="@+id/start"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.1"
+            android:background="@drawable/login_btn"/>
 
     </LinearLayout>
 </LinearLayout>

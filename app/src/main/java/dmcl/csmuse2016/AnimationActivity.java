@@ -107,11 +107,13 @@ public class AnimationActivity extends ActionBarActivity {
             }
             if(time!=usedtime){
                 final int mId =1;
+                int D=0;
+                D |= Notification.DEFAULT_VIBRATE;
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(getApplicationContext())
-                                .setSmallIcon(R.mipmap.iconapp)
+                                .setSmallIcon(R.drawable.notify_icon)
                                 .setContentTitle("測測你今天的氣運")
-                                .setContentText("快來使用每日卜卦");
+                                .setContentText("快來使用每日卜卦").setDefaults(D);
 // Creates an explicit intent for an Activity in your app
                 Intent resultIntent = new Intent(AnimationActivity.this, FreeActivity.class);
 
