@@ -130,7 +130,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text=""
             android:id="@+id/mail_content"
             android:textSize="20sp"
             android:layout_gravity="center_vertical" />
@@ -176,7 +176,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text=""
             android:id="@+id/password_content"
             android:textSize="20sp"
             android:layout_gravity="center_vertical" />
@@ -204,7 +204,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text=""
             android:id="@+id/sex_content"
             android:textSize="20sp"
             android:layout_gravity="center_vertical" />
