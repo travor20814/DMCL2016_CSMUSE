@@ -59,7 +59,7 @@ public class FreeActivity extends AppCompatActivity {
     private final String ansfile = "answer.txt";
     private final String questionfile ="question.txt";
     private String[] hotQuestions = {
-      "熱門主題精選","愛情","工作","財運","今日運勢"
+      "選擇熱門主題 ▼","愛情","工作","財運","今日運勢"
     };
     @Override
     public void onCreate(Bundle savedInstanceState) {

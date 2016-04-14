@@ -7,4 +7,5 @@
         android:gravity="center"
         android:singleLine="true"
         android:textColor="#96fc4444"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+    android:background="@drawable/spin_style" />

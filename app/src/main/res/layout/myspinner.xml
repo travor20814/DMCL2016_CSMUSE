@@ -9,5 +9,6 @@
     android:singleLine="true"
     android:textColor="#fffcff"
     android:textSize="32sp"
-    android:textStyle="bold" >
+    android:textStyle="bold"
+    android:background="@drawable/spin_style">
 </TextView>
