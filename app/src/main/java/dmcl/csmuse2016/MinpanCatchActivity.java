@@ -563,11 +563,7 @@ public class MinpanCatchActivity  extends AppCompatActivity {
         ReturnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent();
-                // intent.setClass(CatchActivity.this, MainActivity.class);
-                // startActivity(intent);
-               // MinpanActivity.errorMs.setText("請輸入內容");
-                //MinpanCatchActivity.this.finish();
+
                 DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout) ;
                 drawerLayout.openDrawer(GravityCompat.START);
             }
@@ -600,10 +596,10 @@ public class MinpanCatchActivity  extends AppCompatActivity {
 
 
 
-
-
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
     public static class MinpanActivity_F extends Fragment {
 
@@ -1256,10 +1252,7 @@ public class MinpanCatchActivity  extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-       /* Intent intent = new Intent();
-        intent.setClass(MinpanActivity.this, MinpanCatchActivity.class);
-        intent.putExtras(bundle1);
-        startActivity(intent);*/
+
             ((MinpanCatchActivity)getActivity()).getInfo(bundle1);
         }
     }
