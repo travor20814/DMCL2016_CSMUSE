@@ -74,8 +74,6 @@ public class MinpanCatchActivity  extends AppCompatActivity {
         //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
         // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout) ;
-        drawerLayout.openDrawer(GravityCompat.START);
        // getInfo();
         addFragment();
         ReturnButton();

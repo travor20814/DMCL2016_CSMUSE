@@ -701,7 +701,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="再算一次"
+            android:text="開始測"
             android:id="@+id/ButtonReturn"
             android:gravity="center"
             android:layout_weight="5"
