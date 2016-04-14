@@ -48,12 +48,7 @@
             android:name=".HomePageActivity"
             android:launchMode="singleTask">
         </activity>
-        <!--<activity
-            android:screenOrientation="portrait"
-            android:name=".MinpanActivity"
-            android:label="命盤"
-            android:theme="@style/AppTheme.Base">
-        </activity>-->
+
         <activity
             android:screenOrientation="portrait"
             android:name=".MinpanCatchActivity"
@@ -93,12 +88,7 @@
             android:label="會員專區"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity
-            android:screenOrientation="portrait"
-            android:name=".EightWordMinpanActivity"
-            android:label="八字命盤"
-            android:theme="@style/AppTheme.Base">
-        </activity>
+
         <activity
             android:screenOrientation="portrait"
             android:name=".EightWordMinpanCatchActivity"
