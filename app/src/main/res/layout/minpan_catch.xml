@@ -47,7 +47,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -57,19 +57,27 @@
                     android:layout_weight="1"
                     android:background="#f1f2f4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar4"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar4"
+                            android:textSize = "14sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text = ""
+                            android:layout_weight="1" />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -78,7 +86,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -87,7 +95,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
@@ -98,15 +106,22 @@
                     android:layout_weight="1"
                     android:background="#c4c4c4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar5"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar5"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text = ""
+                             />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -119,7 +134,8 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:background="#77ffffff"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -128,7 +144,8 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:background="#77ffffff"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
@@ -138,19 +155,26 @@
                     android:layout_weight="1"
                     android:background="#f1f2f4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar6"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar6"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text = "" />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -159,7 +183,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -168,7 +192,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
@@ -178,6 +202,12 @@
                     android:layout_weight="1"
                     android:background="#c4c4c4"
                     android:orientation="vertical">
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -185,12 +215,14 @@
                         android:textSize = "12sp"
                         android:gravity="center"
                         android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                        android:text = ""
+                        />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -199,7 +231,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -208,7 +240,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -216,7 +248,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal">
                 <LinearLayout
@@ -225,19 +257,27 @@
                     android:layout_weight="1"
                     android:background="#c4c4c4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar3"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar3"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text = ""
+                           />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -246,7 +286,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -255,7 +295,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
@@ -263,41 +303,56 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#292928"
+
                     android:id="@+id/Sex_Age"
-                    android:gravity="center"
-                    android:textSize = "25sp"
-                    android:text = "愛情"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="15dp"
+                    android:textSize = "25dp"
+                    android:text = "紫微\n斗數"
                     android:layout_weight="1" />
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingTop="5px">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#292928"
                     android:id="@+id/Birth"
-                    android:gravity="center"
-                    android:textSize = "18sp"
-                    android:text = "愛情"
+                    android:paddingLeft="10dp"
+                    android:textSize = "18dp"
+                    android:text = "天機特選\n人生運勢\n愛情友情\n課業工作"
                     android:layout_weight="1"
                     />
+                </ScrollView>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#f1f2f4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar8"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar8"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text = ""
+                             />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -306,7 +361,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -315,14 +370,14 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
 
                 android:orientation="horizontal">
@@ -332,19 +387,27 @@
                     android:layout_weight="1"
                     android:background="#f1f2f4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar2"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar2"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text = ""
+                             />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -353,7 +416,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -362,7 +425,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
@@ -370,20 +433,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#292928"
+
                     android:id="@+id/Fate_Manner"
                     android:gravity="center"
                     android:textSize = "40sp"
-                    android:text = "愛情"
+                    android:text = "精通"
                     android:layout_weight="1" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#292928"
+
                     android:id="@+id/Fate_Sex"
                     android:gravity="center"
                     android:textSize = "40sp"
-                    android:text = "愛情"
+                    android:text = "運勢"
                     android:layout_weight="1"
                     />
                 <LinearLayout
@@ -392,19 +455,27 @@
                     android:layout_weight="1"
                     android:background="#c4c4c4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar9"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar9"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text = ""
+                             />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -413,7 +484,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -422,14 +493,14 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal">
                 <LinearLayout
@@ -438,26 +509,34 @@
                     android:layout_weight="1"
                     android:background="#c4c4c4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar1"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:text = "123"
-                        android:textColor="#000000"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar1"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:text = ""
+                            android:textColor="#000000"
+                             />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:textSize = "16sp"
-                            android:text = "123"
+                            android:text = ""
                             android:textColor="#000000"
                             android:id="@+id/name_decade1"
                             android:layout_weight="1" />
@@ -468,7 +547,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
@@ -479,19 +558,27 @@
                     android:layout_weight="1"
                     android:background="#f1f2f4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar12"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:text = "123"
-                        android:textColor="#000000"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar12"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:text = ""
+                            android:textColor="#000000"
+                            />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -500,7 +587,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -509,7 +596,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
@@ -519,19 +606,27 @@
                     android:layout_weight="1"
                     android:background="#c4c4c4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar11"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar11"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text = ""
+                             />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -540,7 +635,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -549,7 +644,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
@@ -559,19 +654,27 @@
                     android:layout_weight="1"
                     android:background="#f1f2f4"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/typestar10"
-                        android:textSize = "12sp"
-                        android:gravity="center"
-                        android:textColor="#000000"
-                        android:text = "123"
-                        android:layout_weight="1" />
+                    <ScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingTop="5px">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/typestar10"
+                            android:textSize = "12sp"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text = ""
+                             />
+                    </ScrollView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="#77ffffff"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="match_parent"
@@ -580,7 +683,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "123"
+                            android:text = ""
                             android:layout_weight="1" />
                         <TextView
                             android:layout_width="match_parent"
@@ -589,7 +692,7 @@
                             android:gravity="center"
                             android:textSize = "16sp"
                             android:textColor="#000000"
-                            android:text = "愛情"
+                            android:text = ""
                             android:layout_weight="2" />
                     </LinearLayout>
                 </LinearLayout>
