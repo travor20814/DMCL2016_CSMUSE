@@ -117,6 +117,7 @@ public class fufay extends AppCompatActivity {
         unionPaySDK.Initialize(ctx, scode, key, true);
 
         loginornot = new Write_and_Read(filename,getFilesDir()).ifLogin();
+
     }
 
 
@@ -264,6 +265,24 @@ public class fufay extends AppCompatActivity {
 
         return result;
     }
+    public void toright(View view){
+        int current = mViewPager.getCurrentItem();
+        if(current!=4){
+            mViewPager.setCurrentItem(current + 1, true);
+        }
+        else{
+
+        }
+    }
+    public void toleft(View view){
+        int current = mViewPager.getCurrentItem();
+        if(current!=0){
+            mViewPager.setCurrentItem(current - 1, true);
+        }
+        else{
+
+        }
+    }
     public void showEditDialog(View view)
     {
         if(isNetwork()) {
@@ -382,9 +401,6 @@ public class fufay extends AppCompatActivity {
                         notNetwork_dialogFragment EditNameDialog = new notNetwork_dialogFragment();
                         EditNameDialog.show(getFragmentManager(), "EditNameDialog");
                     }
-                    break;
-                case R.id.action_designer://製作群
-                    msg+="designer clicked";
                     break;
                 case R.id.action_logout://登出
                     new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");

@@ -143,9 +143,6 @@ public class MinsuActivity extends AppCompatActivity {
                         EditNameDialog.show(getFragmentManager(), "EditNameDialog");
                     }
                     break;
-                case R.id.action_designer://製作群
-                    msg += "designer clicked";
-                    break;
                 case R.id.action_logout://登出
                     new Write_and_Read(filename, getFilesDir()).WritetoFile_clear("");
                     tologin.setClass(MinsuActivity.this, LoginActivity.class);
@@ -309,6 +306,14 @@ public class MinsuActivity extends AppCompatActivity {
                 spinner.setAdapter(listAdapter);
                 spinner.setSelection(fileHour);
                 hour = hour_list[fileHour];
+            }else{
+                //設定年的初始值
+                spinner_year = (Spinner) v.findViewById(R.id.input_minsu_year);
+                listAdapter_year = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, year_list);
+                listAdapter_year.setDropDownViewResource(R.layout.myspinner);
+                spinner_year.setAdapter(listAdapter_year);
+                spinner_year.setSelection(90);
+                s_year = year_list[90]; //傳入value
             }
             return v;
         }

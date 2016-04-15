@@ -6,6 +6,6 @@
         android:ellipsize="marquee"
         android:gravity="center"
         android:singleLine="true"
-        android:textColor="#96fc4444"
+        android:textColor="#eafc4444"
         android:textSize="22sp"
-    android:background="@drawable/spin_style" />
+    android:background="@drawable/spin_pugua_style" />

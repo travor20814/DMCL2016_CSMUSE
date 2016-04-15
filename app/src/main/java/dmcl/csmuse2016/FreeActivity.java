@@ -182,9 +182,6 @@ public class FreeActivity extends AppCompatActivity {
                         EditNameDialog.show(getFragmentManager(), "EditNameDialog");
                     }
                     break;
-                case R.id.action_designer://製作群
-                    msg+="designer clicked";
-                    break;
                 case R.id.action_logout://登出
                     new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");
                     tologin.setClass(FreeActivity.this,LoginActivity.class);

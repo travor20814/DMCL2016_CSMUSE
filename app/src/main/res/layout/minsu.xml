@@ -206,7 +206,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/radio_minsu_Female2"
                 android:layout_weight="0.5"
-                android:checked="true" />
+                android:checked="true"
+                android:buttonTint="@color/womanRadioColor" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -217,7 +218,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/radio_minsu_Male2"
                 android:layout_weight="0.5"
-                android:checked="false" />
+                android:checked="false"
+                android:buttonTint="@color/manRadioColor" />
         </RadioGroup>
 
         <LinearLayout

@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/womanRadioColor</item>
     </style>
     <!-- Base application theme. -->
     <style name="AppTheme.Base" parent="Theme.AppCompat">
@@ -12,7 +12,7 @@
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorBarWhite</item>
         <item name="colorPrimaryDark">@color/accent_material_light</item>
-        <item name="colorAccent">@color/dim_foreground_material_dark</item>
+        <item name="colorAccent">@color/womanRadioColor</item>
         <item name="android:windowBackground">@drawable/background_color</item>
     </style>
     <style name="AppTheme.NoActionBar">

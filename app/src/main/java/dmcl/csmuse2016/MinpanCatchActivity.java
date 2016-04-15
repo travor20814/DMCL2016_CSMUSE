@@ -139,9 +139,6 @@ public class MinpanCatchActivity  extends AppCompatActivity {
                         EditNameDialog.show(getFragmentManager(), "EditNameDialog");
                     }
                     break;
-                case R.id.action_designer://製作群
-                    msg += "designer clicked";
-                    break;
                 case R.id.action_logout://登出
                     new Write_and_Read(filename, getFilesDir()).WritetoFile_clear("");
                     tologin.setClass(MinpanCatchActivity.this, LoginActivity.class);
@@ -597,7 +594,8 @@ public class MinpanCatchActivity  extends AppCompatActivity {
 
 
         Bundle bundle1 = new Bundle();
-        private Button button_Submit2;
+        View buttonInteract;
+        private Button button_Submit2,buttonReturn;
         private RadioGroup Gruop_Sex2, Gruop_YearType;
         EditText input_year, input_month, input_day;
         String which_sex = "女";//性別，預設為女
@@ -690,6 +688,14 @@ public class MinpanCatchActivity  extends AppCompatActivity {
                 spinner.setAdapter(listAdapter);
                 spinner.setSelection(fileHour);
                 hour = hour_list[fileHour];
+            }else{
+                //設定年的初始值
+                spinner_year = (Spinner) v.findViewById(R.id.input_minpan_year);
+                listAdapter_year = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, year_list);
+                listAdapter_year.setDropDownViewResource(R.layout.myspinner);
+                spinner_year.setAdapter(listAdapter_year);
+                spinner_year.setSelection(90);
+                s_year = year_list[90]; //傳入value
             }
             return v;
         }
@@ -697,6 +703,8 @@ public class MinpanCatchActivity  extends AppCompatActivity {
 
         void ButtonSummit(final View v) {
             button_Submit2 = (Button) v.findViewById(R.id.button_minpan_Submit2);
+
+
             // 時辰
             spinner = (Spinner) v.findViewById(R.id.minpan_spinner);
             listAdapter = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, hour_list);
@@ -1245,6 +1253,8 @@ public class MinpanCatchActivity  extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            buttonInteract =  (getActivity()).findViewById(R.id.ButtonReturn);
+            buttonInteract.setVisibility(View.GONE);
             ((MinpanCatchActivity)getActivity()).getInfo(bundle1);
         }
     }

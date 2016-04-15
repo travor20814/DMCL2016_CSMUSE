@@ -22,10 +22,7 @@
                 android:title="@string/personal_setting"
                 android:icon="@mipmap/ic_action_settings_white"
                 android:orderInCategory="101"/>
-            <item android:id="@+id/action_designer"
-                android:title="@string/designers"
-                android:icon="@mipmap/ic_action_about_white"
-                android:orderInCategory="102"/>
+
             <item android:id="@+id/action_logout"
                 android:title="@string/logout"
                 android:icon="@mipmap/ic_action_accounts_white"

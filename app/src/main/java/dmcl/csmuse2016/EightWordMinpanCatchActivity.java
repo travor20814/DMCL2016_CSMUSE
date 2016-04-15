@@ -56,25 +56,25 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
         //addFragment(); hao wei
 
 
-        //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_eightwordminpan);
-        //  setSupportActionBar(toolbar);
+          Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_catcheight);
+          setSupportActionBar(toolbar);
 
         // App Logo
-        //   toolbar.setLogo(R.mipmap.title02);
+           toolbar.setLogo(R.mipmap.title02);
         // Title
-        //   toolbar.setTitle("八字命盤");
-        //   toolbar.setTitleTextColor(Color.BLACK);
+           toolbar.setTitle("八字命盤");
+           toolbar.setTitleTextColor(Color.BLACK);
         // Sub Title
-        //   toolbar.setSubtitle("88Say幫您及時掌握未來");
-        //   toolbar.setSubtitleTextColor(Color.BLACK);
+           toolbar.setSubtitle("88Say幫您及時掌握未來");
+           toolbar.setSubtitleTextColor(Color.BLACK);
 
-        //   setSupportActionBar(toolbar);
+           setSupportActionBar(toolbar);
 
         // Navigation Icon 要設定在 setSupoortActionBar 才有作用
         // 否則會出現 back bottom
         //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
         // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
-        //   toolbar.setOnMenuItemClickListener(onMenuItemClick);
+           toolbar.setOnMenuItemClickListener(onMenuItemClick);
         //函式
         ReturnButton();
         //加入fragment的函式
@@ -150,9 +150,6 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
                     intentMember.putExtra("mail", fromfileArray[2]); //send mail to next activity
                     EightWordMinpanCatchActivity.this.startActivity(intentMember);
                     finish();
-                    break;
-                case R.id.action_designer://製作群
-                    msg+="designer clicked";
                     break;
                 case R.id.action_logout://登出
                     new Write_and_Read(filename,getFilesDir()).WritetoFile_clear("");
@@ -512,7 +509,7 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     public static class EightWordMinpan extends Fragment {
 
-
+        View buttonInteract;
         RadioGroup yearTpye , sexType;
         Button Send;
         String s_yearTpye,s_sexTpye;
@@ -605,6 +602,14 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
                 spinner.setAdapter(listAdapter);
                 spinner.setSelection(fileHour);
                 hour = hour_list[fileHour];
+            }else{
+                //設定年的初始值
+                spinner_year = (Spinner)v.findViewById(R.id.spinner_year_char);
+                listAdapter_year = new ArrayAdapter<String>(getActivity(), R.layout.myspinner, year_list);
+                listAdapter_year.setDropDownViewResource(R.layout.myspinner);
+                spinner_year.setAdapter(listAdapter_year);
+                spinner_year.setSelection(90);
+                s_year = year_list[90]; //傳入value
             }
             return v;
         }
@@ -1172,6 +1177,8 @@ public class EightWordMinpanCatchActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            buttonInteract = (getActivity()).findViewById(R.id.button2);
+            buttonInteract.setVisibility(View.GONE);
 
         }
 
